@@ -1,12 +1,7 @@
 package org.example;
 
-import java.util.Objects;
-
 public final class Point {
 
-    /**
-     * @param x Dreidimensionale Kennzeichnung durch Attribute
-     */
     private final double x;
     private final double y;
     private final double z;

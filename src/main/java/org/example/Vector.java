@@ -1,13 +1,6 @@
 package org.example;
 
-import java.util.Objects;
-
-
 public final class Vector {
-
-    /**
-     * @param x Dreidimensionale Kennzeichnung durch Attribute
-     */
 
     private final double x;
     private final double y;
