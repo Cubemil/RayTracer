@@ -1,8 +1,14 @@
 package org.example;
 
-public class Vector {
+import java.util.Objects;
 
-    // Dreidimensionale Attribute
+
+public final class Vector {
+
+    /**
+     * @param x Dreidimensionale Kennzeichnung durch Attribute
+     */
+
     private final double x;
     private final double y;
     private final double z;
@@ -35,9 +41,9 @@ public class Vector {
     // Komponentenweise Multiplikation mit dem Skalar
     public static Vector multiply(double s, Vector v) {
         return new Vector(
-            s * v.x,
-            s * v.y,
-            s * v.z);
+                s * v.x,
+                s * v.y,
+                s * v.z);
     }
 
     // Vektor * Skalar -> Vektor
@@ -69,7 +75,7 @@ public class Vector {
     // Hilfsmethode für das Berechnen der Wurzel einer Zahl
     private static double squareRoot(double number) {
         double temp;
-        double sr = number/2;
+        double sr = number / 2;
         do {
             temp = sr;
             sr = (temp + (number / temp)) / 2;
@@ -110,16 +116,24 @@ public class Vector {
                 v1.x * v2.y - v1.y * v2.x);
     }
 
-    public double getX() {
+    public double x() {
         return x;
     }
 
-    public double getY() {
+    public double y() {
         return y;
     }
 
-    public double getZ() {
+    public double z() {
         return z;
+    }
+
+    @Override
+    public String toString() {
+        return "Vector[" +
+                "x=" + x + ", " +
+                "y=" + y + ", " +
+                "z=" + z + ']';
     }
 
 }

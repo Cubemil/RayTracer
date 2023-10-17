@@ -1,8 +1,12 @@
 package org.example;
 
-public class Point {
+import java.util.Objects;
 
-    // Dreidimensionale Attribute
+public final class Point {
+
+    /**
+     * @param x Dreidimensionale Kennzeichnung durch Attribute
+     */
     private final double x;
     private final double y;
     private final double z;
@@ -40,13 +44,13 @@ public class Point {
     // Punkt + Vektor -> Vektor
     // Komponentenweise Addition
     public static Point add(Point p, Vector v) {
-        return new Point(p.x + v.getX(), p.y + v.getY(), p.z + v.getZ());
+        return new Point(p.x + v.x(), p.y + v.y(), p.z + v.z());
     }
 
     // Punkt - Vektor -> Vektor
     // Komponentenweise Subtraktion
     public static Point subtract(Point p, Vector v) {
-        return new Point(p.x - v.getX(), p.y - v.getY(), p.z - v.getZ());
+        return new Point(p.x - v.x(), p.y - v.y(), p.z - v.z());
     }
 
     // Punkt == Punkt und Punkt != Punkt -> Boolean
@@ -67,15 +71,24 @@ public class Point {
         return ((p1.x > p2.x) && (p1.y > p2.y) && (p1.z > p1.z)) ? p1 : p2;
     }
 
-    public double getX() {
+    public double x() {
         return x;
     }
 
-    public double getY() {
+    public double y() {
         return y;
     }
 
-    public double getZ() {
+    public double z() {
         return z;
     }
+
+    @Override
+    public String toString() {
+        return "Point[" +
+                "x=" + x + ", " +
+                "y=" + y + ", " +
+                "z=" + z + ']';
+    }
+
 }
