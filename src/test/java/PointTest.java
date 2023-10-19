@@ -3,6 +3,9 @@ import org.example.Vector;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
+import io.cucumber.junit.Cucumber;
+import io.cucumber.junit.CucumberOptions;
+import org.junit.runner.RunWith;
 
 class PointTest {
 
@@ -22,8 +25,18 @@ class PointTest {
 
     }
 
+    @RunWith(Cucumber.class)
+    @CucumberOptions(
+            features = {},
+            glue = {""})
+
+    public class RunCucumberTest{
+
+    }
+
     @Test
     void multiply() {
+
     }
 
     @Test
