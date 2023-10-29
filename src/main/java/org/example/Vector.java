@@ -50,7 +50,8 @@ public final class Vector {
 
     // Skalar / Vektor -> Vektor
     // Komponentenweise Multiplikation mit dem Skalar
-    public static Vector divide(Vector v, double s) {
+    public static Vector divide(Vector v, double s) throws IllegalArgumentException {
+        if (s == 0) throw new IllegalArgumentException();
         return new Vector(
                 v.x / s,
                 v.y / s,
@@ -83,7 +84,7 @@ public final class Vector {
     }
 
     // Länge eines Vektors quadriert → Double
-    public double sqrMagnitude(Vector vector) {
+    public static double sqrMagnitude(Vector vector) {
         return magnitude(vector) * magnitude(vector);
     }
 
