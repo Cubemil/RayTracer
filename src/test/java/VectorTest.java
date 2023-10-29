@@ -1,4 +1,3 @@
-import org.example.Point;
 import org.example.Vector;
 import org.junit.jupiter.api.Test;
 
