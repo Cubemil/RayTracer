@@ -3,9 +3,7 @@ import org.example.Vector;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
-import io.cucumber.junit.Cucumber;
-import io.cucumber.junit.CucumberOptions;
-import org.junit.runner.RunWith;
+
 
 class PointTest {
 
@@ -22,15 +20,6 @@ class PointTest {
         Point point = new Point(3.0, -2.0, 5.0);
         Vector vector = new Vector(-2.0, 3.0, 1.0);
         assertTrue(Point.equals(new Point(1.0, 1.0, 6.0), Point.add(point, vector)));
-
-    }
-
-    @RunWith(Cucumber.class)
-    @CucumberOptions(
-            features = {},
-            glue = {""})
-
-    public class RunCucumberTest{
 
     }
 
