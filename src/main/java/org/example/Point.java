@@ -32,7 +32,8 @@ public final class Point {
 
     // Punkt / Skalar -> Punkt
     // Komponentenweise Division mit dem Skalar
-    public static Point divide(Point p, double s) {
+    public static Point divide(Point p, double s) throws IllegalArgumentException {
+        if (s == 0) throw new IllegalArgumentException();
         return new Point(p.x / s, p.y / s, p.z / s);
     }
 
@@ -58,12 +59,12 @@ public final class Point {
 
     // Komponentenweises Minimum
     public static Point min(Point p1, Point p2) {
-        return ((p1.x < p2.x) && (p1.y < p2.y) && (p1.z < p1.z)) ? p1 : p2;
+        return new Point(Math.min(p1.x, p2.x), Math.min(p1.y, p2.y), Math.min(p1.z, p2.z));
     }
 
     // Komponentenweises Maximum
     public static Point max(Point p1, Point p2) {
-        return ((p1.x > p2.x) && (p1.y > p2.y) && (p1.z > p1.z)) ? p1 : p2;
+        return new Point(Math.max(p1.x, p2.x), Math.max(p1.y, p2.y), Math.max(p1.z, p2.z));
     }
 
     public double x() {
