@@ -49,7 +49,7 @@ public final class Point {
         return new Point(p.x - v.x(), p.y - v.y(), p.z - v.z());
     }
 
-    // Punkt == Punkt und Punkt != Punkt -> Boolean
+    // Punkt == Punkt und Punkt != Punkt → Boolean
     // Komponentenweiser Vergleich
     public static boolean equals(Point p1, Point p2) {
         return (p1.x == p2.x &&
