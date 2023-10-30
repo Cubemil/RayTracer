@@ -9,8 +9,9 @@ class CalculatorTest {
     // simple numbers test for add()
     @Test
     void addSimpleTest() {
-        Calculator calc = new Calculator();
-        assertEquals(2, calc.add(1, 1));
+        int result = 4;
+        int actual = Calculator.add(2, 2);
+        assertEquals(result, actual);
     }
 
     // test using bigger integers for add()
