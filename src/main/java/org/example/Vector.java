@@ -5,109 +5,97 @@ public final class Vector {
     private final double x;
     private final double y;
     private final double z;
+    private final double w;
 
     public Vector(double x, double y, double z) {
         this.x = x;
         this.y = y;
         this.z = z;
+        this.w = 0;
     }
 
     // Vektor + Vektor -> Vektor
     // Komponentenweise Addition
-    public static Vector add(Vector v1, Vector v2) {
-        return new Vector(v1.x + v2.x, v1.y + v2.y, v1.z + v2.z);
+    public Vector add(Vector vector) {
+        return new Vector(this.x + vector.x, this.y + vector.y, this.z + vector.z);
     }
 
     // Vektor - Vektor -> Vektor
     // Komponentenweise Subtraktion
-    public static Vector subtract(Vector v1, Vector v2) {
-        return new Vector(v1.x - v2.x, v1.y - v2.y, v1.z - v2.z);
+    public Vector sub(Vector vector) {
+        return new Vector(this.x - vector.x, this.y - vector.y, this.z - vector.z);
     }
 
     // -Vektor -> Vektor
     // Komponentenweise Negation
-    public static Vector negate(Vector v) {
-        return new Vector(-v.x, -v.y, -v.z);
+    public Vector neg() {
+        return new Vector(-this.x, -this.y, -this.z);
     }
 
     // Skalar * Vektor -> Vektor
     // Komponentenweise Multiplikation mit dem Skalar
-    public static Vector multiply(double s, Vector v) {
+    public Vector mult(double s) {
         return new Vector(
-                s * v.x,
-                s * v.y,
-                s * v.z);
-    }
-
-    // Vektor * Skalar -> Vektor
-    // Komponentenweise Multiplikation mit dem Skalar
-    public static Vector multiply(Vector v, double s) {
-        return new Vector(
-                s * v.x,
-                s * v.y,
-                s * v.z);
+                s * this.x,
+                s * this.y,
+                s * this.z);
     }
 
     // Skalar / Vektor -> Vektor
     // Komponentenweise Multiplikation mit dem Skalar
-    public static Vector divide(Vector v, double s) throws IllegalArgumentException {
+    public Vector div(double s) throws IllegalArgumentException {
         if (s == 0) throw new IllegalArgumentException();
         return new Vector(
-                v.x / s,
-                v.y / s,
-                v.z / s);
+                this.x / s,
+                this.y / s,
+                this.z / s);
     }
 
-    // Vektor == Vektor und Vektor != Vektor -> Boolean
-    // Komponentenweiser Vergleich
-    public static boolean equals(Vector v1, Vector v2) {
-        return (v1.x == v2.x &&
-                v1.y == v2.y &&
-                v1.z == v2.z);
-    }
-
-    // Hilfsmethode für das Berechnen der Wurzel einer Zahl
-    private static double squareRoot(double number) {
-        double temp;
-        double sr = number / 2;
-        do {
-            temp = sr;
-            sr = (temp + (number / temp)) / 2;
-        } while ((temp - sr) != 0);
-        return sr;
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Vector other) {
+            return  Math.abs(this.x - other.x) < 0.00001 &&
+                    Math.abs(this.y - other.y) < 0.00001 &&
+                    Math.abs(this.z - other.z) < 0.00001 &&
+                    Math.abs(this.w - other.w) < 0.00001;
+        }
+        return false;
     }
 
     // Länge eines Vektors → Double
     // Wurzel aus dem Skalarprodukt des Vektors mit sich selbst
-    public static double magnitude(Vector vector) {
-        return squareRoot(dot(vector, vector));
+    public double magnitude() {
+        return Math.sqrt(sqrMagnitude());
     }
 
     // Länge eines Vektors quadriert → Double
-    public static double sqrMagnitude(Vector vector) {
-        return magnitude(vector) * magnitude(vector);
+    public double sqrMagnitude() {
+        return (Math.abs(this.x * this.x) +
+                Math.abs(this.y * this.y) +
+                Math.abs(this.z * this.z));
     }
 
+
     // Vektor normalisieren -> Vektor
-    public static Vector normalized(Vector vector) {
-        double length = magnitude(vector);
+    public Vector normalized() {
+        double length = magnitude();
         return new Vector(
-                vector.x / length,
-                vector.y / length,
-                vector.z / length);
+                this.x / length,
+                this.y / length,
+                this.z / length);
     }
 
     // Skalarprodukt zweier Vektoren → Double
-    public static double dot(Vector v1, Vector v2) {
-        return v1.x * v2.x + v1.y * v2.y + v1.z * v2.z;
+    public double dot(Vector vector) {
+        return this.x * vector.x + this.y * vector.y + this.z * vector.z;
     }
 
     // Kreuzprodukt zweier Vektoren → Vektor
-    public static Vector cross(Vector v1, Vector v2) {
+    public Vector cross(Vector vector) {
         return new Vector(
-                v1.y * v2.z - v1.z * v2.y,
-                v1.z * v2.x - v1.x * v2.z,
-                v1.x * v2.y - v1.y * v2.x);
+                this.y * vector.z - this.z * vector.y,
+                this.z * vector.x - this.x * vector.z,
+                this.x * vector.y - this.y * vector.x);
     }
 
     public double x() {
@@ -122,12 +110,19 @@ public final class Vector {
         return z;
     }
 
+    public double getW() {
+        return w;
+    }
+
     @Override
     public String toString() {
         return "Vector[" +
-                "x=" + x + ", " +
-                "y=" + y + ", " +
-                "z=" + z + ']';
+                "x=" + x +
+                ", y=" + y +
+                ", z=" + z +
+                ", w=" + w +
+                ']';
     }
+
 
 }
