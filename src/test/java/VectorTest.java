@@ -79,21 +79,19 @@ class VectorTest {
         assertEquals(14.0, new Vector(1, 2, 3).sqrMagnitude());
         assertEquals(14.0, new Vector(-1, -2, -3).sqrMagnitude());
     }
- /*
+
     @Test
     void normalizeVectorTest() {
-        assertTrue(Vector.equals(new Vector(1, 0, 0), Vector.normalized(new Vector(4, 0 ,0))));
-        assertTrue(Vector.equals(new Vector(0.2672612419124244, 0.5345224838248488, 0.8017837257372732), Vector.normalized(new Vector(1, 2, 3))));
+        assertEquals(new Vector(1, 0, 0), new Vector(4, 0, 0).normalized());
+        assertEquals(new Vector(0.2672612419124244, 0.5345224838248488, 0.8017837257372732), new Vector(1, 2, 3).normalized());
     }
-
-
 
     @Test
     void dotProductTest() {
         Vector vector1 = new Vector(1, 2, 3);
         Vector vector2 = new Vector(2, 3, 4);
 
-        assertEquals(20, Vector.dot(vector1, vector2));
+        assertEquals(20, vector1.dot(vector2));
     }
 
     @Test
@@ -101,10 +99,10 @@ class VectorTest {
         Vector vector1 = new Vector(1, 2, 3);
         Vector vector2 = new Vector(2, 3, 4);
 
-        assertTrue(Vector.equals(new Vector(-1, 2, -1), Vector.cross(vector1, vector2)));
-        assertTrue(Vector.equals(new Vector(1, -2, 1), Vector.cross(vector2, vector1)));
+        assertEquals(new Vector(-1, 2, -1), vector1.cross(vector2));
+        assertEquals(new Vector(1, -2, 1),vector2.cross(vector1));
     }
-*/
+
 
     @Test
     void toStringTest() {

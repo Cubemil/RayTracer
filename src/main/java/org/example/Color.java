@@ -19,52 +19,56 @@ public class Color {
     }
 
     // adding colors
-    public static Color add(Color color1, Color color2) {
+    public Color add(Color color) {
         return new Color(
-                color1.r + color2.r,
-                color1.g + color2.g,
-                color1.b + color2.b
+                this.r + color.r,
+                this.g + color.g,
+                this.b + color.b
         );
     }
 
     // multiply Color by scalar
-    public static Color multiply(Color color, double s) {
+    public Color mult(double s) {
         return new Color(
-                color.r * s,
-                color.g * s,
-                color.b * s
+                this.r * s,
+                this.g * s,
+                this.b * s
         );
     }
 
     // multiply Color by Color (Hadamard-product)
-    public static Color multiply(Color color1, Color color2) {
+    public Color mult(Color color) {
         return new Color(
-                color1.r * color2.r,
-                color1.g * color2.g,
-                color1.b * color2.b
+                this.r * color.r,
+                this.g * color.g,
+                this.b * color.b
         );
     }
 
-    public static Color clamped(Color color) {
-        double newR = color.r;
-        double newG = color.g;
-        double newB = color.b;
+    public Color clamped() {
+        double newR = this.r;
+        double newG = this.g;
+        double newB = this.b;
 
-        if (color.r >= 1.0) newR = 1.0;
-            else if (color.r <= 0.0) newR = 0.0;
-        if (color.g >= 1.0) newG = 1.0;
-            else if (color.g <= 0.0) newG = 0.0;
-        if (color.b >= 1.0) newB = 1.0;
-            else if (color.b <= 0.0) newB = 0.0;
+        if (this.r >= 1.0) newR = 1.0;
+            else if (this.r <= 0.0) newR = 0.0;
+        if (this.g >= 1.0) newG = 1.0;
+            else if (this.g <= 0.0) newG = 0.0;
+        if (this.b >= 1.0) newB = 1.0;
+            else if (this.b <= 0.0) newB = 0.0;
 
         return new Color(newR, newG, newB);
     }
 
-    // equals() -> each component checked
-    public static boolean equals(Color color1, Color color2) {
-        return (color1.r == color2.r &&
-                color1.g == color2.g &&
-                color1.b == color2.b);
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Color other)
+        {
+            return Math.abs(this.r - other.r) < 0.00001 &&
+                    Math.abs(this.g - other.g) < 0.00001 &&
+                    Math.abs(this.b - other.b) < 0.00001;
+        }
+        return false;
     }
 
     public double getR() {
