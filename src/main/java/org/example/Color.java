@@ -18,6 +18,9 @@ public class Color {
         this.b = 0.0;
     }
 
+    public Color(int rgb) {
+    }
+
     // adding colors
     public Color add(Color color) {
         return new Color(
@@ -83,4 +86,8 @@ public class Color {
         return b;
     }
 
+    //TODO
+    public int getIntRGB() {
+        return 0;
+    }
 }
