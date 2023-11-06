@@ -19,6 +19,7 @@ public class Color {
     }
 
     public Color(int rgb) {
+       //TODO Constructor from rgb values
     }
 
     // adding colors
@@ -86,8 +87,11 @@ public class Color {
         return b;
     }
 
+    /**
+     * @return int value of RGB in format: ??RRGGBB
+     */
     //TODO
     public int getIntRGB() {
-        return 0;
+        return (int) (this.r * 255 + this.g * 255 + this.b * 255);
     }
 }
