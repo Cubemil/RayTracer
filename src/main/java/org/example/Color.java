@@ -95,4 +95,5 @@ public class Color {
                 + (int) (this.g * 255) << 8
                 + (int) (this.b * 255) << 16;
     }
+
 }
