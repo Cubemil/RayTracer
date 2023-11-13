@@ -18,6 +18,10 @@ public class Color {
         this.b = 0.0;
     }
 
+    public Color(int rgb) {
+       //TODO Constructor from rgb values
+    }
+
     // adding colors
     public Color add(Color color) {
         return new Color(
@@ -81,6 +85,15 @@ public class Color {
 
     public double getB() {
         return b;
+    }
+
+    /**
+     * @return int value of RGB in format: ??RRGGBB
+     */
+    public int getIntRGB() {
+        return (int) (this.r * 255)
+                + (int) (this.g * 255) << 8
+                + (int) (this.b * 255) << 16;
     }
 
 }
