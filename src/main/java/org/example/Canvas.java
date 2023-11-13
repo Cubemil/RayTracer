@@ -41,6 +41,15 @@ public class Canvas {
         }
     }
 
+    public void writeFile(String newName) {
+        try {
+            File outputFile = new File(newName + ".png");
+            ImageIO.write(outputImage, "png", outputFile);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void readFile(String fileName) {
         try {
             File inputFile = new File(fileName);
