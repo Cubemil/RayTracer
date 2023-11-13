@@ -19,7 +19,9 @@ public class Color {
     }
 
     public Color(int rgb) {
-       //TODO Constructor from rgb values
+        this.b = (double) ((rgb >> 16) & 0xFF) / 255.0;
+        this.g = (double) ((rgb >> 8) & 0xFF) / 255.0;
+        this.r = (double) (rgb & 0xFF) / 255.0;
     }
 
     // adding colors
@@ -66,11 +68,11 @@ public class Color {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj instanceof Color other)
-        {
-            return Math.abs(this.r - other.r) < 0.00001 &&
-                    Math.abs(this.g - other.g) < 0.00001 &&
-                    Math.abs(this.b - other.b) < 0.00001;
+        if (obj instanceof Color other) {
+            double epsilon = 0.00001;
+            return Math.abs(this.r - other.r) < epsilon &&
+                    Math.abs(this.g - other.g) < epsilon &&
+                    Math.abs(this.b - other.b) < epsilon;
         }
         return false;
     }
@@ -91,9 +93,9 @@ public class Color {
      * @return int value of RGB in format: ??RRGGBB
      */
     public int getIntRGB() {
-        return (int) (this.r * 255)
-                + (int) (this.g * 255) << 8
-                + (int) (this.b * 255) << 16;
+        return ((int) (this.r * 255) << 16)
+                + ((int) (this.g * 255) << 8)
+                + (int) (this.b * 255);
     }
 
 }
