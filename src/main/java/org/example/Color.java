@@ -90,8 +90,9 @@ public class Color {
     /**
      * @return int value of RGB in format: ??RRGGBB
      */
-    //TODO
     public int getIntRGB() {
-        return (int) (this.r * 255 + this.g * 255 + this.b * 255);
+        return (int) (this.r * 255)
+                + (int) (this.g * 255) << 8
+                + (int) (this.b * 255) << 16;
     }
 }
