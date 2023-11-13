@@ -6,18 +6,21 @@ public class Color {
     private double g;
     private double b;
 
+    // Constructor using 3 separate double values
     public Color(double r, double g, double b) {
         this.r = r;
         this.g = g;
         this.b = b;
     }
 
+    // Default Constructor (white)
     public Color() {
         this.r = 0.0;
         this.g = 0.0;
         this.b = 0.0;
     }
 
+    // Creates a Color object using an Integer value with format ??RRGGBB
     public Color(int rgb) {
         this.b = (double) ((rgb >> 16) & 0xFF) / 255.0;
         this.g = (double) ((rgb >> 8) & 0xFF) / 255.0;

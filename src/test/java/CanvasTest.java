@@ -5,7 +5,7 @@ import org.example.Canvas;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class CanvasTest {
+class  CanvasTest {
 
     @Test
     void namelessCanvasTest() {
