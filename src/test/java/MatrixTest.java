@@ -36,4 +36,29 @@ class MatrixTest {
         assertEquals(1, m.get(2, 2));
     }
 
+    @Test
+    void matrixEqualityTest() {
+        Matrix m1 = new Matrix(new double[][]{{1, 2, 3, 4}, {5, 6, 7, 8}, {9, 8, 7, 6}, {5, 4, 3, 2}});
+        Matrix m2 = new Matrix(new double[][]{{1, 2, 3, 4}, {5, 6, 7, 8}, {9, 8, 7, 6}, {5, 4, 3, 2}});
+        assertEquals(m1, m2);
+
+        Matrix m3 = new Matrix(new double[][]{{1, 2, 3, 4}, {5, 6, 7, 8}, {9, 8, 7, 6}, {5, 4, 3, 2}});
+        Matrix m4 = new Matrix(new double[][]{{2, 3, 4, 5}, {6, 7, 8, 9}, {8, 7, 6, 5}, {4, 3, 2, 1}});
+        assertNotEquals(m3, m4);
+    }
+
+    @Test
+    void differentSizedMatrixEqualityTest() {
+        // Test with dimension parameter
+        Matrix m1 = new Matrix(4);
+        Matrix m2 = new Matrix(6);
+        assertNotEquals(m1, m2);
+
+        // Test with different array lengths
+        Matrix m3 = new Matrix(new double[][]{{1, 2, 3, 4}, {5, 6, 7, 8}, {9, 8, 7, 6}, {5, 4, 3, 2}});
+        Matrix m4 = new Matrix(new double[][]{{2, 3}, {6, 7}});
+        assertNotEquals(m3, m4);
+
+    }
+
 }
