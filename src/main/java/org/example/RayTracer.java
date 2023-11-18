@@ -6,32 +6,33 @@ public class RayTracer {
         int hoehe = 600;
 
         Canvas image1 = generateDirectionVectorImage(breite, hoehe);
-        image1.writeFile("direction_vector.png");
+        image1.writeFile("direction_vector");
 
         Canvas image2 = generatePixelCoordinatesImage(breite, hoehe);
-        image2.writeFile("pixel_coordinates.png");
+        image2.writeFile("pixel_coordinates");
 
         Canvas image3 = generateVectorLengthImage(breite, hoehe);
-        image3.writeFile("vector_length.png");
+        image3.writeFile("vector_length");
     }
 
     private static Color vectorToColor(Vector vector) {
         // Normalisiere die Komponenten des Vektors auf den Bereich [0, 1]
-        double normalizedX = (vector.x() + 1.0) / 2.0;
-        double normalizedY = (vector.y() + 1.0) / 2.0;
-        double normalizedZ = (vector.z() + 1.0) / 2.0;
+        double normalizedX = vector.normalized().x();
+        double normalizedY = vector.normalized().y();
+        double normalizedZ = vector.normalized().z();
+
+        /*** Alte Implementierung:
+            double normalizedX = (vector.x() + 1.0) / 2.0;
+            double normalizedY = (vector.y() + 1.0) / 2.0;
+            double normalizedZ = (vector.z() + 1.0) / 2.0;
+        ***/
 
         // Begrenze die Werte auf den Bereich [0, 1]
         normalizedX = Math.max(0.0, Math.min(1.0, normalizedX));
         normalizedY = Math.max(0.0, Math.min(1.0, normalizedY));
         normalizedZ = Math.max(0.0, Math.min(1.0, normalizedZ));
 
-        // Skaliere die Werte auf den Bereich [0, 255] und erstelle ein Color-Objekt
-        int r = (int) (normalizedX * 255);
-        int g = (int) (normalizedY * 255);
-        int b = (int) (normalizedZ * 255);
-
-        return new Color(r, g, b);
+        return new Color(normalizedX, normalizedY, normalizedZ);
     }
 
 
@@ -43,8 +44,8 @@ public class RayTracer {
                 double px = x - breite / 2.0;
                 double py = hoehe / 2.0 - y;
 
-                Point observer = new Point(0, 0, 0);
-                Vector ziel = new Vector(px, py, 0);
+                Point observer = new Point(0, 0, -100);
+                Point ziel = new Point(px, py, 0);
                 Ray strahl = new Ray(observer, ziel);
 
                 Color farbwert = vectorToColor(strahl.getDirectionVector());
@@ -74,7 +75,7 @@ public class RayTracer {
     private static Canvas generateVectorLengthImage(int breite, int hoehe) {
         Canvas bild = new Canvas(breite, hoehe);
 
-        Point observer = new Point(0, 0, 0);
+        Point observer = new Point(0, 0, -100);
 
         for (int x = 0; x < breite; x++) {
             for (int y = 0; y < hoehe; y++) {
