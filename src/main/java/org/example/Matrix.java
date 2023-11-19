@@ -37,6 +37,38 @@ public class Matrix {
         }
     }
 
+    // identity matrix
+    public Matrix(int dimension, boolean identityMatrix) {
+        this.dimension = dimension;
+        this.data = new double[dimension][dimension];
+        for (int i = 0; i < dimension; i++) {
+            this.data[i][i] = 1;
+        }
+    }
+
+    /**
+     * @param other matrix to be multiplied with
+     * @return C = A * B
+     * i-th row of A gets multiplied with k-th column of B
+     * -> and then all are added up to be C(i,k)
+     * */
+    public Matrix mult(Matrix other) {
+        if (this.dimension != other.dimension) {
+            throw new RuntimeException("The matrices sizes do not match");
+        }
+        Matrix result = new Matrix(this.dimension);
+        for (int i = 0; i < result.dimension; i++) {
+            for (int k = 0; k < result.dimension; k++) {
+                double curr = 0.0;
+                for (int j = 0; j < this.dimension; j++) {
+                    curr += this.get(i, j) * other.get(j, k);
+                }
+                result.data[i][k] = curr;
+            }
+        }
+        return result;
+    }
+
     public double get(int row, int col) {
         return this.data[row][col];
     }
@@ -62,5 +94,17 @@ public class Matrix {
             }
         }
         return true;
+    }
+
+    @Override
+    public String toString() {
+        String str = "";
+        for (int i = 0; i < dimension; i++) {
+            for (int j = 0; j < dimension; j++) {
+                str += this.data[i][j] + ", ";
+            }
+            str += "\n";
+        }
+        return str;
     }
 }

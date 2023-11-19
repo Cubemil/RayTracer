@@ -1,4 +1,5 @@
 import org.example.Matrix;
+import org.example.Vector;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -59,6 +60,36 @@ class MatrixTest {
         Matrix m4 = new Matrix(new double[][]{{2, 3}, {6, 7}});
         assertNotEquals(m3, m4);
 
+    }
+
+    @Test
+    void multiplyingTwoMatricesTest() {
+        Matrix m1 = new Matrix(new double[][]{{1, 2, 3, 4}, {5, 6, 7, 8}, {9, 8, 7, 6}, {5, 4, 3, 2}});
+        Matrix m2 = new Matrix(new double[][]{{-2, 1, 2, 3}, {3, 2, 1, -1}, {4, 3, 6, 5}, {1, 2, 7, 8}});
+
+        assertEquals(new Matrix(new double[][]{{20, 22, 50, 48}, {44, 54, 114, 108}, {40, 58, 110, 102}, {16, 26, 46, 42}}), m1.mult(m2));
+    }
+
+    @Test
+    void multiplyingWithIdentitiyMatrixTest() {
+        Matrix m1 = new Matrix(new double[][]{{20, 22, 50, 48}, {44, 54, 114, 108}, {40, 58, 110, 102}, {16, 26, 46, 42}});
+        Matrix m2 = new Matrix(4, true);
+
+        assertEquals(m1, m1.mult(m2));
+        assertEquals(m1, m2.mult(m1));
+    }
+
+    @Test
+    void differentSizedMatrixMultiplyingTest() {
+        Matrix m1 = new Matrix(4);
+        Matrix m2 = new Matrix(6);
+        boolean thrown = false;
+        try {
+            m1.mult(m2);
+        } catch (RuntimeException e) {
+            thrown = true;
+        }
+        assertTrue(thrown);
     }
 
 }
