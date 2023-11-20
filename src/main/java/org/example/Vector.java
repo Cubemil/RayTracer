@@ -14,6 +14,13 @@ public final class Vector {
         this.w = 0;
     }
 
+    public Vector(double x, double y, double z, double w) {
+        this.x = x;
+        this.y = y;
+        this.z = z;
+        this.w = w;
+    }
+
     // Vektor + Vektor -> Vektor
     // Komponentenweise Addition
     public Vector add(Vector vector) {
@@ -110,9 +117,10 @@ public final class Vector {
         return z;
     }
 
-    public double getW() {
+    public double w() {
         return w;
     }
+
 
     @Override
     public String toString() {

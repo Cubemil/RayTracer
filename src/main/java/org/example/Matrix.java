@@ -2,13 +2,26 @@ package org.example;
 
 public class Matrix {
 
-    private int dimension;
-    private double[][] data;
+    /*----------------------------------fields---------------------------------------*/
+
+    private final int dimension;
+    private final double[][] data;
+
+    /*-----------------------------constructors---------------------------------------*/
 
     // Standard-Matrix (4 x 4)
     public Matrix() {
         this.dimension = 4;
         this.data = new double[dimension][dimension];
+    }
+
+    // Standard identity matrix 4x4
+    public Matrix(boolean identityMatrix) {
+        this.dimension = 4;
+        this.data = new double[dimension][dimension];
+        for (int i = 0; i < dimension; i++) {
+            this.data[i][i] = 1;
+        }
     }
 
     // (n x n) - Matrix
@@ -46,6 +59,8 @@ public class Matrix {
         }
     }
 
+    /*--------------------------calculation functions-------------------------------*/
+
     /**
      * @param other matrix to be multiplied with
      * @return C = A * B
@@ -68,6 +83,60 @@ public class Matrix {
         }
         return result;
     }
+
+    /**
+     * @param point to be multiplied with
+     * @return new Point = point as a column * matrix (from the right side)
+     */
+    public Point mult(Point point) {
+        if (this.dimension != 4)
+            throw new RuntimeException("When multiplying a matrix with a vector, both need to be 4-dimensional");
+
+        double[] result = new double[4];
+        double[] given = new double[]{
+                point.x(),
+                point.y(),
+                point.z(),
+                point.w()};
+
+        for (int i = 0; i < 4; i++) {
+            double curr = 0.0;
+            for (int j = 0; j < 4; j++) {
+                curr += this.data[i][j] * given[j];
+            }
+            result[i] = curr;
+        }
+
+        return new Point(result[0], result[1], result[2], result[3]);
+    }
+
+    /**
+     * @param vector to be multiplied with
+     * @return new Vector = vector as a column * matrix (from the right side)
+     */
+    public Vector mult(Vector vector) {
+        if (this.dimension != 4)
+            throw new RuntimeException("When multiplying a matrix with a vector, both need to be 4-dimensional");
+
+        double[] result = new double[4];
+        double[] given = new double[]{
+                vector.x(),
+                vector.y(),
+                vector.z(),
+                vector.w()};
+
+        for (int i = 0; i < 4; i++) {
+            double curr = 0.0;
+            for (int j = 0; j < 4; j++) {
+                curr += this.data[i][j] * given[j];
+            }
+            result[i] = curr;
+        }
+
+        return new Vector(result[0], result[1], result[2], result[3]);
+    }
+
+    /*------------------------------structure methods---------------------------------------*/
 
     public double get(int row, int col) {
         return this.data[row][col];
@@ -98,13 +167,14 @@ public class Matrix {
 
     @Override
     public String toString() {
-        String str = "";
+        StringBuilder str = new StringBuilder();
         for (int i = 0; i < dimension; i++) {
             for (int j = 0; j < dimension; j++) {
-                str += this.data[i][j] + ", ";
+                str.append(this.data[i][j]).append(", ");
             }
-            str += "\n";
+            str.append("\n");
         }
-        return str;
+        return str.toString();
     }
+
 }

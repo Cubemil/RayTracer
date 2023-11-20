@@ -14,6 +14,13 @@ public final class Point {
         this.w = 1;
     }
 
+    public Point(double x, double y, double z, double w) {
+        this.x = x;
+        this.y = y;
+        this.z = z;
+        this.w = w;
+    }
+
     // Punkt - Punkt -> Vektor!!!
     // Komponentenweise Subtraktion
     public Vector sub(Point point) {

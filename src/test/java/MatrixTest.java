@@ -1,5 +1,6 @@
 import org.example.Matrix;
 import org.example.Vector;
+import org.example.Point;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -88,6 +89,33 @@ class MatrixTest {
             thrown = true;
         }
         assertTrue(thrown);
+    }
+
+    @Test
+    void matrixTimesVectorTest() {
+        Matrix m = new Matrix(new double[][]{{1, 2, 3, 4}, {2, 4, 4, 2}, {8, 6, 4, 1}, {0, 0, 0, 1}});
+        Vector v = new Vector(1, 2, 3);
+        assertEquals(new Vector(14, 22, 32), m.mult(v));
+    }
+
+    @Test
+    void identityMatrixTimesVector() {
+        Vector v = new Vector(1, 2, 3);
+        Matrix m = new Matrix(true);
+        assertEquals(v, m.mult(v));
+    }
+
+    @Test
+    void matrixTimesPointTest() {
+        Matrix m = new Matrix(new double[][]{{1, 2, 3, 4}, {2, 4, 4, 2}, {8, 6, 4, 1}, {0, 0, 0, 1}});
+        Point p = new Point(1, 2, 3);
+        assertEquals(new Point(18, 24, 33), m.mult(p));
+    }
+
+    @Test
+    void identityMatrixTimesPointTest() {
+        Point p = new Point(1, 2, 3);
+        assertEquals(p, new Matrix(true).mult(p));
     }
 
 }
