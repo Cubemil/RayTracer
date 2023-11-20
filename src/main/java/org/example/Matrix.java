@@ -90,7 +90,7 @@ public class Matrix {
      */
     public Point mult(Point point) {
         if (this.dimension != 4)
-            throw new RuntimeException("When multiplying a matrix with a vector, both need to be 4-dimensional");
+            throw new RuntimeException("When multiplying a matrix with a point, both need to be 4-dimensional");
 
         double[] result = new double[4];
         double[] given = new double[]{
@@ -134,6 +134,20 @@ public class Matrix {
         }
 
         return new Vector(result[0], result[1], result[2], result[3]);
+    }
+
+    /**
+     * @return a transposed matrix from the current one
+     * m X n = A(ij) -> n X m = AT(ji)
+     */
+    public Matrix transpose() {
+        Matrix result = new Matrix(this.dimension);
+        for (int i = 0; i < this.dimension; i++) {
+            for (int j = 0; j < this.dimension; j++) {
+                result.data[i][j] = this.data[j][i];
+            }
+        }
+        return result;
     }
 
     /*------------------------------structure methods---------------------------------------*/
