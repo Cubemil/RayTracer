@@ -18,8 +18,6 @@ class MatrixTest {
         assertEquals(15.5, m.get(3, 2));
     }
 
-    //TODO test for unit matrix
-
     @Test
     void twoTimesTwoMatrixTest() {
         Matrix m = new Matrix(new double[][]{{-3, 5}, {1, -2}});
