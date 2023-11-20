@@ -2,12 +2,12 @@ package org.example;
 
 public class Matrix {
 
-    /*----------------------------------fields---------------------------------------*/
+    /*----------------------------------//fields//---------------------------------------*/
 
     private final int dimension;
     private final double[][] data;
 
-    /*-----------------------------constructors---------------------------------------*/
+    /*-----------------------------//constructors//---------------------------------------*/
 
     // Standard-Matrix (4 x 4)
     public Matrix() {
@@ -59,7 +59,7 @@ public class Matrix {
         }
     }
 
-    /*--------------------------calculation functions-------------------------------*/
+    /*--------------------------//calculation functions//-------------------------------*/
 
     /**
      * @param other matrix to be multiplied with
@@ -140,7 +140,7 @@ public class Matrix {
      * @return a transposed matrix from the current one
      * m X n = A(ij) -> n X m = AT(ji)
      */
-    public Matrix transpose() {
+    public Matrix trans() {
         Matrix result = new Matrix(this.dimension);
         for (int i = 0; i < this.dimension; i++) {
             for (int j = 0; j < this.dimension; j++) {
@@ -150,7 +150,41 @@ public class Matrix {
         return result;
     }
 
-    /*------------------------------structure methods---------------------------------------*/
+    /**
+     * @param m m-th row to discard in the new matrix
+     * @param n n-th column to discard
+     * @return submatrix of this
+     * the submatrix is a new matrix with n - 1 dimension,
+     * made by removing m,n row/col from this
+     */
+    public Matrix subMatrix(int m, int n) {
+        Matrix subM = new Matrix(this.dimension - 1);
+        int subI = 0;
+        int subJ;
+        for (int i = 0; i < this.dimension; i++) {
+            // Skip the m-th row
+            if (i == m) continue;
+            subJ = 0;
+            for (int j = 0; j < this.dimension; j++) {
+                // Skip the n-th column
+                if (j != n) {
+                    subM.data[subI][subJ] = this.data[i][j];
+                    subJ++;
+                }
+            } subI++;
+        }
+        return subM;
+    }
+
+    //TODO subDet()
+
+    //TODO cofactor()
+
+    //TODO det()
+
+    //TODO inv()
+
+    /*------------------------------//structure methods//---------------------------------------*/
 
     public double get(int row, int col) {
         return this.data[row][col];
