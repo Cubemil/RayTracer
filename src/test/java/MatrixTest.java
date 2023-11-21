@@ -131,9 +131,58 @@ class MatrixTest {
     }
 
     @Test
-    void subMatrixTest() {
+    void determinant2x2MatrixTest() {
+        Matrix m = new Matrix(new double[][]{{1, 5}, {-3, 2}});
+        assertEquals(17, m.det());
+    }
+
+    @Test
+    void subMatrix3x3Test() {
         Matrix m = new Matrix(new double[][]{{1, 5, 0}, {-3, 2, 7}, {0, 6, -3}});
         assertEquals(new Matrix(new double[][]{{-3, 2}, {0, 6}}), m.subMatrix(0, 2));
+    }
+
+    @Test
+    void subMatrix4x4Test() {
+        Matrix m = new Matrix(new double[][]{{-6, 1, 1, 6}, {-8, 5, 8, 6}, {-1, 0, 8, 2}, {-7, 1, -1, 1}});
+        assertEquals(new Matrix(new double[][]{{-6, 1, 6}, {-8, 8, 6}, {-7, -1, 1}}), m.subMatrix(2, 1));
+    }
+
+    @Test
+    void minorOfA3x3MatrixTest() {
+        Matrix m = new Matrix(new double[][]{{3, 5, 0}, {2, -1, -7}, {6, -1, 5}});
+        Matrix subM = m.subMatrix(1, 0);
+        double determinant = 25;
+        double minor = 25;
+
+        assertEquals(determinant, subM.det());
+        assertEquals(minor, m.minor(1, 0));
+    }
+
+    @Test
+    void cofactor3x3MatrixTest() {
+        Matrix m = new Matrix(new double[][]{{3, 5, 0}, {2, -1, -7}, {6, -1, 5}});
+        assertEquals(-12, m.cofactor(0, 0));
+        assertEquals(-25, m.cofactor(1, 0));
+    }
+
+    @Test
+    void determinant3x3MatrixTest() {
+        Matrix m = new Matrix(new double[][]{{1, 2, 6}, {-5, 8, -4}, {2, 6, 4}});
+        assertEquals(56, m.cofactor(0, 0));
+        assertEquals(12, m.cofactor(0, 1));
+        assertEquals(-46, m.cofactor(0, 2));
+        assertEquals(-196, m.det());
+    }
+
+    @Test
+    void determinant4x4MatrixTest() {
+        Matrix m = new Matrix(new double[][]{{-2, -8, 3, 5}, {-3, 1, 7, 3}, {1, 2, -9, 6}, {-6, 7, 7, -9}});
+        assertEquals(690, m.cofactor(0, 0));
+        assertEquals(447, m.cofactor(0, 1));
+        assertEquals(210, m.cofactor(0, 2));
+        assertEquals(51, m.cofactor(0, 3));
+        assertEquals(-4071, m.det());
     }
 
 }

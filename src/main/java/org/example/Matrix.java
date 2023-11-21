@@ -176,11 +176,46 @@ public class Matrix {
         return subM;
     }
 
-    //TODO subDet()
+    /**
+     * @param i i-th row of the Matrix
+     * @param j j-th col of the Matrix
+     * @return the cofactor from a matrix's minor
+     */
+    public double cofactor(int i, int j) {
+        return Math.pow(-1, i + j) * minor(i, j);
+    }
 
-    //TODO cofactor()
+    /**
+     * @param i i-th row of the matrix
+     * @param j j-th column of the matrix
+     * @return the "sub-determinant" coming from a submatrix
+     */
+    public double minor(int i, int j) {
+        return subMatrix(i, j).det();
+    }
 
-    //TODO det()
+
+    /**
+     * @return the determinant of a matrix
+     * steps:
+     * 1. default-case from a 2x2 matrix
+     * 2. getting the submatrix
+     * 3. getting the minor from the submatrix (recursive)
+     * 4. getting the cofactor from the previous data (recursive)
+     * 5. return sum of all the products
+     */
+    public double det() {
+        //Basisfall: det von 2x2-Matrix
+        if (this.dimension == 2) {
+            return data[0][0] * data[1][1] -
+                    data[0][1] * data[1][0];
+        }
+        int determinant = 0;
+        for (int j = 0; j < dimension; j++) {
+            determinant += data[0][j] * cofactor(0, j);
+        }
+        return determinant;
+    }
 
     //TODO inv()
 
