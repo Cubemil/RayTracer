@@ -212,7 +212,6 @@ public class Matrix {
         return determinant;
     }
 
-
     /**
      * @return the adjunct of a matrix
      * adj = transposed cofactor-matrix
@@ -228,12 +227,12 @@ public class Matrix {
         return result.trans();
     }
 
-
     /**
      * @return inverted matrix
      */
     public Matrix inv() {
         if (Math.abs(det()) < 1e-10) throw new RuntimeException("The determinant of the matrix is close to 0");
+        // lazy evaluation
         if (this.inverse == null) {
             double d = 1 / det();
             inverse = adj().mult(d).data;
