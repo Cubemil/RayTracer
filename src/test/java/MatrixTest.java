@@ -37,6 +37,12 @@ class MatrixTest {
     }
 
     @Test
+    void default4x4MatrixTest() {
+        Matrix m = new Matrix();
+        assertEquals(new Matrix(new double[][]{{0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}}), m);
+    }
+
+    @Test
     void matrixEqualityTest() {
         Matrix m1 = new Matrix(new double[][]{{1, 2, 3, 4}, {5, 6, 7, 8}, {9, 8, 7, 6}, {5, 4, 3, 2}});
         Matrix m2 = new Matrix(new double[][]{{1, 2, 3, 4}, {5, 6, 7, 8}, {9, 8, 7, 6}, {5, 4, 3, 2}});
@@ -183,6 +189,73 @@ class MatrixTest {
         assertEquals(210, m.cofactor(0, 2));
         assertEquals(51, m.cofactor(0, 3));
         assertEquals(-4071, m.det());
+    }
+
+    @Test
+    void testInvertibleMatrixForInvertibility() {
+        Matrix m = new Matrix(new double[][]{{6, 4, 4, 4}, {5, 5, 7, 6}, {4, -9, 3, -7}, {9, 1, 7, -6}});
+        boolean thrown = false;
+        try {
+            assertEquals(-2120, m.det());
+        } catch (IllegalStateException e) {
+            e.printStackTrace();
+            thrown = true;
+        }
+        assertFalse(thrown);
+    }
+
+    @Test
+    void testNonInvertibleMatrixForInvertibility() {
+        Matrix m = new Matrix(new double[][]{{-4, 2, -2, -3}, {9, 6, 2, 6}, {0, -5, 1, -5}, {0, 0, 0, 0}});
+        boolean thrown = false;
+        try {
+            m.inv().det();
+        } catch (IllegalStateException e) {
+            e.printStackTrace();
+            thrown = true;
+        }
+        assertTrue(thrown);
+    }
+
+    @Test
+    void calculatingInverseOfAMatrix() {
+        Matrix m = new Matrix(new double[][]{{-5, 2, 6, -8}, {1, -5, 1, 8}, {7, 7, -6, -7}, {1, -3, 7, 4}});
+        Matrix b = m.inv();
+
+        assertEquals(532, m.det(), 1e-10);
+        assertEquals(-160, m.cofactor(2, 3), 1e-10);
+        assertEquals((-160/532.0), b.get(3, 2), 1e-10);
+        assertEquals(105, m.cofactor(3, 2), 1e-10);
+        assertEquals((105/532.0), b.get(2, 3), 1e-10);
+
+        Matrix expected = new Matrix(new double[][]{
+                {0.21805, 0.45113, 0.24060, -0.04511},
+                {-0.80827, -1.45677, -0.44361, 0.52068},
+                {-0.07895, -0.22368, -0.05263, 0.19737},
+                {-0.52256, -0.81391, -0.30075, 0.30639}});
+
+        assertEquals(expected, b);
+    }
+
+    @Test
+    void calculatingInverseMatrixTest2() {
+        Matrix m = new Matrix(new double[][]{{8, -5, 9, 2}, {7, 5, 6, 1}, {-6, 0, 9, 6}, {-3, 0, -9, -4}});
+        Matrix invM = new Matrix(new double[][]{
+                {-0.15385, -0.15385, -0.28205, -0.53846},
+                {-0.07692, 0.12308, 0.02564, 0.03077},
+                {0.35897, 0.35897, 0.43590, 0.92308},
+                {-0.69231, -0.69231, -0.76923, -1.92308}});
+
+        assertEquals(invM, m.inv());
+    }
+
+    @Test
+    void multiplyingAProductByItsInverseTest() {
+        Matrix m = new Matrix(new double[][]{{3, -9, 7, 3}, {3, -8, 2, -9}, {-4, 4, 4, 1}, {-6, 5, -1, 1}});
+        Matrix b = new Matrix(new double[][]{{8, 2, 2, 2}, {3, -1, 7, 0}, {7, 0, 5, 4}, {6, -2, 0, 5}});
+        Matrix c = m.mult(b);
+
+        assertEquals(m, c.mult(b.inv()));
     }
 
 }

@@ -19,8 +19,8 @@ public class Matrix {
     public Matrix(boolean identityMatrix) {
         this.dimension = 4;
         this.data = new double[dimension][dimension];
-        for (int i = 0; i < dimension; i++) {
-            this.data[i][i] = 1;
+        if (identityMatrix) {
+            setIdentityMatrix();
         }
     }
 
@@ -28,16 +28,6 @@ public class Matrix {
     public Matrix(int dimension) {
         this.dimension = dimension;
         this.data = new double[dimension][dimension];
-    }
-
-    // Pre-filled matrix with dimension
-    public Matrix(int dimension, double[][] data) {
-        this.dimension = dimension;
-        this.data = data;
-        // checks if dimension matches each row/col of the passed array
-        if (dimension != data[0].length || dimension != data.length) {
-            throw new RuntimeException("Incorrectly sized data for this matrix's dimensions");
-        }
     }
 
     // Pre-filled matrix without dimension
@@ -54,12 +44,25 @@ public class Matrix {
     public Matrix(int dimension, boolean identityMatrix) {
         this.dimension = dimension;
         this.data = new double[dimension][dimension];
-        for (int i = 0; i < dimension; i++) {
-            this.data[i][i] = 1;
+        if (identityMatrix) {
+            setIdentityMatrix();
         }
     }
 
     /*--------------------------//calculation functions//-------------------------------*/
+
+    /**
+     * @param s a double value
+     * @return a multiplied matrix with a given value
+     */
+    public Matrix mult(double s) {
+        Matrix result = new Matrix(this.dimension);
+        for (int i = 0; i < this.dimension; i++) {
+            for (int j = 0; j < this.dimension; j++) {
+                result.data[i][j] = this.data[i][j] * s;
+            }
+        } return result;
+    }
 
     /**
      * @param other matrix to be multiplied with
@@ -80,8 +83,7 @@ public class Matrix {
                 }
                 result.data[i][k] = curr;
             }
-        }
-        return result;
+        } return result;
     }
 
     /**
@@ -106,7 +108,6 @@ public class Matrix {
             }
             result[i] = curr;
         }
-
         return new Point(result[0], result[1], result[2], result[3]);
     }
 
@@ -132,7 +133,6 @@ public class Matrix {
             }
             result[i] = curr;
         }
-
         return new Vector(result[0], result[1], result[2], result[3]);
     }
 
@@ -172,8 +172,7 @@ public class Matrix {
                     subJ++;
                 }
             } subI++;
-        }
-        return subM;
+        } return subM;
     }
 
     /**
@@ -194,7 +193,6 @@ public class Matrix {
         return subMatrix(i, j).det();
     }
 
-
     /**
      * @return the determinant of a matrix
      * steps:
@@ -210,23 +208,49 @@ public class Matrix {
             return data[0][0] * data[1][1] -
                     data[0][1] * data[1][0];
         }
-        int determinant = 0;
+        double determinant = 0;
         for (int j = 0; j < dimension; j++) {
             determinant += data[0][j] * cofactor(0, j);
         }
         return determinant;
     }
 
-    //TODO inv()
+
+    /**
+     * @return the adjunct of a matrix
+     * adj = transposed cofactor-matrix
+     */
+    public Matrix adj() {
+        Matrix result = new Matrix(dimension);
+
+        for (int i = 0; i < dimension; i++) {
+            for (int j = 0; j < dimension; j++) {
+                result.data[i][j] = cofactor(i, j);
+            }
+        }
+        return result.trans();
+    }
+
+
+    /**
+     * @return inverted matrix
+     */
+    public Matrix inv() {
+        if (Math.abs(det()) < 1e-10) throw new IllegalStateException("The determinant of the matrix is close to 0");
+        double d = 1 / det();
+        return adj().mult(d);
+    }
 
     /*------------------------------//structure methods//---------------------------------------*/
 
-    public double get(int row, int col) {
-        return this.data[row][col];
+    private void setIdentityMatrix() {
+        for (int i = 0; i < dimension; i++) {
+            data[i][i] = 1;
+        }
     }
 
-    public void set(int row, int col, double value) {
-        this.data[row][col] = value;
+    public double get(int row, int col) {
+        return this.data[row][col];
     }
 
     @Override
@@ -237,15 +261,13 @@ public class Matrix {
                 this.data[0].length != other.data[0].length) {
             return false;
         }
-        double epsilon = 0.00001;
-        for (int i = 0; i < dimension; i++) {
-            for (int j = 0; j < dimension; j++) {
-                if (!(Math.abs(this.get(i, j) - other.get(i, j)) < epsilon)) {
+        for (int i = 0; i < ((Matrix) obj).dimension; i++) {
+            for (int j = 0; j < ((Matrix) obj).dimension; j++) {
+                if (Math.abs(((Matrix) obj).get(i, j) - get(i, j)) > 1.0E-5) {
                     return false;
                 }
             }
-        }
-        return true;
+        } return true;
     }
 
     @Override
