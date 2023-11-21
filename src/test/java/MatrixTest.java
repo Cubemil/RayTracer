@@ -197,7 +197,7 @@ class MatrixTest {
         boolean thrown = false;
         try {
             assertEquals(-2120, m.det());
-        } catch (IllegalStateException e) {
+        } catch (RuntimeException e) {
             e.printStackTrace();
             thrown = true;
         }
@@ -210,7 +210,7 @@ class MatrixTest {
         boolean thrown = false;
         try {
             m.inv().det();
-        } catch (IllegalStateException e) {
+        } catch (RuntimeException e) {
             e.printStackTrace();
             thrown = true;
         }

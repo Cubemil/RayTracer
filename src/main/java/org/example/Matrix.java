@@ -6,6 +6,7 @@ public class Matrix {
 
     private final int dimension;
     private final double[][] data;
+    private double[][] inverse;
 
     /*-----------------------------//constructors//---------------------------------------*/
 
@@ -19,9 +20,7 @@ public class Matrix {
     public Matrix(boolean identityMatrix) {
         this.dimension = 4;
         this.data = new double[dimension][dimension];
-        if (identityMatrix) {
-            setIdentityMatrix();
-        }
+        if (identityMatrix) setIdentityMatrix();
     }
 
     // (n x n) - Matrix
@@ -44,9 +43,7 @@ public class Matrix {
     public Matrix(int dimension, boolean identityMatrix) {
         this.dimension = dimension;
         this.data = new double[dimension][dimension];
-        if (identityMatrix) {
-            setIdentityMatrix();
-        }
+        if (identityMatrix) setIdentityMatrix();
     }
 
     /*--------------------------//calculation functions//-------------------------------*/
@@ -236,9 +233,12 @@ public class Matrix {
      * @return inverted matrix
      */
     public Matrix inv() {
-        if (Math.abs(det()) < 1e-10) throw new IllegalStateException("The determinant of the matrix is close to 0");
-        double d = 1 / det();
-        return adj().mult(d);
+        if (Math.abs(det()) < 1e-10) throw new RuntimeException("The determinant of the matrix is close to 0");
+        if (this.inverse == null) {
+            double d = 1 / det();
+            inverse = adj().mult(d).data;
+        }
+        return new Matrix(this.inverse);
     }
 
     /*------------------------------//structure methods//---------------------------------------*/
