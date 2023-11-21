@@ -107,7 +107,7 @@ class VectorTest {
     @Test
     void toStringTest() {
         Vector vector = new Vector(1, 2, 3);
-        System.out.println(vector.toString());
+        assertEquals("Vector[x=1.0, y=2.0, z=3.0, w=0.0]", vector.toString());
     }
 
 }

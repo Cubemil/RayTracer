@@ -2,8 +2,8 @@ package org.example;
 
 public class Ray {
 
-    private Point originPoint;
-    private Vector directionVector;
+    private final Point originPoint;
+    private final Vector directionVector;
 
     // Creates an Object using a point of origin with a Vector as direction
     public Ray(Point originPoint, Vector directionVector) {

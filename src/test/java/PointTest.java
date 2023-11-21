@@ -93,6 +93,6 @@ class PointTest {
     @Test
     void toStringTest() {
         Point point = new Point(1, 2, 3);
-        System.out.println(point.toString());
+        assertEquals("Point[x=1.0, y=2.0, z=3.0, w=1.0]",point.toString());
     }
 }

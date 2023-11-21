@@ -17,15 +17,13 @@ class CalculatorTest {
     // test using bigger integers for add()
     @Test
     void addBigNumbersTest() {
-        Calculator calc = new Calculator();
-        assertEquals(517727833, calc.add(2115166, 515612667));
+        assertEquals(517727833, Calculator.add(2115166, 515612667));
     }
 
     // test using negative numbers for add()
     @Test
     void addNegativeNumbersTest() {
-        Calculator calc = new Calculator();
-        assertEquals(-202715, calc.add(1337, -204052));
+        assertEquals(-202715, Calculator.add(1337, -204052));
     }
 
 }

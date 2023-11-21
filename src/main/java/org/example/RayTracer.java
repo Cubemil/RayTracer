@@ -21,11 +21,11 @@ public class RayTracer {
         double normalizedY = vector.normalized().y();
         double normalizedZ = vector.normalized().z();
 
-        /*** Alte Implementierung:
-            double normalizedX = (vector.x() + 1.0) / 2.0;
-            double normalizedY = (vector.y() + 1.0) / 2.0;
-            double normalizedZ = (vector.z() + 1.0) / 2.0;
-        ***/
+        /* Alte Implementierung:
+         double normalizedX = (vector.x() + 1.0) / 2.0;
+         double normalizedY = (vector.y() + 1.0) / 2.0;
+         double normalizedZ = (vector.z() + 1.0) / 2.0;
+         */
 
         // Begrenze die Werte auf den Bereich [0, 1]
         normalizedX = Math.max(0.0, Math.min(1.0, normalizedX));

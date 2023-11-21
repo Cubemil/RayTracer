@@ -70,7 +70,7 @@ class MatrixTest {
     }
 
     @Test
-    void multiplyingWithIdentitiyMatrixTest() {
+    void multiplyingWithIdentityMatrixTest() {
         Matrix m1 = new Matrix(new double[][]{{20, 22, 50, 48}, {44, 54, 114, 108}, {40, 58, 110, 102}, {16, 26, 46, 42}});
         Matrix m2 = new Matrix(4, true);
 
