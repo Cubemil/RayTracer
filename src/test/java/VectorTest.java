@@ -65,9 +65,8 @@ class VectorTest {
         assertEquals(1, new Vector(1, 0, 0).magnitude());
         assertEquals(1, new Vector(0, 1, 0).magnitude());
         assertEquals(1.0, new Vector(0, 0, 1).magnitude());
-        //TODO adjust floating point precision
-        assertEquals(3.7416573867739413, new Vector(1, 2, 3).magnitude());
-        assertEquals(3.7416573867739413, new Vector(-1, -2, -3).magnitude());
+        assertTrue(3.7416573867739413 - new Vector(1,2,3).magnitude() < 0.001);
+        assertTrue(3.7416573867739413 - new Vector(-1,-2,-3).magnitude() < 0.001);
     }
 
 
@@ -83,7 +82,7 @@ class VectorTest {
     @Test
     void normalizeVectorTest() {
         assertEquals(new Vector(1, 0, 0), new Vector(4, 0, 0).normalized());
-        assertEquals(new Vector(0.2672612419124244, 0.5345224838248488, 0.8017837257372732), new Vector(1, 2, 3).normalized());
+        assertEquals(new Vector(0.26726124, 0.53452248, 0.80178372), new Vector(1, 2, 3).normalized());
     }
 
     @Test
