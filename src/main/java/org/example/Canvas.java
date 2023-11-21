@@ -29,7 +29,7 @@ public class Canvas {
     }
 
     public Color getPixelColor(int x, int y) {
-        return new Color(outputImage.getRGB(x, y));
+        return new Color(Math.round(outputImage.getRGB(x, y)));
     }
 
     public void writeFile() {

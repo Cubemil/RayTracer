@@ -2,8 +2,8 @@ package org.example;
 
 public class Ray {
 
-    private Point originPoint;
-    private Vector directionVector;
+    private final Point originPoint;
+    private final Vector directionVector;
 
     // Creates an Object using a point of origin with a Vector as direction
     public Ray(Point originPoint, Vector directionVector) {
@@ -14,7 +14,8 @@ public class Ray {
     // Creates an Object using two Points and normalising the distance Vector between the two
     public Ray(Point originPoint, Point destinationPoint) {
         this.originPoint = originPoint;
-        this.directionVector = destinationPoint.sub(originPoint).normalized();
+        Vector temp = destinationPoint.sub(originPoint);
+        this.directionVector = temp.normalized();
     }
 
     /**

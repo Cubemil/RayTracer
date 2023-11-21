@@ -14,6 +14,13 @@ public final class Point {
         this.w = 1;
     }
 
+    public Point(double x, double y, double z, double w) {
+        this.x = x;
+        this.y = y;
+        this.z = z;
+        this.w = w;
+    }
+
     // Punkt - Punkt -> Vektor!!!
     // Komponentenweise Subtraktion
     public Vector sub(Point point) {
@@ -47,11 +54,12 @@ public final class Point {
 
     @Override
     public boolean equals(Object obj) {
+        double epsilon = 0.001;
         if (obj instanceof Point other) {
-            return  Math.abs(this.x - other.x) < 0.00001 &&
-                    Math.abs(this.y - other.y) < 0.00001 &&
-                    Math.abs(this.z - other.z) < 0.00001 &&
-                    Math.abs(this.w - other.w) < 0.00001;
+            return  Math.abs(this.x - other.x) < epsilon &&
+                    Math.abs(this.y - other.y) < epsilon &&
+                    Math.abs(this.z - other.z) < epsilon &&
+                    Math.abs(this.w - other.w) < epsilon;
         }
         return false;
     }

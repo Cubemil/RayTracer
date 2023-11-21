@@ -48,8 +48,7 @@ class ColorTest {
         Color color1 = new Color(1, 0.2, 0.4);
         Color color2 = new Color(0.9, 1, 0.1);
 
-        // TODO Fix floating point precision error
-        assertEquals(new Color(0.9, 0.2, 0.04000000000000001), color1.mult(color2));
+        assertEquals(new Color(0.9, 0.2, 0.04), color1.mult(color2));
     }
 
     // tests the clamping method for Color objects

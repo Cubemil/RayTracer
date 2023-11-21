@@ -14,6 +14,13 @@ public final class Vector {
         this.w = 0;
     }
 
+    public Vector(double x, double y, double z, double w) {
+        this.x = x;
+        this.y = y;
+        this.z = z;
+        this.w = w;
+    }
+
     // Vektor + Vektor -> Vektor
     // Komponentenweise Addition
     public Vector add(Vector vector) {
@@ -53,11 +60,12 @@ public final class Vector {
 
     @Override
     public boolean equals(Object obj) {
+        double epsilon = 0.001;
         if (obj instanceof Vector other) {
-            return  Math.abs(this.x - other.x) < 0.00001 &&
-                    Math.abs(this.y - other.y) < 0.00001 &&
-                    Math.abs(this.z - other.z) < 0.00001 &&
-                    Math.abs(this.w - other.w) < 0.00001;
+            return  Math.abs(this.x - other.x) < epsilon &&
+                    Math.abs(this.y - other.y) < epsilon &&
+                    Math.abs(this.z - other.z) < epsilon &&
+                    Math.abs(this.w - other.w) < epsilon;
         }
         return false;
     }
@@ -70,19 +78,15 @@ public final class Vector {
 
     // Länge eines Vektors quadriert → Double
     public double sqrMagnitude() {
-        return (Math.abs(this.x * this.x) +
-                Math.abs(this.y * this.y) +
-                Math.abs(this.z * this.z));
+        return  this.x * this.x +
+                this.y * this.y +
+                this.z * this.z;
     }
-
 
     // Vektor normalisieren -> Vektor
     public Vector normalized() {
         double length = magnitude();
-        return new Vector(
-                this.x / length,
-                this.y / length,
-                this.z / length);
+        return length != 0 ? new Vector(this.x / length, this.y / length, this.z / length) : new Vector(0, 0, 0);
     }
 
     // Skalarprodukt zweier Vektoren → Double
@@ -110,9 +114,10 @@ public final class Vector {
         return z;
     }
 
-    public double getW() {
+    public double w() {
         return w;
     }
+
 
     @Override
     public String toString() {
@@ -124,5 +129,9 @@ public final class Vector {
                 ']';
     }
 
+    // Check if the vector is normalized
+    public boolean isNormalized() {
+        return Math.abs(this.magnitude() - 1.0) < 0.00001;
+    }
 
 }

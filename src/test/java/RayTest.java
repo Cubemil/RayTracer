@@ -24,9 +24,7 @@ class RayTest {
 
         Ray ray = new Ray(origin, target);
         assertEquals(origin, ray.getOriginPoint());
-        //assertEquals(new Vector(1, 1, 1), ray.getDirectionVector());
-        //TODO check if direction vector is normalized (it is)
-
+        assertTrue(ray.getDirectionVector().isNormalized());
     }
 
     @Test

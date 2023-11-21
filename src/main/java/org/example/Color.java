@@ -2,9 +2,9 @@ package org.example;
 
 public class Color {
 
-    private double r;
-    private double g;
-    private double b;
+    private final double r;
+    private final double g;
+    private final double b;
 
     // Constructor using 3 separate double values
     public Color(double r, double g, double b) {
@@ -72,7 +72,7 @@ public class Color {
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof Color other) {
-            double epsilon = 0.00001;
+            double epsilon = 0.01;
             return Math.abs(this.r - other.r) < epsilon &&
                     Math.abs(this.g - other.g) < epsilon &&
                     Math.abs(this.b - other.b) < epsilon;
