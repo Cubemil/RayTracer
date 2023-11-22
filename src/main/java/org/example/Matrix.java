@@ -33,42 +33,42 @@ public class Matrix {
         this.data = new double[dimension][dimension];
 
         IntStream.range(0, dimension).forEach(
-                i -> System.arraycopy(data[i], 0, this.data[i], 0, dimension));
+                row -> System.arraycopy(data[row], 0, this.data[row], 0, dimension));
     }
 
     /*--------------------------//calculation functions//-------------------------------*/
 
     /**
-     * @param s a double value
+     * @param scalar a double value
      * @return a multiplied matrix with a given value
      */
-    public Matrix mult(double s) {
+    public Matrix mult(double scalar) {
         Matrix result = new Matrix(this.dimension);
-        for (int i = 0; i < this.dimension; i++) {
-            for (int j = 0; j < this.dimension; j++) {
-                result.data[i][j] = this.data[i][j] * s;
+        for (int row = 0; row < this.dimension; row++) {
+            for (int col = 0; col < this.dimension; col++) {
+                result.data[row][col] = this.data[row][col] * scalar;
             }
         } return result;
     }
 
     /**
      * @param other matrix to be multiplied with
-     * @return C = A * B
-     * i-th row of A gets multiplied with k-th column of B
-     * -> and then all are added up to be C(i,k)
+     * @return result = this * other
+     * row-th row of A gets multiplied with otherCol-th column of B
+     * -> and then all are added up to be C(row, otherCol)
      * */
     public Matrix mult(Matrix other) {
         if (this.dimension != other.dimension) {
             throw new IllegalArgumentException("The matrices sizes do not match");
         }
         Matrix result = new Matrix(this.dimension);
-        for (int i = 0; i < result.dimension; i++) {
-            for (int k = 0; k < result.dimension; k++) {
+        for (int row = 0; row < result.dimension; row++) {
+            for (int col = 0; col < result.dimension; col++) {
                 double curr = 0.0;
-                for (int j = 0; j < this.dimension; j++) {
-                    curr += this.get(i, j) * other.get(j, k);
+                for (int otherCol = 0; otherCol < this.dimension; otherCol++) {
+                    curr += this.get(row, otherCol) * other.get(otherCol, col);
                 }
-                result.data[i][k] = curr;
+                result.data[row][col] = curr;
             }
         } return result;
     }
@@ -88,12 +88,12 @@ public class Matrix {
                 point.z(),
                 point.w()};
 
-        for (int i = 0; i < 4; i++) {
+        for (int row = 0; row < 4; row++) {
             double curr = 0.0;
-            for (int j = 0; j < 4; j++) {
-                curr += this.data[i][j] * given[j];
+            for (int col = 0; col < 4; col++) {
+                curr += this.data[row][col] * given[col];
             }
-            result[i] = curr;
+            result[row] = curr;
         }
         return new Point(result[0], result[1], result[2], result[3]);
     }
@@ -113,71 +113,71 @@ public class Matrix {
                 vector.z(),
                 vector.w()};
 
-        for (int i = 0; i < 4; i++) {
+        for (int row = 0; row < 4; row++) {
             double curr = 0.0;
-            for (int j = 0; j < 4; j++) {
-                curr += this.data[i][j] * given[j];
+            for (int col = 0; col < 4; col++) {
+                curr += this.data[row][col] * given[col];
             }
-            result[i] = curr;
+            result[row] = curr;
         }
         return new Vector(result[0], result[1], result[2], result[3]);
     }
 
     /**
      * @return a transposed matrix from the current one
-     * m X n = A(ij) -> n X m = AT(ji)
+     * m X n = A(row, col) -> n X m = AT(col, row)
      */
     public Matrix trans() {
         Matrix result = new Matrix(this.dimension);
-        for (int i = 0; i < this.dimension; i++) {
-            for (int j = 0; j < this.dimension; j++) {
-                result.data[i][j] = this.data[j][i];
+        for (int row = 0; row < this.dimension; row++) {
+            for (int col = 0; col < this.dimension; col++) {
+                result.data[row][col] = this.data[col][row];
             }
         }
         return result;
     }
 
     /**
-     * @param m m-th row to discard in the new matrix
-     * @param n n-th column to discard
+     * @param skipRow skipRow-th row to discard in the new matrix
+     * @param skipCol skipCol-th column to discard
      * @return submatrix of this
-     * the submatrix is a new matrix with n - 1 dimension,
-     * made by removing m,n row/col from this
+     * the submatrix is a new matrix with skipCol - 1 dimension,
+     * made by removing skipRow,skipCol row/col from this
      */
-    public Matrix subMatrix(int m, int n) {
-        Matrix subM = new Matrix(this.dimension - 1);
-        int subI = 0;
-        int subJ;
-        for (int i = 0; i < this.dimension; i++) {
-            // Skip the m-th row
-            if (i == m) continue;
-            subJ = 0;
-            for (int j = 0; j < this.dimension; j++) {
-                // Skip the n-th column
-                if (j != n) {
-                    subM.data[subI][subJ] = this.data[i][j];
-                    subJ++;
+    public Matrix subMatrix(int skipRow, int skipCol) {
+        Matrix subMatrix = new Matrix(this.dimension - 1);
+        int subRow = 0;
+        int subCol;
+        for (int row = 0; row < this.dimension; row++) {
+            // Skip the skipRow-th row
+            if (row == skipRow) continue;
+            subCol = 0;
+            for (int col = 0; col < this.dimension; col++) {
+                // Skip the skipCol-th column
+                if (col != skipCol) {
+                    subMatrix.data[subRow][subCol] = this.data[row][col];
+                    subCol++;
                 }
-            } subI++;
-        } return subM;
+            } subRow++;
+        } return subMatrix;
     }
 
     /**
-     * @param i i-th row of the Matrix
-     * @param j j-th col of the Matrix
+     * @param row row-th row of the Matrix
+     * @param col col-th col of the Matrix
      * @return the cofactor from a matrix's minor
      */
-    public double cofactor(int i, int j) {
-        return Math.pow(-1, i + j) * minor(i, j);
+    public double cofactor(int row, int col) {
+        return Math.pow(-1, row + col) * minor(row, col);
     }
 
     /**
-     * @param i i-th row of the matrix
-     * @param j j-th column of the matrix
+     * @param row row-th row of the matrix
+     * @param col col-th column of the matrix
      * @return the "sub-determinant" coming from a submatrix
      */
-    public double minor(int i, int j) {
-        return subMatrix(i, j).det();
+    public double minor(int row, int col) {
+        return subMatrix(row, col).det();
     }
 
     /**
@@ -196,8 +196,8 @@ public class Matrix {
                     data[0][1] * data[1][0];
         }
         double determinant = 0;
-        for (int j = 0; j < dimension; j++) {
-            determinant += data[0][j] * cofactor(0, j);
+        for (int col = 0; col < dimension; col++) {
+            determinant += data[0][col] * cofactor(0, col);
         }
         return determinant;
     }
@@ -208,10 +208,9 @@ public class Matrix {
      */
     public Matrix adj() {
         Matrix result = new Matrix(dimension);
-
-        for (int i = 0; i < dimension; i++) {
-            for (int j = 0; j < dimension; j++) {
-                result.data[i][j] = cofactor(i, j);
+        for (int row = 0; row < dimension; row++) {
+            for (int col = 0; col < dimension; col++) {
+                result.data[row][col] = cofactor(row, col);
             }
         }
         return result.trans();
@@ -238,11 +237,11 @@ public class Matrix {
      * the data array is cleared and filled along the main diagonal with ones
      */
     public static Matrix identityMatrix(Matrix matrix) {
-        for (int i = 0; i < matrix.dimension; i++) {
-            for (int j = 0; j < matrix.dimension; j++) {
-                matrix.data[i][j] = 0;
+        for (int row = 0; row < matrix.dimension; row++) {
+            for (int col = 0; col < matrix.dimension; col++) {
+                matrix.data[row][col] = 0;
             }
-            matrix.data[i][i] = 1;
+            matrix.data[row][row] = 1;
         }
         return matrix;
     }
@@ -259,21 +258,21 @@ public class Matrix {
                 this.data[0].length != other.data[0].length) {
             return false;
         }
-        for (int i = 0; i < ((Matrix) obj).dimension; i++) {
-            for (int j = 0; j < ((Matrix) obj).dimension; j++) {
-                if (Math.abs(((Matrix) obj).get(i, j) - get(i, j)) > 1.0E-5) {
+        for (int row = 0; row < ((Matrix) obj).dimension; row++) {
+            for (int col = 0; col < ((Matrix) obj).dimension; col++) {
+                if (Math.abs(((Matrix) obj).get(row, col) - get(row, col)) > 1.0E-5)
                     return false;
-                }
             }
-        } return true;
+        }
+        return true;
     }
 
     @Override
     public String toString() {
         StringBuilder str = new StringBuilder();
-        for (int i = 0; i < dimension; i++) {
-            for (int j = 0; j < dimension; j++) {
-                str.append(this.data[i][j]).append(", ");
+        for (int row = 0; row < dimension; row++) {
+            for (int col = 0; col < dimension; col++) {
+                str.append(this.data[row][col]).append(", ");
             }
             str.append("\n");
         }
