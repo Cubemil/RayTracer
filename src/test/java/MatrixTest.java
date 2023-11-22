@@ -64,7 +64,6 @@ class MatrixTest {
         Matrix m3 = new Matrix(new double[][]{{1, 2, 3, 4}, {5, 6, 7, 8}, {9, 8, 7, 6}, {5, 4, 3, 2}});
         Matrix m4 = new Matrix(new double[][]{{2, 3}, {6, 7}});
         assertNotEquals(m3, m4);
-
     }
 
     @Test
