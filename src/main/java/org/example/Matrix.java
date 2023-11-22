@@ -1,5 +1,7 @@
 package org.example;
 
+import java.util.stream.IntStream;
+
 public class Matrix {
 
     /*----------------------------------//fields//---------------------------------------*/
@@ -24,12 +26,14 @@ public class Matrix {
 
     // Pre-filled matrix without dimension
     public Matrix(double[][] data) {
-        this.data = data;
-        this.dimension = data.length;
-        // checks if number of cols and rows match
-        if (data.length != data[0].length) {
+        if (data.length != data[0].length)
             throw new RuntimeException("This Matrix's dimensions do not match");
-        }
+
+        this.dimension = data.length;
+        this.data = new double[dimension][dimension];
+
+        IntStream.range(0, dimension).forEach(
+                i -> System.arraycopy(data[i], 0, this.data[i], 0, dimension));
     }
 
     /*--------------------------//calculation functions//-------------------------------*/
