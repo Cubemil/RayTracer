@@ -16,13 +16,6 @@ public class Matrix {
         this.data = new double[dimension][dimension];
     }
 
-    // Standard identity matrix 4x4
-    public Matrix(boolean identityMatrix) {
-        this.dimension = 4;
-        this.data = new double[dimension][dimension];
-        if (identityMatrix) setIdentityMatrix();
-    }
-
     // (n x n) - Matrix
     public Matrix(int dimension) {
         this.dimension = dimension;
@@ -37,13 +30,6 @@ public class Matrix {
         if (data.length != data[0].length) {
             throw new RuntimeException("This Matrix's dimensions do not match");
         }
-    }
-
-    // identity matrix
-    public Matrix(int dimension, boolean identityMatrix) {
-        this.dimension = dimension;
-        this.data = new double[dimension][dimension];
-        if (identityMatrix) setIdentityMatrix();
     }
 
     /*--------------------------//calculation functions//-------------------------------*/
@@ -69,7 +55,7 @@ public class Matrix {
      * */
     public Matrix mult(Matrix other) {
         if (this.dimension != other.dimension) {
-            throw new RuntimeException("The matrices sizes do not match");
+            throw new IllegalArgumentException("The matrices sizes do not match");
         }
         Matrix result = new Matrix(this.dimension);
         for (int i = 0; i < result.dimension; i++) {
@@ -89,7 +75,7 @@ public class Matrix {
      */
     public Point mult(Point point) {
         if (this.dimension != 4)
-            throw new RuntimeException("When multiplying a matrix with a point, both need to be 4-dimensional");
+            throw new IllegalArgumentException("When multiplying a matrix with a point, both need to be 4-dimensional");
 
         double[] result = new double[4];
         double[] given = new double[]{
@@ -114,7 +100,7 @@ public class Matrix {
      */
     public Vector mult(Vector vector) {
         if (this.dimension != 4)
-            throw new RuntimeException("When multiplying a matrix with a vector, both need to be 4-dimensional");
+            throw new IllegalArgumentException("When multiplying a matrix with a vector, both need to be 4-dimensional");
 
         double[] result = new double[4];
         double[] given = new double[]{
@@ -202,7 +188,7 @@ public class Matrix {
     public double det() {
         //Basisfall: det von 2x2-Matrix
         if (this.dimension == 2) {
-            return data[0][0] * data[1][1] -
+            return  data[0][0] * data[1][1] -
                     data[0][1] * data[1][0];
         }
         double determinant = 0;
@@ -231,7 +217,7 @@ public class Matrix {
      * @return inverted matrix
      */
     public Matrix inv() {
-        if (Math.abs(det()) < 1e-10) throw new RuntimeException("The determinant of the matrix is close to 0");
+        if (Math.abs(det()) < 1e-10) throw new ArithmeticException("The determinant of the matrix is close to 0");
         // lazy evaluation
         if (this.inverse == null) {
             double d = 1 / det();
@@ -242,10 +228,19 @@ public class Matrix {
 
     /*------------------------------//structure methods//---------------------------------------*/
 
-    private void setIdentityMatrix() {
-        for (int i = 0; i < dimension; i++) {
-            data[i][i] = 1;
+    /**
+     * @param matrix to be made into an identity matrix
+     * @return an identity matrix of a given method
+     * the data array is cleared and filled along the main diagonal with ones
+     */
+    public static Matrix identityMatrix(Matrix matrix) {
+        for (int i = 0; i < matrix.dimension; i++) {
+            for (int j = 0; j < matrix.dimension; j++) {
+                matrix.data[i][j] = 0;
+            }
+            matrix.data[i][i] = 1;
         }
+        return matrix;
     }
 
     public double get(int row, int col) {

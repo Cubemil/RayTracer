@@ -78,7 +78,7 @@ class MatrixTest {
     @Test
     void multiplyingWithIdentityMatrixTest() {
         Matrix m1 = new Matrix(new double[][]{{20, 22, 50, 48}, {44, 54, 114, 108}, {40, 58, 110, 102}, {16, 26, 46, 42}});
-        Matrix m2 = new Matrix(4, true);
+        Matrix m2 = Matrix.identityMatrix(new Matrix(4));
 
         assertEquals(m1, m1.mult(m2));
         assertEquals(m1, m2.mult(m1));
@@ -107,7 +107,7 @@ class MatrixTest {
     @Test
     void identityMatrixTimesVector() {
         Vector v = new Vector(1, 2, 3);
-        Matrix m = new Matrix(true);
+        Matrix m = Matrix.identityMatrix(new Matrix());
         assertEquals(v, m.mult(v));
     }
 
@@ -121,7 +121,7 @@ class MatrixTest {
     @Test
     void identityMatrixTimesPointTest() {
         Point p = new Point(1, 2, 3);
-        assertEquals(p, new Matrix(true).mult(p));
+        assertEquals(p, Matrix.identityMatrix(new Matrix()).mult(p));
     }
 
     @Test
@@ -132,7 +132,7 @@ class MatrixTest {
 
     @Test
     void transposeIdentityMatrixTest() {
-        Matrix m = new Matrix(true);
+        Matrix m = Matrix.identityMatrix(new Matrix());
         assertEquals(m, m.trans());
     }
 
@@ -197,7 +197,7 @@ class MatrixTest {
         boolean thrown = false;
         try {
             assertEquals(-2120, m.det());
-        } catch (RuntimeException e) {
+        } catch (ArithmeticException e) {
             e.printStackTrace();
             thrown = true;
         }
@@ -210,7 +210,7 @@ class MatrixTest {
         boolean thrown = false;
         try {
             m.inv().det();
-        } catch (RuntimeException e) {
+        } catch (ArithmeticException e) {
             e.printStackTrace();
             thrown = true;
         }
