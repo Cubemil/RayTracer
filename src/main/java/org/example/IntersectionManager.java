@@ -13,7 +13,7 @@ public class IntersectionManager {
      * Standard-Constructor without initialising the array
      */
     public IntersectionManager() {
-        this.intersections = null;
+        this.intersections = new Intersection[]{};
     }
 
     /**

@@ -74,6 +74,16 @@ public final class Point {
         return new Point(Math.max(this.x, point.x), Math.max(this.y, point.y), Math.max(this.z, point.z));
     }
 
+    // Skalarprodukt zweier Punkten → Double
+    public double dot(Point point) {
+        return this.x * point.x + this.y * point.y + this.z * point.z;
+    }
+
+    // Skalarprodukt Punkt mit Vektor → Double
+    public double dot(Vector vector) {
+        return this.x * vector.x() + this.y * vector.y() + this.z * vector.z();
+    }
+
     public double x() {
         return x;
     }
