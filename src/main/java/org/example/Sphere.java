@@ -4,7 +4,7 @@ public class Sphere extends Shape {
 
     private final Point m;    // center Point
     private final double r;   // radius 1
-    private final IntersectionManager intersections;
+    private IntersectionManager intersections;
 
     public Sphere() {
         this.r = 1.0;
@@ -32,6 +32,9 @@ public class Sphere extends Shape {
      */
     @Override
     public IntersectionManager intersect(Ray ray) {
+        // initialise intersections
+        this.intersections = new IntersectionManager();
+
         Vector oc = ray.getOriginPoint().sub(getM());
         double a = ray.getDirectionVector().dot(ray.getDirectionVector());
         double b = 2 * oc.dot(ray.getDirectionVector());
@@ -39,7 +42,8 @@ public class Sphere extends Shape {
 
         double discriminant = b * b - 4 * a * c;
 
-        if (discriminant < 0) return intersections;
+        // return empty array
+        if (discriminant < 0) return new IntersectionManager(new Intersection[]{});
         else {
             // first intersection point
             double t1 = (-b + Math.sqrt(discriminant)) / (2 * a);
@@ -69,4 +73,7 @@ public class Sphere extends Shape {
         return m;
     }
 
+    public IntersectionManager getIntersections() {
+        return intersections;
+    }
 }
