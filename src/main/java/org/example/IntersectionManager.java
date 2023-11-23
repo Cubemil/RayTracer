@@ -28,18 +28,18 @@ public class IntersectionManager {
     /*------------------------------------managing-functions------------------------------------*/
 
     /**
-     * @param intersections 1...n intersections that want to be added to the 'intersections'-field
+     * @param newIntersections 1...n newIntersections that want to be added to the 'newIntersections'-field
      */
-    public void add(Intersection... intersections) {
-        if (intersections == null || intersections.length == 0) return; // nothing to add
+    public void add(Intersection... newIntersections) {
+        if (newIntersections == null || newIntersections.length == 0) return; // nothing to add
 
         // new temp Array with length of all new intersect varargs added on top of field
-        Intersection[] temp = new Intersection[this.intersections.length + intersections.length];
+        Intersection[] temp = new Intersection[this.intersections.length + newIntersections.length];
         System.arraycopy(this.intersections, 0, temp, 0, this.intersections.length); // arraycopy for my time saving :D
 
         // adds new item always at the end
         int index = this.intersections.length;
-        for (Intersection newIntersect : intersections) {
+        for (Intersection newIntersect : newIntersections) {
             temp[index++] = newIntersect;
         }
 

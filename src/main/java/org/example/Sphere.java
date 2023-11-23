@@ -4,11 +4,12 @@ public class Sphere extends Shape {
 
     private final Point m;    // center Point
     private final double r;   // radius 1
-    private IntersectionManager intersections = new IntersectionManager();
+    private final IntersectionManager intersections;
 
     public Sphere() {
         this.r = 1.0;
         this.m = new Point(0,0,0);
+        this.intersections = new IntersectionManager();
     }
 
     /**
@@ -63,11 +64,4 @@ public class Sphere extends Shape {
         return m;
     }
 
-    public double getR() {
-        return r;
-    }
-
-    public IntersectionManager getIntersections() {
-        return intersections;
-    }
 }
