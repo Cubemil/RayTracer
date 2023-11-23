@@ -55,9 +55,14 @@ public class Sphere extends Shape {
     }
 
 
+    /**
+     * @param point on the surface of the sphere
+     * @return the normal vector of the point
+     * here it is the same as the location vector of the point
+     */
     @Override
     public Vector normalAt(Point point) {
-        return null;
+        return new Vector(point.x(), point.y(), point.z());
     }
 
     public Point getM() {

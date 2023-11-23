@@ -69,4 +69,31 @@ class SphereTest {
         assertEquals(-4.0, xs.get(1).getT());
     }
 
+    @Test
+    void normalSpherePointXAxisTest() {
+        Sphere sphere = new Sphere();
+        Vector n = sphere.normalAt(new Point(1, 0, 0));
+
+        assertEquals(new Vector(1, 0, 0), n);
+        assertEquals(n, n.normalized());
+    }
+
+    @Test
+    void normalSpherePointYAxisTest() {
+        Sphere sphere = new Sphere();
+        Vector n = sphere.normalAt(new Point(0, 1, 0));
+
+        assertEquals(new Vector(0, 1, 0), n);
+        assertEquals(n, n.normalized());
+    }
+
+    @Test
+    void normalSpherePointTAxisTest() {
+        Sphere sphere = new Sphere();
+        Vector n = sphere.normalAt(new Point(0, 0, 1));
+
+        assertEquals(new Vector(0, 0, 1), n);
+        assertEquals(n, n.normalized());
+    }
+
 }
