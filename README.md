@@ -8,7 +8,7 @@ by Emil Petersen
 - [x]  Chapter 2: Mathematical data structures - points, vectors, colors
 - [x]  Chapter 3: Images and rays
 - [x]  Chapter 4: Mathematical data structures - matrices
-- [ ]  Chapter 5: Spheres and intersection with a ray
+- [x]  Chapter 5: Spheres and intersection with rays
 
 ## License
 This project is being made for Hochschule Anhalt - University of applied sciences, Germany
