@@ -3,9 +3,9 @@ package org.example;
 public class Intersection {
 
     private double t;
-    private Object shape;
+    private Shape shape;
 
-    public Intersection(double t, Object shape) {
+    public Intersection(double t, Shape shape) {
         this.t = t;
         this.shape = shape;
     }
@@ -14,16 +14,17 @@ public class Intersection {
         return this.t;
     }
 
-    public void setT(double t) {
-        this.t = t;
-    }
-
     public Object getShape() {
         return this.shape;
     }
 
-    public void setShape(Object shape) {
-        this.shape = shape;
+    @Override
+    public String toString() {
+        return "Intersection with " + shape + " at " + t;
+    }
+
+    public Shape shape() {
+        return this.shape;
     }
 
 }
