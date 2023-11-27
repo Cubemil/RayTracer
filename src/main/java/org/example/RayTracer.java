@@ -151,10 +151,10 @@ public class RayTracer {
 
                 Point target = new Point(px * 0.01, py * 0.01, 0);
                 Ray ray = new Ray(new Point(0,0,-10), target);
-                sphere.intersect(ray);
+                IntersectionManager intersections = sphere.intersect(ray);
 
                 // no intersections -> blue
-                if (sphere.getIntersections().count() == 0) image.setPixelColor(x, y, new Color(0, 0, 1));
+                if (intersections.count() == 0) image.setPixelColor(x, y, new Color(0, 0, 1));
                 // at least one intersection -> orange
                 else image.setPixelColor(x, y, new Color(1, 0.5, 0));
             }
@@ -181,14 +181,14 @@ public class RayTracer {
 
                 Point target = new Point(px * 0.01, py * 0.01, 0);
                 Ray ray = new Ray(new Point(0,0,-10), target);
-                sphere.intersect(ray);
+                IntersectionManager intersections = sphere.intersect(ray);
 
                 // no intersection: background blue
-                if (sphere.getIntersections().count() == 0) {
+                if (intersections.count() == 0) {
                     image.setPixelColor(x, y, new Color(0, 0, 1));
                 } else {
                     // Distance to origin 9 - 10 units -> subtract 9
-                    tValue = sphere.getIntersections().get(0).getT() - 9;
+                    tValue = intersections.get(0).getT() - 9;
                     // interpretation as a grayscale
                     Color colorOfT = new Color(tValue, tValue, tValue);
                     image.setPixelColor(x, y, colorOfT);
@@ -216,14 +216,14 @@ public class RayTracer {
 
                 Point target = new Point(px * 0.01, py * 0.01, 0);
                 Ray ray = new Ray(new Point(0,0,-10), target);
-                sphere.intersect(ray);
+                IntersectionManager intersections = sphere.intersect(ray);
 
                 // no intersection: background blue
-                if (sphere.getIntersections().count() == 0) {
+                if (intersections.count() == 0) {
                     image.setPixelColor(x, y, new Color(0, 0, 1));
                 } else {
                     // Intercepting point at the sphere from the ray (t value)
-                    Point interceptPoint = ray.pointAt(sphere.getIntersections().get(0).getT());
+                    Point interceptPoint = ray.pointAt(intersections.get(0).getT());
                     // use t value as parameter for getting the normal vector from the sphere surface point
                     Vector normalVec = sphere.normalAt(interceptPoint);
                     // using the absolute components from the vector we can create a new Color in rgb, not grayscale

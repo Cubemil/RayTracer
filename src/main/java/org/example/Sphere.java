@@ -4,18 +4,15 @@ public class Sphere extends Shape {
 
     private final Point m;    // center Point
     private final double r;   // radius 1
-    private IntersectionManager intersections;
 
     public Sphere() {
         this.r = 1.0;
         this.m = new Point(0,0,0);
-        this.intersections = new IntersectionManager();
     }
 
     /**
      * @param ray ray to check for intersections
      * @return the list of intersections with the ray
-     * automatically adds intersections to the array
      * <p> -----------------calculations-------------------
      * >Sphere: dot((P - C), (P - C) = r^2
      * >Ray: p(t) = A + tB
@@ -32,8 +29,7 @@ public class Sphere extends Shape {
      */
     @Override
     public IntersectionManager intersect(Ray ray) {
-        // initialise intersections
-        this.intersections = new IntersectionManager();
+        IntersectionManager resultIntersections = new IntersectionManager();
 
         Vector oc = ray.getOriginPoint().sub(getM());
         double a = ray.getDirectionVector().dot(ray.getDirectionVector());
@@ -51,11 +47,11 @@ public class Sphere extends Shape {
             double t2 = (-b - Math.sqrt(discriminant)) / (2 * a);
 
             // Idea: check if intersection is in front of ray origin: if (tX >= 0)
-            intersections.add(new Intersection(t1, this));
-            intersections.add(new Intersection(t2, this));
+            resultIntersections.add(new Intersection(t1, this));
+            resultIntersections.add(new Intersection(t2, this));
         }
 
-        return intersections;
+        return resultIntersections;
     }
 
 
@@ -73,7 +69,4 @@ public class Sphere extends Shape {
         return m;
     }
 
-    public IntersectionManager getIntersections() {
-        return intersections;
-    }
 }
