@@ -54,7 +54,6 @@ public class Sphere extends Shape {
         return resultIntersections;
     }
 
-
     /**
      * @param point on the surface of the sphere
      * @return the normal vector of the point

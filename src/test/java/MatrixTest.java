@@ -126,13 +126,13 @@ class MatrixTest {
     @Test
     void transposeMatrixTest() {
         Matrix m = new Matrix(new double[][]{{0, 9, 3, 0}, {9, 8, 0, 8}, {1, 8, 5, 3}, {0, 0, 5, 8}});
-        assertEquals(new Matrix(new double[][]{{0, 9, 1, 0}, {9, 8, 8, 0}, {3, 0, 5, 5}, {0, 8, 3, 8}}), m.trans());
+        assertEquals(new Matrix(new double[][]{{0, 9, 1, 0}, {9, 8, 8, 0}, {3, 0, 5, 5}, {0, 8, 3, 8}}), m.transposed());
     }
 
     @Test
     void transposeIdentityMatrixTest() {
         Matrix m = Matrix.identityMatrix(new Matrix());
-        assertEquals(m, m.trans());
+        assertEquals(m, m.transposed());
     }
 
     @Test
