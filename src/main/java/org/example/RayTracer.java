@@ -150,7 +150,7 @@ public class RayTracer {
 
                 Point target = new Point(px * 0.01, py * 0.01, 0);
                 Ray ray = new Ray(new Point(0,0,-10), target);
-                IntersectionManager intersections = sphere.intersect(ray);
+                IntersectionManager intersections = sphere.localIntersect(ray);
 
                 // no intersections -> blue
                 if (intersections.count() == 0) image.setPixelColor(x, y, new Color(0, 0, 1));
@@ -180,7 +180,7 @@ public class RayTracer {
 
                 Point target = new Point(px * 0.01, py * 0.01, 0);
                 Ray ray = new Ray(new Point(0,0,-10), target);
-                IntersectionManager intersections = sphere.intersect(ray);
+                IntersectionManager intersections = sphere.localIntersect(ray);
 
                 // no intersection: background blue
                 if (intersections.count() == 0) {
@@ -215,7 +215,7 @@ public class RayTracer {
 
                 Point target = new Point(px * 0.01, py * 0.01, 0);
                 Ray ray = new Ray(new Point(0,0,-10), target);
-                IntersectionManager intersections = sphere.intersect(ray);
+                IntersectionManager intersections = sphere.localIntersect(ray);
 
                 // no intersection: background blue
                 if (intersections.count() == 0) {
