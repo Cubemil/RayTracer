@@ -2,12 +2,10 @@ package org.example;
 
 public class Sphere extends Shape {
 
-    private final Point m;    // center Point
-    private final double r;   // radius 1
+    private static final Point m = new Point(0,0,0);    // center Point
+    private static final double r = 1.0;   // radius 1
 
     public Sphere() {
-        this.r = 1.0;
-        this.m = new Point(0,0,0);
     }
 
     /**

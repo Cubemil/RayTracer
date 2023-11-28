@@ -7,25 +7,34 @@ public class RayTracer {
 
         // Testing canvas
         Canvas dirVectorImage = generateDirectionVectorImage(width, height);
-        dirVectorImage.writeFile();
         Canvas pixelCoordinatesImage = generatePixelCoordinatesImage(width, height);
-        pixelCoordinatesImage.writeFile();
         Canvas vectorLengthImage = generateVectorLengthImage(width, height);
-        vectorLengthImage.writeFile();
 
         // Testing spheres and rays intersecting
         Canvas dirRayImg = generateRayDirectionImage(width, height);
-        dirRayImg.writeFile();
         Canvas findSphereImg = generateFindingSphereImage(width, height);
-        findSphereImg.writeFile();
         Canvas tValueSphereImg = generateTValueSphereImage(width, height);
-        tValueSphereImg.writeFile();
         Canvas normalVecSphereImg = generateNormalVectorSphereImage(width, height);
-        normalVecSphereImg.writeFile();
+
+        // Testing transformed spheres
+        Sphere sphere = new Sphere();
+        Canvas noTransImg = generateSilhouette(sphere, "noTransformationSphereSilhouette");
+
+        sphere = new Sphere();
+        sphere.setTransformationMatrix(Matrix.scale(0, 0.5, 0));
+        Canvas y_scaledImg = generateSilhouette(sphere, "y_scaledSphereSilhouette");
+
+        sphere = new Sphere();
+        sphere.setTransformationMatrix(Matrix.scale(0.5, 0, 0));
+        Canvas x_scaledImg = generateSilhouette(sphere, "x_scaledSphereSilhouette");
+
+        sphere = new Sphere();
+        sphere.setTransformationMatrix(Matrix.scale(0.5, 0, 0).mult(Matrix.rotateZ(Math.PI / 4)));
+        Canvas rotatedAndScaledImg = generateSilhouette(sphere, "rotatedAndScaledSphereSilhouette");
 
     }
 
-    /*---------------------------------canvas testing---------------------------------*/
+    /*---------------------------------rendering canvas-------------------------------------*/
 
     /**
      * @param width width of the output image
@@ -48,6 +57,7 @@ public class RayTracer {
                 image.setPixelColor(x, y, colorValue);
             }
         }
+        image.writeFile();
         return image;
     }
 
@@ -69,6 +79,7 @@ public class RayTracer {
                 image.setPixelColor(x, y, colorValue);
             }
         }
+        image.writeFile();
         return image;
     }
 
@@ -94,10 +105,11 @@ public class RayTracer {
                 image.setPixelColor(x, y, colorValue);
             }
         }
+        image.writeFile();
         return image;
     }
 
-    /*---------------------------------intersections testing---------------------------------*/
+    /*---------------------------------rendering intersections---------------------------------*/
 
     /**
      * @param width width of the output image
@@ -129,6 +141,7 @@ public class RayTracer {
                 image.setPixelColor(x, y, colorValue);
             }
         }
+        image.writeFile();
         return image;
     }
 
@@ -150,7 +163,7 @@ public class RayTracer {
 
                 Point target = new Point(px * 0.01, py * 0.01, 0);
                 Ray ray = new Ray(new Point(0,0,-10), target);
-                IntersectionManager intersections = sphere.localIntersect(ray);
+                IntersectionManager intersections = sphere.intersect(ray);
 
                 // no intersections -> blue
                 if (intersections.count() == 0) image.setPixelColor(x, y, new Color(0, 0, 1));
@@ -158,6 +171,7 @@ public class RayTracer {
                 else image.setPixelColor(x, y, new Color(1, 0.5, 0));
             }
         }
+        image.writeFile();
         return image;
     }
 
@@ -180,7 +194,7 @@ public class RayTracer {
 
                 Point target = new Point(px * 0.01, py * 0.01, 0);
                 Ray ray = new Ray(new Point(0,0,-10), target);
-                IntersectionManager intersections = sphere.localIntersect(ray);
+                IntersectionManager intersections = sphere.intersect(ray);
 
                 // no intersection: background blue
                 if (intersections.count() == 0) {
@@ -194,6 +208,7 @@ public class RayTracer {
                 }
             }
         }
+        image.writeFile();
         return image;
     }
 
@@ -215,7 +230,7 @@ public class RayTracer {
 
                 Point target = new Point(px * 0.01, py * 0.01, 0);
                 Ray ray = new Ray(new Point(0,0,-10), target);
-                IntersectionManager intersections = sphere.localIntersect(ray);
+                IntersectionManager intersections = sphere.intersect(ray);
 
                 // no intersection: background blue
                 if (intersections.count() == 0) {
@@ -232,6 +247,47 @@ public class RayTracer {
                 }
             }
         }
+        image.writeFile();
+        return image;
+    }
+
+    /*---------------------------------rendering transformations---------------------------------*/
+
+    /**
+     * @param sphere Sphere to be showing in the Image. Can be transformed beforehand!!!
+     * @param fileName Name and path of the output Image
+     * @return Canvas object with an image of the silhouette of a (transformed) sphere
+     */
+    private static Canvas generateSilhouette(Sphere sphere, String fileName) {
+        int WIDTH = 400;
+        int HEIGHT = 400;
+        double WALL_Z = 10.0;
+        double WALL_SIZE = 7.0;
+        double HALF_SIZE = WALL_SIZE / 2.0;
+        double PIXEL_SIZE = WALL_SIZE / WIDTH;
+
+        Canvas image = new Canvas(WIDTH,HEIGHT, "Images/" + fileName);
+
+        for (int y = 0; y < HEIGHT; y++) {
+            double worldY = HALF_SIZE - PIXEL_SIZE * y;
+            for (int x = 0; x < WIDTH; x++) {
+                double worldX = -HALF_SIZE + PIXEL_SIZE * x;
+                Point position = new Point(worldX, worldY, WALL_Z);
+                Ray ray = new Ray(new Point(0,0,-10), position);
+
+                IntersectionManager intersections = sphere.intersect(ray);
+
+                // no intersection: background blue
+                if (intersections.count() == 0) {
+                    image.setPixelColor(x, y, new Color(0, 0, 1));
+                } else {
+                    Color newColor = new Color(1,0,0);
+                    // setting the pixel to the new color
+                    image.setPixelColor(x, y, newColor);
+                }
+            }
+        }
+        image.writeFile();
         return image;
     }
 
