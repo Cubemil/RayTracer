@@ -197,7 +197,6 @@ class MatrixTest {
         try {
             assertEquals(-2120, m.det());
         } catch (ArithmeticException e) {
-            e.printStackTrace();
             thrown = true;
         }
         assertFalse(thrown);
@@ -210,7 +209,6 @@ class MatrixTest {
         try {
             m.inv().det();
         } catch (ArithmeticException e) {
-            e.printStackTrace();
             thrown = true;
         }
         assertTrue(thrown);

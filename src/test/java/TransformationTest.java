@@ -1,11 +1,13 @@
 import org.example.Matrix;
 import org.example.Point;
+import org.example.Ray;
 import org.example.Vector;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class TransformationTest {
 
+    // Matrix transformation tests
     @Test
     void multiplyingByTranslationMatrixTest() {
         Matrix transform = Matrix.translate(5.0, -3.0, 2.0);
@@ -128,6 +130,26 @@ class TransformationTest {
         Matrix transform = C.mult(B.mult(A));
 
         assertEquals(new Point(15, 0, 7), transform.mult(p));
+    }
+
+    // Ray transformation tests
+    @Test
+    void rayTranslatingTest() {
+        Ray ray = new Ray(new Point(1, 2, 3), new Vector(0, 1, 0));
+        Matrix transform = Matrix.translate(3, 4, 5);
+
+        Ray ray2 = ray.transform(transform);
+        assertEquals(new Point(4,6,8), ray2.getOriginPoint());
+    }
+
+    @Test
+    void rayScalingTest() {
+        Ray ray = new Ray(new Point(1, 2, 3), new Vector(0, 1, 0));
+        Matrix transform = Matrix.scale(2, 3, 4);
+
+        Ray ray2 = ray.transform(transform);
+        assertEquals(new Point(2, 6, 12), ray2.getOriginPoint());
+        assertEquals(new Vector(0,3,0), ray2.getDirectionVector());
     }
 
 }

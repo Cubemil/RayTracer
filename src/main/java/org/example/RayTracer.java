@@ -27,7 +27,6 @@ public class RayTracer {
 
     /*---------------------------------canvas testing---------------------------------*/
 
-
     /**
      * @param width width of the output image
      * @param height height of the output image
@@ -35,7 +34,7 @@ public class RayTracer {
      * vector to each position to represent a specific colour
      */
     private static Canvas generateDirectionVectorImage(int width, int height) {
-        Canvas image = new Canvas(width, height, "direction_vector");
+        Canvas image = new Canvas(width, height, "Images/direction_vector");
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
                 double px = x - width / 2.0;
@@ -59,7 +58,7 @@ public class RayTracer {
      * for showing a specific colour
      */
     private static Canvas generatePixelCoordinatesImage(int width, int height) {
-        Canvas image = new Canvas(width, height, "pixel_coordinates");
+        Canvas image = new Canvas(width, height, "Images/pixel_coordinates");
 
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
@@ -80,7 +79,7 @@ public class RayTracer {
      * an observer point, showing a color in grayscale
      */
     private static Canvas generateVectorLengthImage(int width, int height) {
-        Canvas image = new Canvas(width, height, "vector_length");
+        Canvas image = new Canvas(width, height, "Images/vector_length");
         Point observer = new Point(0, 0, -100);
 
         for (int x = 0; x < width; x++) {
@@ -107,7 +106,7 @@ public class RayTracer {
      * ray to return a color
      */
     private static Canvas generateRayDirectionImage(int width, int height) {
-        Canvas image = new Canvas(width, height, "ray_direction");
+        Canvas image = new Canvas(width, height, "Images/ray_direction");
 
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
@@ -141,7 +140,7 @@ public class RayTracer {
      * the image and another color when it does
      */
     private static Canvas generateFindingSphereImage(int width, int height) {
-        Canvas image = new Canvas(width, height, "finding_sphere");
+        Canvas image = new Canvas(width, height, "Images/finding_sphere");
         Sphere sphere = new Sphere();
 
         for (int x = 0; x < width; x++) {
@@ -170,7 +169,7 @@ public class RayTracer {
      * intersection points of a ray and the sphere
      */
     private static Canvas generateTValueSphereImage(int width, int height) {
-        Canvas image = new Canvas(width, height, "t_value_sphere");
+        Canvas image = new Canvas(width, height, "Images/t_value_sphere");
         Sphere sphere = new Sphere();
         double tValue;
 
@@ -206,7 +205,7 @@ public class RayTracer {
      * the sphere that the current ray intercepts
      */
     private static Canvas generateNormalVectorSphereImage(int width, int height) {
-        Canvas image = new Canvas(width, height, "normalVector_sphere");
+        Canvas image = new Canvas(width, height, "Images/normalVector_sphere");
         Sphere sphere = new Sphere();
 
         for (int x = 0; x < width; x++) {
