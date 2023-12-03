@@ -220,7 +220,10 @@ public class Matrix {
      * @return inverted matrix
      */
     public Matrix inv() {
-        if (Math.abs(det()) < 1e-10) throw new ArithmeticException("The determinant of the matrix is close to 0");
+        if (Math.abs(det()) < 1e-10){
+            System.out.println(det());
+            throw new ArithmeticException("The determinant of the matrix is close to 0");
+        }
         // lazy evaluation
         if (this.inverse == null) {
             double d = 1 / det();

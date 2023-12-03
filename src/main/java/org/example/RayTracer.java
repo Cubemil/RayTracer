@@ -2,6 +2,7 @@ package org.example;
 
 public class RayTracer {
     public static void main(String[] args) {
+
         int width = 960;
         int height = 540;
 
@@ -18,20 +19,16 @@ public class RayTracer {
 
         // Testing transformed spheres
         Sphere sphere = new Sphere();
-        Canvas noTransImg = generateSilhouette(sphere, "noTransformationSphereSilhouette");
+        generateSilhouette(sphere, "noTransformationSphereSilhouette");
 
-        sphere = new Sphere();
-        sphere.setTransformationMatrix(Matrix.scale(0, 0.5, 0));
-        Canvas y_scaledImg = generateSilhouette(sphere, "y_scaledSphereSilhouette");
+        sphere.setTransformationMatrix(Matrix.scale(1, 0.5, 1));
+        generateSilhouette(sphere, "y_scaledSphereSilhouette");
 
-        sphere = new Sphere();
-        sphere.setTransformationMatrix(Matrix.scale(0.5, 0, 0));
-        Canvas x_scaledImg = generateSilhouette(sphere, "x_scaledSphereSilhouette");
+        sphere.setTransformationMatrix(Matrix.scale(0.5, 1, 1));
+        generateSilhouette(sphere, "x_scaledSphereSilhouette");
 
-        sphere = new Sphere();
-        sphere.setTransformationMatrix(Matrix.scale(0.5, 0, 0).mult(Matrix.rotateZ(Math.PI / 4)));
-        Canvas rotatedAndScaledImg = generateSilhouette(sphere, "rotatedAndScaledSphereSilhouette");
-
+        sphere.setTransformationMatrix(Matrix.rotateZ(Math.PI / 4).mult(Matrix.scale(0.5, 1, 1)));
+        generateSilhouette(sphere, "rotatedAndScaledSphereSilhouette");
     }
 
     /*---------------------------------rendering canvas-------------------------------------*/
@@ -256,16 +253,15 @@ public class RayTracer {
     /**
      * @param sphere Sphere to be showing in the Image. Can be transformed beforehand!!!
      * @param fileName Name and path of the output Image
-     * @return Canvas object with an image of the silhouette of a (transformed) sphere
+     * writes a Canvas object with an image of the silhouette of a (transformed) sphere
      */
-    private static Canvas generateSilhouette(Sphere sphere, String fileName) {
+    private static void generateSilhouette(Sphere sphere, String fileName) {
         int WIDTH = 400;
         int HEIGHT = 400;
         double WALL_Z = 10.0;
         double WALL_SIZE = 7.0;
         double HALF_SIZE = WALL_SIZE / 2.0;
         double PIXEL_SIZE = WALL_SIZE / WIDTH;
-
         Canvas image = new Canvas(WIDTH,HEIGHT, "Images/" + fileName);
 
         for (int y = 0; y < HEIGHT; y++) {
@@ -273,28 +269,25 @@ public class RayTracer {
             for (int x = 0; x < WIDTH; x++) {
                 double worldX = -HALF_SIZE + PIXEL_SIZE * x;
                 Point position = new Point(worldX, worldY, WALL_Z);
-                Ray ray = new Ray(new Point(0,0,-10), position);
-
+                Ray ray = new Ray(new Point(0,0,-5), position);
                 IntersectionManager intersections = sphere.intersect(ray);
 
                 // no intersection: background blue
                 if (intersections.count() == 0) {
                     image.setPixelColor(x, y, new Color(0, 0, 1));
                 } else {
-                    Color newColor = new Color(1,0,0);
-                    // setting the pixel to the new color
-                    image.setPixelColor(x, y, newColor);
+                    // at least one intersection: red
+                    image.setPixelColor(x, y, new Color(1, 0, 0));
                 }
             }
         }
         image.writeFile();
-        return image;
     }
 
     /*---------------------------------helper functions---------------------------------*/
 
     /**
-     * @param vector that wants to be turned into a color
+     * @param vector to be turned into a color
      * @return a new Color from the xyz-components of a vector
      * 1. the absolute value of the component is stored
      * 2. the range is limited to 0-1

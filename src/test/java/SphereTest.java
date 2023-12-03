@@ -9,7 +9,7 @@ class SphereTest {
     void sphereIntersectionAtTwoPointsTest() {
         Ray ray = new Ray(new Point(0, 0, -5), new Vector(0, 0, 1));
         Sphere sphere = new Sphere();
-        IntersectionManager xs = sphere.localIntersect(ray);
+        IntersectionManager xs = sphere.intersect(ray);
 
         assertEquals(2, xs.count());
         assertEquals(4.0, xs.get(0).getT());
@@ -21,7 +21,7 @@ class SphereTest {
         Ray ray = new Ray(new Point(0, 0, -5), new Vector(0, 0, 1));
         Sphere sphere = new Sphere();
 
-        IntersectionManager xs = sphere.localIntersect(ray);
+        IntersectionManager xs = sphere.intersect(ray);
         assertEquals(2, xs.count());
         assertEquals(sphere, xs.get(0).shape());
         assertEquals(sphere, xs.get(1).shape());
@@ -31,7 +31,7 @@ class SphereTest {
     void rayIntersectsSphereAtATangentTest() {
         Ray ray = new Ray(new Point(0, 1, -5), new Vector(0, 0, 1));
         Sphere sphere = new Sphere();
-        IntersectionManager xs = sphere.localIntersect(ray);
+        IntersectionManager xs = sphere.intersect(ray);
 
         assertEquals(2, xs.count());
         assertEquals(5.0, xs.get(0).getT());
@@ -42,7 +42,7 @@ class SphereTest {
     void rayMissesSphereTest() {
         Ray ray = new Ray(new Point(0, 2, -5), new Vector(0, 0, 1));
         Sphere sphere = new Sphere();
-        IntersectionManager xs = sphere.localIntersect(ray);
+        IntersectionManager xs = sphere.intersect(ray);
 
         assertEquals(0, xs.count());
     }
@@ -51,7 +51,7 @@ class SphereTest {
     void rayOriginatesInsideSphereTest() {
         Ray ray = new Ray(new Point(0, 0, 0), new Vector(0, 0, 1));
         Sphere sphere = new Sphere();
-        IntersectionManager xs = sphere.localIntersect(ray);
+        IntersectionManager xs = sphere.intersect(ray);
 
         assertEquals(2, xs.count());
         assertEquals(-1, xs.get(0).getT());
@@ -62,7 +62,7 @@ class SphereTest {
     void sphereIsBehindRayTest() {
         Ray ray = new Ray(new Point(0, 0, 5), new Vector(0, 0, 1));
         Sphere sphere = new Sphere();
-        IntersectionManager xs = sphere.localIntersect(ray);
+        IntersectionManager xs = sphere.intersect(ray);
 
         assertEquals(2, xs.count());
         assertEquals(-6.0, xs.get(0).getT());

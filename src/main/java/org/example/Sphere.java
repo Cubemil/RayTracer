@@ -4,10 +4,6 @@ public class Sphere extends Shape {
 
     private static final Point m = new Point(0,0,0);    // center Point
     private static final double r = 1.0;   // radius 1
-
-    public Sphere() {
-    }
-
     /**
      * @param localRay ray to check for intersections
      * -> later Transformed according to transformation Matrix of Sphere
