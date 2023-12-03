@@ -9,6 +9,7 @@ by Emil Petersen
 - [x]  Chapter 3: Images and rays
 - [x]  Chapter 4: Mathematical data structures - matrices
 - [x]  Chapter 5: Spheres and intersection with rays
+- [x]  Chapter 6: Mathematical data structures - transformationen
 
 ## License
 This project is being made for Hochschule Anhalt - University of applied sciences, Germany
