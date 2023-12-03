@@ -127,7 +127,7 @@ public class Matrix {
      * @return a transposed matrix from the current one
      * m X n = A(row, col) -> n X m = AT(col, row)
      */
-    public Matrix trans() {
+    public Matrix transposed() {
         Matrix result = new Matrix(this.dimension);
         for (int row = 0; row < this.dimension; row++) {
             for (int col = 0; col < this.dimension; col++) {
@@ -213,20 +213,73 @@ public class Matrix {
                 result.data[row][col] = cofactor(row, col);
             }
         }
-        return result.trans();
+        return result.transposed();
     }
 
     /**
      * @return inverted matrix
      */
     public Matrix inv() {
-        if (Math.abs(det()) < 1e-10) throw new ArithmeticException("The determinant of the matrix is close to 0");
+        if (Math.abs(det()) < 1e-10){
+            System.out.println(det());
+            throw new ArithmeticException("The determinant of the matrix is close to 0");
+        }
         // lazy evaluation
         if (this.inverse == null) {
             double d = 1 / det();
             inverse = adj().mult(d).data;
         }
         return new Matrix(this.inverse);
+    }
+
+    /*--------------------------//transformation functions//-------------------------------*/
+
+    public static Matrix translate(double dx, double dy, double dz) {
+        Matrix transMatrix = identityMatrix(new Matrix());
+        transMatrix.data[0][3] = dx;
+        transMatrix.data[1][3] = dy;
+        transMatrix.data[2][3] = dz;
+
+        return transMatrix;
+    }
+
+    public static Matrix scale(double sx, double sy, double sz) {
+        Matrix transMatrix = identityMatrix(new Matrix());
+        transMatrix.data[0][0] = sx;
+        transMatrix.data[1][1] = sy;
+        transMatrix.data[2][2] = sz;
+
+        return transMatrix;
+    }
+
+    public static Matrix rotateX(double angle) {
+        Matrix transMatrix = identityMatrix(new Matrix());
+        transMatrix.data[1][1] = Math.cos(angle);
+        transMatrix.data[1][2] = - Math.sin(angle);
+        transMatrix.data[2][1] = Math.sin(angle);
+        transMatrix.data[2][2] = Math.cos(angle);
+
+        return transMatrix;
+    }
+
+    public static Matrix rotateY(double angle) {
+        Matrix transMatrix = identityMatrix(new Matrix());
+        transMatrix.data[0][0] = Math.cos(angle);
+        transMatrix.data[2][0] = - Math.sin(angle);
+        transMatrix.data[0][2] = Math.sin(angle);
+        transMatrix.data[2][2] = Math.cos(angle);
+
+        return transMatrix;
+    }
+
+    public static Matrix rotateZ(double angle) {
+        Matrix transMatrix = identityMatrix(new Matrix());
+        transMatrix.data[0][0] = Math.cos(angle);
+        transMatrix.data[0][1] = - Math.sin(angle);
+        transMatrix.data[1][0] = Math.sin(angle);
+        transMatrix.data[1][1] = Math.cos(angle);
+
+        return transMatrix;
     }
 
     /*------------------------------//structure methods//---------------------------------------*/

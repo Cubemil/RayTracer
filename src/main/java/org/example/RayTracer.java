@@ -2,31 +2,36 @@ package org.example;
 
 public class RayTracer {
     public static void main(String[] args) {
+
         int width = 960;
         int height = 540;
 
         // Testing canvas
         Canvas dirVectorImage = generateDirectionVectorImage(width, height);
-        dirVectorImage.writeFile();
         Canvas pixelCoordinatesImage = generatePixelCoordinatesImage(width, height);
-        pixelCoordinatesImage.writeFile();
         Canvas vectorLengthImage = generateVectorLengthImage(width, height);
-        vectorLengthImage.writeFile();
 
         // Testing spheres and rays intersecting
         Canvas dirRayImg = generateRayDirectionImage(width, height);
-        dirRayImg.writeFile();
         Canvas findSphereImg = generateFindingSphereImage(width, height);
-        findSphereImg.writeFile();
         Canvas tValueSphereImg = generateTValueSphereImage(width, height);
-        tValueSphereImg.writeFile();
         Canvas normalVecSphereImg = generateNormalVectorSphereImage(width, height);
-        normalVecSphereImg.writeFile();
 
+        // Testing transformed spheres
+        Sphere sphere = new Sphere();
+        generateSilhouette(sphere, "noTransformationSphereSilhouette");
+
+        sphere.setTransformationMatrix(Matrix.scale(1, 0.5, 1));
+        generateSilhouette(sphere, "y_scaledSphereSilhouette");
+
+        sphere.setTransformationMatrix(Matrix.scale(0.5, 1, 1));
+        generateSilhouette(sphere, "x_scaledSphereSilhouette");
+
+        sphere.setTransformationMatrix(Matrix.rotateZ(Math.PI / 4).mult(Matrix.scale(0.5, 1, 1)));
+        generateSilhouette(sphere, "rotatedAndScaledSphereSilhouette");
     }
 
-    /*---------------------------------canvas testing---------------------------------*/
-
+    /*---------------------------------rendering canvas-------------------------------------*/
 
     /**
      * @param width width of the output image
@@ -35,7 +40,7 @@ public class RayTracer {
      * vector to each position to represent a specific colour
      */
     private static Canvas generateDirectionVectorImage(int width, int height) {
-        Canvas image = new Canvas(width, height, "direction_vector");
+        Canvas image = new Canvas(width, height, "Images/direction_vector");
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
                 double px = x - width / 2.0;
@@ -49,6 +54,7 @@ public class RayTracer {
                 image.setPixelColor(x, y, colorValue);
             }
         }
+        image.writeFile();
         return image;
     }
 
@@ -59,7 +65,7 @@ public class RayTracer {
      * for showing a specific colour
      */
     private static Canvas generatePixelCoordinatesImage(int width, int height) {
-        Canvas image = new Canvas(width, height, "pixel_coordinates");
+        Canvas image = new Canvas(width, height, "Images/pixel_coordinates");
 
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
@@ -70,6 +76,7 @@ public class RayTracer {
                 image.setPixelColor(x, y, colorValue);
             }
         }
+        image.writeFile();
         return image;
     }
 
@@ -80,7 +87,7 @@ public class RayTracer {
      * an observer point, showing a color in grayscale
      */
     private static Canvas generateVectorLengthImage(int width, int height) {
-        Canvas image = new Canvas(width, height, "vector_length");
+        Canvas image = new Canvas(width, height, "Images/vector_length");
         Point observer = new Point(0, 0, -100);
 
         for (int x = 0; x < width; x++) {
@@ -95,10 +102,11 @@ public class RayTracer {
                 image.setPixelColor(x, y, colorValue);
             }
         }
+        image.writeFile();
         return image;
     }
 
-    /*---------------------------------intersections testing---------------------------------*/
+    /*---------------------------------rendering intersections---------------------------------*/
 
     /**
      * @param width width of the output image
@@ -107,7 +115,7 @@ public class RayTracer {
      * ray to return a color
      */
     private static Canvas generateRayDirectionImage(int width, int height) {
-        Canvas image = new Canvas(width, height, "ray_direction");
+        Canvas image = new Canvas(width, height, "Images/ray_direction");
 
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
@@ -130,6 +138,7 @@ public class RayTracer {
                 image.setPixelColor(x, y, colorValue);
             }
         }
+        image.writeFile();
         return image;
     }
 
@@ -141,7 +150,7 @@ public class RayTracer {
      * the image and another color when it does
      */
     private static Canvas generateFindingSphereImage(int width, int height) {
-        Canvas image = new Canvas(width, height, "finding_sphere");
+        Canvas image = new Canvas(width, height, "Images/finding_sphere");
         Sphere sphere = new Sphere();
 
         for (int x = 0; x < width; x++) {
@@ -159,6 +168,7 @@ public class RayTracer {
                 else image.setPixelColor(x, y, new Color(1, 0.5, 0));
             }
         }
+        image.writeFile();
         return image;
     }
 
@@ -170,7 +180,7 @@ public class RayTracer {
      * intersection points of a ray and the sphere
      */
     private static Canvas generateTValueSphereImage(int width, int height) {
-        Canvas image = new Canvas(width, height, "t_value_sphere");
+        Canvas image = new Canvas(width, height, "Images/t_value_sphere");
         Sphere sphere = new Sphere();
         double tValue;
 
@@ -195,6 +205,7 @@ public class RayTracer {
                 }
             }
         }
+        image.writeFile();
         return image;
     }
 
@@ -206,7 +217,7 @@ public class RayTracer {
      * the sphere that the current ray intercepts
      */
     private static Canvas generateNormalVectorSphereImage(int width, int height) {
-        Canvas image = new Canvas(width, height, "normalVector_sphere");
+        Canvas image = new Canvas(width, height, "Images/normalVector_sphere");
         Sphere sphere = new Sphere();
 
         for (int x = 0; x < width; x++) {
@@ -233,13 +244,50 @@ public class RayTracer {
                 }
             }
         }
+        image.writeFile();
         return image;
+    }
+
+    /*---------------------------------rendering transformations---------------------------------*/
+
+    /**
+     * @param sphere Sphere to be showing in the Image. Can be transformed beforehand!!!
+     * @param fileName Name and path of the output Image
+     * writes a Canvas object with an image of the silhouette of a (transformed) sphere
+     */
+    private static void generateSilhouette(Sphere sphere, String fileName) {
+        int WIDTH = 400;
+        int HEIGHT = 400;
+        double WALL_Z = 10.0;
+        double WALL_SIZE = 7.0;
+        double HALF_SIZE = WALL_SIZE / 2.0;
+        double PIXEL_SIZE = WALL_SIZE / WIDTH;
+        Canvas image = new Canvas(WIDTH,HEIGHT, "Images/" + fileName);
+
+        for (int y = 0; y < HEIGHT; y++) {
+            double worldY = HALF_SIZE - PIXEL_SIZE * y;
+            for (int x = 0; x < WIDTH; x++) {
+                double worldX = -HALF_SIZE + PIXEL_SIZE * x;
+                Point position = new Point(worldX, worldY, WALL_Z);
+                Ray ray = new Ray(new Point(0,0,-5), position);
+                IntersectionManager intersections = sphere.intersect(ray);
+
+                // no intersection: background blue
+                if (intersections.count() == 0) {
+                    image.setPixelColor(x, y, new Color(0, 0, 1));
+                } else {
+                    // at least one intersection: red
+                    image.setPixelColor(x, y, new Color(1, 0, 0));
+                }
+            }
+        }
+        image.writeFile();
     }
 
     /*---------------------------------helper functions---------------------------------*/
 
     /**
-     * @param vector that wants to be turned into a color
+     * @param vector to be turned into a color
      * @return a new Color from the xyz-components of a vector
      * 1. the absolute value of the component is stored
      * 2. the range is limited to 0-1
