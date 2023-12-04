@@ -7,15 +7,15 @@ public class RayTracer {
         int height = 540;
 
         // Testing canvas
-        Canvas dirVectorImage = generateDirectionVectorImage(width, height);
-        Canvas pixelCoordinatesImage = generatePixelCoordinatesImage(width, height);
-        Canvas vectorLengthImage = generateVectorLengthImage(width, height);
+        generateDirectionVectorImage(width, height);
+        generatePixelCoordinatesImage(width, height);
+        generateVectorLengthImage(width, height);
 
         // Testing spheres and rays intersecting
-        Canvas dirRayImg = generateRayDirectionImage(width, height);
-        Canvas findSphereImg = generateFindingSphereImage(width, height);
-        Canvas tValueSphereImg = generateTValueSphereImage(width, height);
-        Canvas normalVecSphereImg = generateNormalVectorSphereImage(width, height);
+        generateRayDirectionImage(width, height);
+        generateFindingSphereImage(width, height);
+        generateTValueSphereImage(width, height);
+        generateNormalVectorSphereImage(width, height);
 
         // Testing transformed spheres
         Sphere sphere = new Sphere();
@@ -36,10 +36,10 @@ public class RayTracer {
     /**
      * @param width width of the output image
      * @param height height of the output image
-     * @return a new Canvas object that utilises the direction
+     * creates a new Canvas object that utilises the direction
      * vector to each position to represent a specific colour
      */
-    private static Canvas generateDirectionVectorImage(int width, int height) {
+    private static void generateDirectionVectorImage(int width, int height) {
         Canvas image = new Canvas(width, height, "Images/direction_vector");
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
@@ -55,16 +55,15 @@ public class RayTracer {
             }
         }
         image.writeFile();
-        return image;
     }
 
     /**
      * @param width width of the output image
      * @param height height of the output image
-     * @return a Canvas object that uses every pixel and their components
+     * creates a Canvas object that uses every pixel and their components
      * for showing a specific colour
      */
-    private static Canvas generatePixelCoordinatesImage(int width, int height) {
+    private static void generatePixelCoordinatesImage(int width, int height) {
         Canvas image = new Canvas(width, height, "Images/pixel_coordinates");
 
         for (int x = 0; x < width; x++) {
@@ -77,16 +76,15 @@ public class RayTracer {
             }
         }
         image.writeFile();
-        return image;
     }
 
     /**
      * @param width width of the output image
      * @param height height of the output image
-     * @return a Canvas object that uses the vector length from
+     * creates a Canvas object that uses the vector length from
      * an observer point, showing a color in grayscale
      */
-    private static Canvas generateVectorLengthImage(int width, int height) {
+    private static void generateVectorLengthImage(int width, int height) {
         Canvas image = new Canvas(width, height, "Images/vector_length");
         Point observer = new Point(0, 0, -100);
 
@@ -103,7 +101,6 @@ public class RayTracer {
             }
         }
         image.writeFile();
-        return image;
     }
 
     /*---------------------------------rendering intersections---------------------------------*/
@@ -111,10 +108,10 @@ public class RayTracer {
     /**
      * @param width width of the output image
      * @param height height of the output image
-     * @return a Canvas object that uses the direction of every
+     * creates a Canvas object that uses the direction of every
      * ray to return a color
      */
-    private static Canvas generateRayDirectionImage(int width, int height) {
+    private static void generateRayDirectionImage(int width, int height) {
         Canvas image = new Canvas(width, height, "Images/ray_direction");
 
         for (int x = 0; x < width; x++) {
@@ -139,17 +136,16 @@ public class RayTracer {
             }
         }
         image.writeFile();
-        return image;
     }
 
     /**
      * @param width width of the output image
      * @param height height of the output image
-     * @return a Canvas object that shows one color when
+     * creates a Canvas object that shows one color when
      * a ray does not intersect a sphere in the center of
      * the image and another color when it does
      */
-    private static Canvas generateFindingSphereImage(int width, int height) {
+    private static void generateFindingSphereImage(int width, int height) {
         Canvas image = new Canvas(width, height, "Images/finding_sphere");
         Sphere sphere = new Sphere();
 
@@ -169,17 +165,16 @@ public class RayTracer {
             }
         }
         image.writeFile();
-        return image;
     }
 
     /**
      * @param width width of the output image
      * @param height height of the output image
-     * @return a Canvas object that shows a grayscale color
+     * creates a Canvas object that shows a grayscale color
      * according to the t-Value of the smaller one of two possible
      * intersection points of a ray and the sphere
      */
-    private static Canvas generateTValueSphereImage(int width, int height) {
+    private static void generateTValueSphereImage(int width, int height) {
         Canvas image = new Canvas(width, height, "Images/t_value_sphere");
         Sphere sphere = new Sphere();
         double tValue;
@@ -206,17 +201,16 @@ public class RayTracer {
             }
         }
         image.writeFile();
-        return image;
     }
 
     /**
      * @param width width of the output image
      * @param height height of the output image
-     * @return a Canvas object that shows an rgb color according to
+     * creates a Canvas object that shows an rgb color according to
      * the values of a normal vector of a surface point on
      * the sphere that the current ray intercepts
      */
-    private static Canvas generateNormalVectorSphereImage(int width, int height) {
+    private static void generateNormalVectorSphereImage(int width, int height) {
         Canvas image = new Canvas(width, height, "Images/normalVector_sphere");
         Sphere sphere = new Sphere();
 
@@ -245,7 +239,6 @@ public class RayTracer {
             }
         }
         image.writeFile();
-        return image;
     }
 
     /*---------------------------------rendering transformations---------------------------------*/
