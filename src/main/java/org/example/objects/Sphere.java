@@ -5,8 +5,8 @@ import org.example.math.*;
 
 public class Sphere extends Shape {
 
-    private static final Point m = new Point(0,0,0);    // center Point
-    private static final double r = 1.0;   // radius 1
+    private final Point m = new Point(0,0,0);    // center Point
+    private final double r = 1.0;   // radius 1
     /**
      * @param localRay ray to check for intersections
      * -> later Transformed according to transformation Matrix of Sphere
@@ -74,4 +74,21 @@ public class Sphere extends Shape {
         return m;
     }
 
+    public double getR() {
+        return this.r;
+    }
+
+    /**
+     * @param obj other Sphere
+     * @return true if this and other Sphere share the same origin Point, radius and Transformation
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Sphere other) {
+            return  this.getM().equals(other.getM()) &&
+                    this.r == other.getR() &&
+                    this.getTransformationMatrix().equals(other.getTransformationMatrix());
+        }
+        return false;
+    }
 }
