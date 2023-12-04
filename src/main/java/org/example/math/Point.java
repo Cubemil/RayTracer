@@ -1,4 +1,4 @@
-package org.example.Math;
+package org.example.math;
 
 public final class Point {
 

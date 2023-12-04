@@ -1,13 +1,13 @@
-package org.example.Utils;
+package org.example.utils;
 
-import org.example.Math.Matrix;
-import org.example.Math.Point;
-import org.example.Math.Ray;
-import org.example.Math.Vector;
-import org.example.Objects.Sphere;
-import org.example.Utils.Images.Canvas;
-import org.example.Utils.Images.Color;
-import org.example.Utils.Intersections.IntersectionManager;
+import org.example.math.Matrix;
+import org.example.math.Point;
+import org.example.math.Ray;
+import org.example.math.Vector;
+import org.example.objects.Sphere;
+import org.example.utils.images.Canvas;
+import org.example.utils.images.Color;
+import org.example.utils.intersections.IntersectionManager;
 
 public class RayTracer {
     public static void main(String[] args) {

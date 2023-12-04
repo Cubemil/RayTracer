@@ -1,6 +1,4 @@
-package org.example.Utils.Intersections;
-
-import org.example.Utils.Intersections.Intersection;
+package org.example.utils.intersections;
 
 public class IntersectionManager {
 

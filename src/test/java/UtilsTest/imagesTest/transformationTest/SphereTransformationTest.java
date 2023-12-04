@@ -1,13 +1,13 @@
-package UtilsTest.ImagesTest.TransformationTest;
+package utilsTest.imagesTest.transformationTest;
 
-import org.example.Math.Matrix;
-import org.example.Math.Point;
-import org.example.Math.Ray;
-import org.example.Math.Vector;
-import org.example.Objects.Sphere;
-import org.example.Utils.Intersections.IntersectionManager;
+import org.example.math.Matrix;
+import org.example.math.Point;
+import org.example.math.Ray;
+import org.example.math.Vector;
+import org.example.objects.Sphere;
+import org.example.utils.intersections.IntersectionManager;
 import org.junit.jupiter.api.Test;
-import static org.example.Math.Matrix.*;
+import static org.example.math.Matrix.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 class SphereTransformationTest {

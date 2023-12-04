@@ -1,8 +1,8 @@
-package MathTest;
+package mathTest;
 
-import org.example.Math.Matrix;
-import org.example.Math.Vector;
-import org.example.Math.Point;
+import org.example.math.Matrix;
+import org.example.math.Vector;
+import org.example.math.Point;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
