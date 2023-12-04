@@ -1,4 +1,6 @@
-package org.example;
+package org.example.Utils.Intersections;
+
+import org.example.Objects.Shape;
 
 public record Intersection(double t, Shape shape) {
 

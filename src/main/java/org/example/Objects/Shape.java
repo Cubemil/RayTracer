@@ -1,4 +1,10 @@
-package org.example;
+package org.example.Objects;
+
+import org.example.Utils.Intersections.IntersectionManager;
+import org.example.Math.Matrix;
+import org.example.Math.Point;
+import org.example.Math.Ray;
+import org.example.Math.Vector;
 
 public abstract class Shape {
 

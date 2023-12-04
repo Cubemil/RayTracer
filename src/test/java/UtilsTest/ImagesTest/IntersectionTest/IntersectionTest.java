@@ -1,6 +1,8 @@
-import org.example.IntersectionManager;
-import org.example.Sphere;
-import org.example.Intersection;
+package UtilsTest.ImagesTest.IntersectionTest;
+
+import org.example.Utils.Intersections.IntersectionManager;
+import org.example.Objects.Sphere;
+import org.example.Utils.Intersections.Intersection;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 

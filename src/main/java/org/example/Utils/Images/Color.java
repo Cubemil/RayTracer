@@ -1,4 +1,4 @@
-package org.example;
+package org.example.Utils.Images;
 
 public class Color {
 

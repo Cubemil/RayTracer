@@ -1,4 +1,6 @@
-import org.example.Vector;
+package MathTest;
+
+import org.example.Math.Vector;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

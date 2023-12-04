@@ -1,4 +1,6 @@
-import org.example.Color;
+package UtilsTest.ImagesTest;
+
+import org.example.Utils.Images.Color;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
