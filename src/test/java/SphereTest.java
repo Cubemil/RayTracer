@@ -12,8 +12,8 @@ class SphereTest {
         IntersectionManager xs = sphere.intersect(ray);
 
         assertEquals(2, xs.count());
-        assertEquals(4.0, xs.get(0).getT());
-        assertEquals(6.0, xs.get(1).getT());
+        assertEquals(4.0, xs.get(0).t());
+        assertEquals(6.0, xs.get(1).t());
     }
 
     @Test
@@ -34,8 +34,8 @@ class SphereTest {
         IntersectionManager xs = sphere.intersect(ray);
 
         assertEquals(2, xs.count());
-        assertEquals(5.0, xs.get(0).getT());
-        assertEquals(5.0, xs.get(1).getT());
+        assertEquals(5.0, xs.get(0).t());
+        assertEquals(5.0, xs.get(1).t());
     }
 
     @Test
@@ -54,8 +54,8 @@ class SphereTest {
         IntersectionManager xs = sphere.intersect(ray);
 
         assertEquals(2, xs.count());
-        assertEquals(-1, xs.get(0).getT());
-        assertEquals(1, xs.get(1).getT());
+        assertEquals(-1, xs.get(0).t());
+        assertEquals(1, xs.get(1).t());
     }
 
     @Test
@@ -65,8 +65,8 @@ class SphereTest {
         IntersectionManager xs = sphere.intersect(ray);
 
         assertEquals(2, xs.count());
-        assertEquals(-6.0, xs.get(0).getT());
-        assertEquals(-4.0, xs.get(1).getT());
+        assertEquals(-6.0, xs.get(0).t());
+        assertEquals(-4.0, xs.get(1).t());
     }
 
     @Test

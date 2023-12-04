@@ -193,7 +193,7 @@ public class RayTracer {
                     image.setPixelColor(x, y, new Color(0, 0, 1));
                 } else {
                     // Distance to origin 9 - 10 units -> subtract 9
-                    tValue = intersections.get(0).getT() - 9;
+                    tValue = intersections.get(0).t() - 9;
                     // interpretation as a grayscale
                     Color colorOfT = new Color(tValue, tValue, tValue);
                     image.setPixelColor(x, y, colorOfT);
@@ -228,7 +228,7 @@ public class RayTracer {
                     image.setPixelColor(x, y, new Color(0, 0, 1));
                 } else {
                     // Intercepting point at the sphere from the ray (t value)
-                    Point interceptPoint = ray.pointAt(intersections.get(0).getT());
+                    Point interceptPoint = ray.pointAt(intersections.get(0).t());
                     // use t value as parameter for getting the normal vector from the sphere surface point
                     Vector normalVec = sphere.normalAt(interceptPoint);
                     // using the absolute components from the vector we can create a new Color in rgb, not grayscale

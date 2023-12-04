@@ -58,7 +58,7 @@ public class IntersectionManager {
         do {
             swapped = false;
             for (int index = 1; index < intersections.length; index++) {
-                if (intersections[index - 1].getT() > intersections[index].getT()) {
+                if (intersections[index - 1].t() > intersections[index].t()) {
                     // swap intersections[index - 1] and intersections[index]
                     Intersection temp = intersections[index - 1];
                     intersections[index - 1] = intersections[index];

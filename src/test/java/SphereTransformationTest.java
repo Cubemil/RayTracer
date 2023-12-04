@@ -30,8 +30,8 @@ class SphereTransformationTest {
         IntersectionManager xs = sphere.intersect(ray);
 
         assertEquals(2, xs.count());
-        assertEquals(3, xs.get(0).getT());
-        assertEquals(7, xs.get(1).getT());
+        assertEquals(3, xs.get(0).t());
+        assertEquals(7, xs.get(1).t());
     }
 
     @Test

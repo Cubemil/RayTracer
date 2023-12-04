@@ -10,7 +10,7 @@ class IntersectionTest {
     void intersectionStructureTest() {
         Sphere sphere = new Sphere();
         Intersection i1 = new Intersection(3.5, sphere);
-        assertEquals(3.5, i1.getT());
+        assertEquals(3.5, i1.t());
         assertEquals(sphere, i1.getShape());
     }
 
@@ -19,7 +19,7 @@ class IntersectionTest {
         Sphere sphere = new Sphere();
         Intersection i1 = new Intersection(3.5, sphere);
         Intersection i2 = new Intersection(0.3, sphere);
-        assertTrue(i1.getT() > i2.getT());
+        assertTrue(i1.t() > i2.t());
     }
 
     @Test
@@ -29,8 +29,8 @@ class IntersectionTest {
         Intersection i2 = new Intersection(2, sphere);
         IntersectionManager xs = new IntersectionManager(i1, i2);
         assertEquals(2, xs.count());
-        assertEquals(1.0, xs.get(0).getT());
-        assertEquals(2.0, xs.get(1).getT());
+        assertEquals(1.0, xs.get(0).t());
+        assertEquals(2.0, xs.get(1).t());
     }
 
 }

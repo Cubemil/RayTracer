@@ -7,10 +7,10 @@ import java.io.IOException;
 
 public class Canvas {
 
-    private int width;
-    private int height;
+    private final int width;
+    private final int height;
     private String fileName;
-    private BufferedImage outputImage;
+    private final BufferedImage outputImage;
 
     public Canvas(int width, int height) {
         this.width = width;
@@ -36,26 +36,6 @@ public class Canvas {
         try {
             File outputFile = new File(fileName + ".png");
             ImageIO.write(outputImage, "png", outputFile);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void writeFile(String newName) {
-        try {
-            File outputFile = new File(newName + ".png");
-            ImageIO.write(outputImage, "png", outputFile);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void readFile(String fileName) {
-        try {
-            File inputFile = new File(fileName);
-            outputImage = ImageIO.read(inputFile);
-            this.width = outputImage.getWidth();
-            this.height = outputImage.getHeight();
         } catch (IOException e) {
             e.printStackTrace();
         }
