@@ -1,11 +1,12 @@
 package org.example.utils.image;
 
-import org.example.math.Matrix;
-import org.example.objects.Shape;
-import org.example.objects.Sphere;
+import org.example.math.*;
+import org.example.objects.*;
+import org.example.utils.intersections.IntersectionManager;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.stream.Collectors;
 
 public class Scene {
 
@@ -24,7 +25,15 @@ public class Scene {
 
     /*--------------------------------calculation methods-------------------------------*/
 
-    
+    /**
+     * @param ray current Ray to send through the scene
+     * @return a new IntersectionManager
+     * -> contains every Intersection of the ray with every object in the scene
+     */
+    public IntersectionManager traceRay(Ray ray) {
+        var intersectionList = objects.stream().map(o -> o.intersect(ray)).collect(Collectors.toCollection(ArrayList::new));
+        return new IntersectionManager().combineIntersections(intersectionList);
+    }
 
     /*---------------------------------structure methods--------------------------------*/
 

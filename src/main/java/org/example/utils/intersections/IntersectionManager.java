@@ -1,5 +1,8 @@
 package org.example.utils.intersections;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class IntersectionManager {
 
     /*------------------------------------fields------------------------------------*/
@@ -70,6 +73,24 @@ public class IntersectionManager {
         return intersections;
     }
 
+    /**
+     * @param intersectionList an ArrayList of IntersectionManagers
+     * @return this, but with all new List Objects added
+     */
+    public IntersectionManager combineIntersections(ArrayList<IntersectionManager> intersectionList) {
+        for (IntersectionManager manager : intersectionList)
+            for (int i = 0; i < manager.count(); i++)
+                this.add(manager.get(i));
+        return this;
+    }
+
+    /**
+     * @return the smallest t-value above 0
+     */
+    public Intersection hit() {
+        return Arrays.stream(intersections).filter(x -> x.t() > 0).findFirst().orElse(null);
+    }
+
     /*------------------------------------structure-methods------------------------------------*/
 
     /**
@@ -86,4 +107,5 @@ public class IntersectionManager {
     public int count() {
         return intersections.length;
     }
+
 }
