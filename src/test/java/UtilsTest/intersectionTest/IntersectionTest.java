@@ -1,4 +1,4 @@
-package utilsTest.imagesTest.intersectionTest;
+package utilsTest.intersectionTest;
 
 import org.example.utils.intersections.IntersectionManager;
 import org.example.objects.Sphere;

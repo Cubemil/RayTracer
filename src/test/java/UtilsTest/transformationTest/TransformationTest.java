@@ -1,4 +1,4 @@
-package utilsTest.imagesTest.transformationTest;
+package utilsTest.transformationTest;
 
 import org.example.math.Matrix;
 import org.example.math.Point;

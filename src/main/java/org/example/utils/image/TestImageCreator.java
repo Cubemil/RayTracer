@@ -1,11 +1,10 @@
-package org.example.utils;
+package org.example.utils.image;
 
 import org.example.math.*;
 import org.example.objects.Sphere;
-import org.example.utils.images.*;
 import org.example.utils.intersections.*;
 
-public class RayTracer {
+public class TestImageCreator {
     public static void main(String[] args) {
 
         int width = 960;
