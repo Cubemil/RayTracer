@@ -282,6 +282,33 @@ public class Matrix {
         return transMatrix;
     }
 
+    /**
+     * @param position  origin Point of the camera
+     * @param lookAt    Point at which the camera looks
+     * @param up        Vector which shows which direction is "up" -> typically the world's y-axis
+     * @return          the view Matrix V -> CS of the camera
+     * ----------------------------------------------------------------------------------------
+     * -> vpn    :  perpendicular to the scene -> also called view plane normal  (n-axis)
+     * -> right  :  horizontal u-axis of the camera cs                           (u-axis)
+     * -> trueUp :  upwards direction of the camera (perp. to the other axes)    (v-axis)
+     * ----------------------------------------------------------------------------------------
+     */
+    public static Matrix viewTransform(Point position, Point lookAt, Vector up) {
+        Vector vpn    = position.sub(lookAt).normalized();
+        Vector right  = up.normalized().cross(vpn);
+        Vector trueUp = vpn.cross(right);
+
+        // Change of basis
+        Matrix orientation = new Matrix(new double[][]{
+                {right.x(),     right.y(),  right.z(),  0},
+                {trueUp.x(),    trueUp.y(), trueUp.z(), 0},
+                {vpn.x(),       vpn.y(),    vpn.z(),    0},
+                {0,             0,          0,          1}});
+
+        // matrix gets multiplied by translation -> View-Matrix
+        return orientation.mult(Matrix.translate(-position.x(), -position.y(), -position.z()));
+    }
+
     /*------------------------------//structure methods//---------------------------------------*/
 
     /**
