@@ -1,13 +1,9 @@
 package org.example.utils;
 
-import org.example.math.Matrix;
-import org.example.math.Point;
-import org.example.math.Ray;
-import org.example.math.Vector;
+import org.example.math.*;
 import org.example.objects.Sphere;
-import org.example.utils.images.Canvas;
-import org.example.utils.images.Color;
-import org.example.utils.intersections.IntersectionManager;
+import org.example.utils.images.*;
+import org.example.utils.intersections.*;
 
 public class RayTracer {
     public static void main(String[] args) {
@@ -49,7 +45,7 @@ public class RayTracer {
      * vector to each position to represent a specific colour
      */
     private static void generateDirectionVectorImage(int width, int height) {
-        Canvas image = new Canvas(width, height, "Images/direction_vector");
+        Canvas image = new Canvas(width, height, "Images/TestCanvasImages/direction_vector");
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
                 double px = x - width / 2.0;
@@ -73,7 +69,7 @@ public class RayTracer {
      * for showing a specific colour
      */
     private static void generatePixelCoordinatesImage(int width, int height) {
-        Canvas image = new Canvas(width, height, "Images/pixel_coordinates");
+        Canvas image = new Canvas(width, height, "Images/TestCanvasImages/pixel_coordinates");
 
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
@@ -94,7 +90,7 @@ public class RayTracer {
      * an observer point, showing a color in grayscale
      */
     private static void generateVectorLengthImage(int width, int height) {
-        Canvas image = new Canvas(width, height, "Images/vector_length");
+        Canvas image = new Canvas(width, height, "Images/TestCanvasImages/vector_length");
         Point observer = new Point(0, 0, -100);
 
         for (int x = 0; x < width; x++) {
@@ -121,7 +117,7 @@ public class RayTracer {
      * ray to return a color
      */
     private static void generateRayDirectionImage(int width, int height) {
-        Canvas image = new Canvas(width, height, "Images/ray_direction");
+        Canvas image = new Canvas(width, height, "Images/TestCanvasImages/ray_direction");
 
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
@@ -155,7 +151,7 @@ public class RayTracer {
      * the image and another color when it does
      */
     private static void generateFindingSphereImage(int width, int height) {
-        Canvas image = new Canvas(width, height, "Images/finding_sphere");
+        Canvas image = new Canvas(width, height, "Images/TestSphereImages/finding_sphere");
         Sphere sphere = new Sphere();
 
         for (int x = 0; x < width; x++) {
@@ -184,7 +180,7 @@ public class RayTracer {
      * intersection points of a ray and the sphere
      */
     private static void generateTValueSphereImage(int width, int height) {
-        Canvas image = new Canvas(width, height, "Images/t_value_sphere");
+        Canvas image = new Canvas(width, height, "Images/TestSphereImages/t_value_sphere");
         Sphere sphere = new Sphere();
         double tValue;
 
@@ -220,7 +216,7 @@ public class RayTracer {
      * the sphere that the current ray intercepts
      */
     private static void generateNormalVectorSphereImage(int width, int height) {
-        Canvas image = new Canvas(width, height, "Images/normalVector_sphere");
+        Canvas image = new Canvas(width, height, "Images/TestSphereImages/normalVector_sphere");
         Sphere sphere = new Sphere();
 
         for (int x = 0; x < width; x++) {
@@ -264,7 +260,7 @@ public class RayTracer {
         double WALL_SIZE = 7.0;
         double HALF_SIZE = WALL_SIZE / 2.0;
         double PIXEL_SIZE = WALL_SIZE / WIDTH;
-        Canvas image = new Canvas(WIDTH,HEIGHT, "Images/" + fileName);
+        Canvas image = new Canvas(WIDTH,HEIGHT, "Images/TestTransformationImages/" + fileName);
 
         for (int y = 0; y < HEIGHT; y++) {
             double worldY = HALF_SIZE - PIXEL_SIZE * y;
