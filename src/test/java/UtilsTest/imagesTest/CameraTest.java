@@ -45,7 +45,18 @@ class CameraTest {
         assertEquals(Matrix.viewTransform(position, lookAt, up), camera.getTransform());
     }
 
+    @Test
+    void pixelSizeHorizontalCanvasTest() {
+        Camera camera = new Camera(200, 125, 90);
 
+        assertEquals(0.01, camera.pixelSize());
+    }
 
+    @Test
+    void pixelSizeVerticalCanvasTest() {
+        Camera camera = new Camera(125, 200, 90);
+
+        assertEquals(0.01, camera.pixelSize());
+    }
 
 }

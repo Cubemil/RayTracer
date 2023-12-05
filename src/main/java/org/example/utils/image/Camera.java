@@ -8,8 +8,10 @@ public class Camera {
 
     private final int width;      // size of the created image
     private final int height;
+    private double halfWidth;     // half Size
+    private double halfHeight;
     private final double fov;     // field of view angle of the camera
-    private Matrix transform;       // View-Transformation -> default: id. matrix
+    private Matrix transform;     // View-Transformation -> default: id. matrix
 
     /*--------------------------------//constructors//--------------------------------*/
 
@@ -43,8 +45,32 @@ public class Camera {
     /**
      * @return aspect ratio of the pixel image to its height
      */
-    public int aspectRatio() {
+    private int aspectRatio() {
         return width / height;
+    }
+
+    /**
+     * @return opposite side of the right-angled triangle between vpn and origin
+     */
+    private double halfView() {
+        return Math.tan(fov / 2.0);
+    }
+
+    /**
+     * @return size of one pixel in the image
+     * checks for orientation format -> adjusts the size accordingly
+     */
+    public double pixelSize() {
+        if (aspectRatio() < 1) {    //vertical format
+            halfHeight = halfView();
+            halfWidth = halfView() * aspectRatio();
+        } else {                    //horizontal format
+            halfWidth = halfView();
+            halfHeight = halfView() / aspectRatio();
+        }
+
+        // pixels are assumed to be square -> single value
+        return (2 * halfWidth / width);
     }
 
 
