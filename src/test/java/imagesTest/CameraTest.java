@@ -55,4 +55,32 @@ class CameraTest {
         assertEquals(0.01, camera.pixelSize(), 0.1);
     }
 
+    @Test
+    void rayThroughCanvasCenterTest() {
+        Camera camera = new Camera(201, 101, 90);
+        Ray ray = camera.generateRay(100, 50);
+
+        assertEquals(new Point(0, 0, 0), ray.getOriginPoint());
+        assertEquals(new Vector(0, 0, -1), ray.getDirectionVector());
+    }
+
+    @Test
+    void rayThroughCanvasCornerTest() {
+        Camera camera = new Camera(201, 101, 90);
+        Ray ray = camera.generateRay(0, 0);
+
+        assertEquals(new Point(0, 0, 0), ray.getOriginPoint());
+        assertEquals(new Vector(0.665186, 0.332593, -0.668512), ray.getDirectionVector());
+    }
+
+    @Test
+    void rayWithTransformedCameraTest() {
+        Camera camera = new Camera(201, 101, 90);
+        camera.setTransform(Matrix.rotateY(0.785398).mult(Matrix.translate(0, -2, 5)));
+        Ray ray = camera.generateRay(100, 50);
+
+        assertEquals(new Point(0, 2, -5), ray.getOriginPoint());
+        assertEquals(new Vector(0.707106, 0, -0.707106), ray.getDirectionVector());
+    }
+
 }

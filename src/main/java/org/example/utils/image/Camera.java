@@ -73,6 +73,31 @@ public class Camera {
         return (2 * halfWidth / width);
     }
 
+    /**
+     * @param pixelX width of the target pixel
+     * @param pixelY height of the target pixel
+     * @return a ray that goes from the camera to the given pixel
+     * --> the returning pixel from the Canvas is the same as in the result Image
+     */
+    public Ray generateRay(int pixelX, int pixelY) {
+        // determine offset from edge of Canvas to pixel center
+        var xOffset = (pixelX + 0.5) * pixelSize();
+        var yOffset = (pixelY + 0.5) * pixelSize();
+
+        /* calculate pixel coordinate in world coords
+        *  -> vpn goes through Canvas center
+        *  -> Offset must be subtracted from half width/height */
+        var worldX = halfWidth - xOffset;
+        var worldY = halfHeight - yOffset;
+
+        // cam origin and pixel coords transformed with view-transformation (Canvas at z=-1)
+        var origin = transform.inv().mult(new Point(0, 0, 0));
+        var pixel = transform.inv().mult(new Point(worldX, worldY, -1));
+
+        // ray direction
+        var direction = pixel.sub(origin).normalized();
+        return new Ray(origin, direction);
+    }
 
     /*-----------------------------//structure functions//----------------------------*/
 
@@ -84,14 +109,6 @@ public class Camera {
         return height;
     }
 
-    public double getHalfWidth() {
-        return halfWidth;
-    }
-
-    public double getHalfHeight() {
-        return halfHeight;
-    }
-
     public double getFov() {
         return fov;
     }
@@ -100,4 +117,7 @@ public class Camera {
         return transform;
     }
 
+    public void setTransform(Matrix newTransform) {
+        this.transform = newTransform;
+    }
 }
