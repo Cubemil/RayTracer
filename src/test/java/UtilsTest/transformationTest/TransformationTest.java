@@ -1,9 +1,6 @@
 package utilsTest.transformationTest;
 
-import org.example.math.Matrix;
-import org.example.math.Point;
-import org.example.math.Ray;
-import org.example.math.Vector;
+import org.example.math.*;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -153,5 +150,60 @@ class TransformationTest {
         assertEquals(new Point(2, 6, 12), ray2.getOriginPoint());
         assertEquals(new Vector(0,3,0), ray2.getDirectionVector());
     }
+
+    // Camera/View Transformation Tests
+    @Test
+    void transformationMatrixDefaultOrientationTest() {
+        Point position = new Point(0, 0, 0);
+        Point lookAt = new Point(0, 0, -1);
+        Vector up = new Vector(0, 1, 0);
+        Matrix transform = Matrix.viewTransform(position, lookAt, up);
+
+        assertEquals(Matrix.identityMatrix(new Matrix()), transform);
+    }
+
+    @Test
+    void viewTransformationLookingInPositiveZDirectionTest() {
+        Point position = new Point(0, 0, 0);
+        Point lookAt = new Point(0, 0, 1);
+        Vector up = new Vector(0, 1, 0);
+        Matrix transform = Matrix.viewTransform(position, lookAt, up);
+
+        assertEquals(Matrix.scale(-1, 1, -1), transform);
+    }
+
+    @Test
+    void viewTransformationMovesTheWorldTest() {
+        Point position = new Point(0, 0, 8);
+        Point lookAt = new Point(0, 0, 0);
+        Vector up = new Vector(0, 1, 0);
+        Matrix transform = Matrix.viewTransform(position, lookAt, up);
+
+        assertEquals(Matrix.translate(0,0,-8), transform);
+    }
+
+    @Test
+    void arbitraryViewTransformationTest() {
+        Point position = new Point(1, 3, 2);
+        Point lookAt = new Point(4, -2, 8);
+        Vector up = new Vector(1, 1, 0);
+        Matrix transform = Matrix.viewTransform(position, lookAt, up);
+
+        Matrix result = new Matrix(new double[][]{
+                {-0.50709, 0.50709, 0.67612, -2.36643},
+                {0.76772, 0.60609, 0.12122, -2.82843},
+                {-0.35857, 0.59761, -0.71714, 0.00000},
+                {0.00000, 0.00000, 0.00000, 1.00000}});
+
+        assertEquals(result, transform);
+    }
+
+
+
+
+
+
+
+
 
 }
