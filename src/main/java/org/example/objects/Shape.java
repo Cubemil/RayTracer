@@ -11,7 +11,7 @@ public abstract class Shape {
 
     public abstract Vector normalAt(Point point);
 
-    private Matrix transformationMatrix = Matrix.identityMatrix(new Matrix());
+    private Matrix transformationMatrix = Matrix.identityMatrix();
 
     public Matrix getTransformationMatrix() {
         return transformationMatrix;

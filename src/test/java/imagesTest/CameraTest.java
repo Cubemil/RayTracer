@@ -1,4 +1,4 @@
-package mathTest.imagesTest;
+package imagesTest;
 
 import org.example.math.*;
 import org.example.utils.image.Camera;
@@ -15,7 +15,7 @@ class CameraTest {
         assertEquals(160, camera.getWidth());
         assertEquals(120, camera.getHeight());
         assertEquals(90, camera.getFov());
-        assertEquals(Matrix.identityMatrix(new Matrix()), camera.getTransform());
+        assertEquals(Matrix.identityMatrix(), camera.getTransform());
     }
 
     @Test

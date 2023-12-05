@@ -159,7 +159,7 @@ class TransformationTest {
         Vector up = new Vector(0, 1, 0);
         Matrix transform = Matrix.viewTransform(position, lookAt, up);
 
-        assertEquals(Matrix.identityMatrix(new Matrix()), transform);
+        assertEquals(Matrix.identityMatrix(), transform);
     }
 
     @Test

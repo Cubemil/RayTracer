@@ -15,7 +15,7 @@ class SphereTransformationTest {
     @Test
     void sphereDefaultTransformationTest() {
         Sphere sphere = new Sphere();
-        Matrix identityMatrix = identityMatrix(new Matrix());
+        Matrix identityMatrix = identityMatrix();
         assertEquals(identityMatrix, sphere.getTransformationMatrix());
     }
 

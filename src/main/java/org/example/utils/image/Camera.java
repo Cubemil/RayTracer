@@ -22,7 +22,7 @@ public class Camera {
         this.width = width;
         this.height = height;
         this.fov = fov;
-        this.transform = Matrix.identityMatrix(new Matrix());
+        this.transform = Matrix.identityMatrix();
     }
 
     /**
@@ -45,8 +45,8 @@ public class Camera {
     /**
      * @return aspect ratio of the pixel image to its height
      */
-    private int aspectRatio() {
-        return width / height;
+    private double aspectRatio() {
+        return (double)width / height;
     }
 
     /**
@@ -82,6 +82,14 @@ public class Camera {
 
     public int getHeight() {
         return height;
+    }
+
+    public double getHalfWidth() {
+        return halfWidth;
+    }
+
+    public double getHalfHeight() {
+        return halfHeight;
     }
 
     public double getFov() {

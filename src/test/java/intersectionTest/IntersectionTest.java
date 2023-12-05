@@ -1,4 +1,4 @@
-package mathTest.intersectionTest;
+package intersectionTest;
 
 import org.example.utils.intersections.IntersectionManager;
 import org.example.objects.Sphere;

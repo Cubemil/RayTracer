@@ -235,7 +235,7 @@ public class Matrix {
     /*--------------------------//transformation functions//-------------------------------*/
 
     public static Matrix translate(double dx, double dy, double dz) {
-        Matrix transMatrix = identityMatrix(new Matrix());
+        Matrix transMatrix = identityMatrix();
         transMatrix.data[0][3] = dx;
         transMatrix.data[1][3] = dy;
         transMatrix.data[2][3] = dz;
@@ -244,7 +244,7 @@ public class Matrix {
     }
 
     public static Matrix scale(double sx, double sy, double sz) {
-        Matrix transMatrix = identityMatrix(new Matrix());
+        Matrix transMatrix = identityMatrix();
         transMatrix.data[0][0] = sx;
         transMatrix.data[1][1] = sy;
         transMatrix.data[2][2] = sz;
@@ -253,7 +253,7 @@ public class Matrix {
     }
 
     public static Matrix rotateX(double angle) {
-        Matrix transMatrix = identityMatrix(new Matrix());
+        Matrix transMatrix = identityMatrix();
         transMatrix.data[1][1] = Math.cos(angle);
         transMatrix.data[1][2] = - Math.sin(angle);
         transMatrix.data[2][1] = Math.sin(angle);
@@ -263,7 +263,7 @@ public class Matrix {
     }
 
     public static Matrix rotateY(double angle) {
-        Matrix transMatrix = identityMatrix(new Matrix());
+        Matrix transMatrix = identityMatrix();
         transMatrix.data[0][0] = Math.cos(angle);
         transMatrix.data[2][0] = - Math.sin(angle);
         transMatrix.data[0][2] = Math.sin(angle);
@@ -273,7 +273,7 @@ public class Matrix {
     }
 
     public static Matrix rotateZ(double angle) {
-        Matrix transMatrix = identityMatrix(new Matrix());
+        Matrix transMatrix = identityMatrix();
         transMatrix.data[0][0] = Math.cos(angle);
         transMatrix.data[0][1] = - Math.sin(angle);
         transMatrix.data[1][0] = Math.sin(angle);
@@ -312,11 +312,11 @@ public class Matrix {
     /*------------------------------//structure methods//---------------------------------------*/
 
     /**
-     * @param matrix to be made into an identity matrix
      * @return an identity matrix of a given method
      * the data array is cleared and filled along the main diagonal with ones
      */
-    public static Matrix identityMatrix(Matrix matrix) {
+    public static Matrix identityMatrix() {
+        Matrix matrix = new Matrix();
         for (int row = 0; row < matrix.dimension; row++) {
             for (int col = 0; col < matrix.dimension; col++) {
                 matrix.data[row][col] = 0;
