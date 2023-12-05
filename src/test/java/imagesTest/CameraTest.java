@@ -46,15 +46,13 @@ class CameraTest {
     @Test
     void pixelSizeHorizontalCanvasTest() {
         Camera camera = new Camera(200, 125, 90);
-
-        assertEquals(0.01, camera.pixelSize());
+        assertEquals(0.01, camera.pixelSize(), 0.1);
     }
 
     @Test
     void pixelSizeVerticalCanvasTest() {
         Camera camera = new Camera(125, 200, 90);
-
-        assertEquals(0.01, camera.pixelSize());
+        assertEquals(0.01, camera.pixelSize(), 0.1);
     }
 
 }

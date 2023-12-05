@@ -46,7 +46,7 @@ public class Camera {
      * @return aspect ratio of the pixel image to its height
      */
     private double aspectRatio() {
-        return (double)width / height;
+        return (double) width / height;
     }
 
     /**
