@@ -1,4 +1,4 @@
-package utilsTest.transformationTest;
+package transformationTest;
 
 import org.example.math.*;
 import org.junit.jupiter.api.Test;

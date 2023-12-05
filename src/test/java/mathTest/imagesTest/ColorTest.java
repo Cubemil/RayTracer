@@ -1,4 +1,4 @@
-package utilsTest.imagesTest;
+package mathTest.imagesTest;
 
 import org.example.utils.image.Color;
 import org.junit.jupiter.api.Test;

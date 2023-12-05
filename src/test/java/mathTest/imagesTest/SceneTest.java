@@ -1,4 +1,4 @@
-package utilsTest.imagesTest;
+package mathTest.imagesTest;
 
 import org.example.math.*;
 import org.example.objects.Sphere;

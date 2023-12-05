@@ -1,8 +1,6 @@
-package utilsTest.imagesTest;
+package mathTest.imagesTest;
 
-import org.example.math.Matrix;
-import org.example.math.Point;
-import org.example.math.Vector;
+import org.example.math.*;
 import org.example.utils.image.Camera;
 import org.junit.jupiter.api.Test;
 
