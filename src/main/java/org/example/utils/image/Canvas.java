@@ -41,6 +41,10 @@ public class Canvas {
         }
     }
 
+    public void writeFile(String newName) {
+        new Canvas(width, height, newName).writeFile();
+    }
+
     public int getWidth() {
         return width;
     }
@@ -52,4 +56,5 @@ public class Canvas {
     public String getFileName() {
         return fileName;
     }
+
 }
