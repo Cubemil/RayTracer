@@ -4,7 +4,7 @@ import org.example.math.*;
 import org.example.objects.*;
 import org.example.utils.image.*;
 
-public class RayTracerLauncher {
+public class TestRayTracerLauncher {
     public static void main(String[] args) {
 
         // Sphere
@@ -23,7 +23,7 @@ public class RayTracerLauncher {
         Camera camera1 = new Camera(800, 600, 7.7, viewTransform1);
 
         // Ray Tracer
-        createImage(scene, camera1, "Images/testImage1");
+        createImage(scene, camera1, "Images/TestRayTracer/testImage1");
 
 /*----------------------------------Test 2----------------------------------*/
 
@@ -36,7 +36,7 @@ public class RayTracerLauncher {
         Camera camera2 = new Camera(600, 600, 11.4, viewTransform2);
 
         // Ray Tracer
-        createImage(scene, camera2, "Images/testImage2");
+        createImage(scene, camera2, "Images/TestRayTracer/testImage2");
 
 /*----------------------------------Test 3----------------------------------*/
 
@@ -49,7 +49,7 @@ public class RayTracerLauncher {
         Camera camera3 = new Camera(600, 600, 2.7, viewTransform3);
 
         // Ray Tracer
-        createImage(scene, camera3, "Images/testImage3");
+        createImage(scene, camera3, "Images/TestRayTracer/testImage3");
 
 /*-------------------------------Other Tests--------------------------------*/
         // Three spheres test image
@@ -79,7 +79,7 @@ public class RayTracerLauncher {
                 new Point(0.0, 1.0, 0.0),
                 new Vector(0, 1, 0));
 
-        createImage(scene, camera, "Images/threeSpheresImage");
+        createImage(scene, camera, "Images/TestRayTracer/threeSpheresImage");
     }
 
 }

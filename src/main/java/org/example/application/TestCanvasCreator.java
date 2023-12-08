@@ -6,7 +6,7 @@ import org.example.utils.image.Canvas;
 import org.example.utils.image.Color;
 import org.example.utils.intersections.*;
 
-public class TestImageCreator {
+public class TestCanvasCreator {
     public static void main(String[] args) {
 
         int width = 960;
