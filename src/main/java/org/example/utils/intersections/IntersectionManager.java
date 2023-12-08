@@ -75,13 +75,14 @@ public class IntersectionManager {
 
     /**
      * @param intersectionList an ArrayList of IntersectionManagers
-     * @return this, but with all new List Objects added
+     * @return new IM Object with all new List Objects added and sorted
      */
-    public IntersectionManager combineIntersections(ArrayList<IntersectionManager> intersectionList) {
+    public static IntersectionManager combineIntersections(ArrayList<IntersectionManager> intersectionList) {
+        IntersectionManager resultIntersectionMng = new IntersectionManager();
         for (IntersectionManager manager : intersectionList)
             for (int i = 0; i < manager.count(); i++)
-                this.add(manager.get(i));
-        return this;
+                resultIntersectionMng.add(manager.get(i));
+        return resultIntersectionMng;
     }
 
     /**

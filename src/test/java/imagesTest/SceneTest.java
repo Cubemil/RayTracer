@@ -51,5 +51,4 @@ class SceneTest {
         assertEquals(6, xs.get(3).t());
     }
 
-
 }

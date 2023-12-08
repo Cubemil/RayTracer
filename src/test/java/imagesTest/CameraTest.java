@@ -46,13 +46,13 @@ class CameraTest {
     @Test
     void pixelSizeHorizontalCanvasTest() {
         Camera camera = new Camera(200, 125, 90);
-        assertEquals(0.01, camera.pixelSize(), 0.1);
+        assertEquals(0.01, camera.pixelSize());
     }
 
     @Test
     void pixelSizeVerticalCanvasTest() {
         Camera camera = new Camera(125, 200, 90);
-        assertEquals(0.01, camera.pixelSize(), 0.1);
+        assertEquals(0.01, camera.pixelSize());
     }
 
     @Test
@@ -64,7 +64,6 @@ class CameraTest {
         assertEquals(new Vector(0, 0, -1), ray.getDirectionVector());
     }
 
-    /*TODO Test results dont fit
     @Test
     void rayThroughCanvasCornerTest() {
         Camera camera = new Camera(201, 101, 90);
@@ -72,7 +71,7 @@ class CameraTest {
 
         assertEquals(new Point(0, 0, 0), ray.getOriginPoint());
         assertEquals(new Vector(0.665186, 0.332593, -0.668512), ray.getDirectionVector());
-    }*/
+    }
 
     @Test
     void rayWithTransformedCameraTest() {

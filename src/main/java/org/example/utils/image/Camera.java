@@ -51,9 +51,11 @@ public class Camera {
 
     /**
      * @return opposite side of the right-angled triangle between vpn and origin
+     * *** toRadians converts angle measured in degrees to an approximately equivalent angle measured in radians. ***
+     * -> because Math.tan() expects it
      */
     private double halfView() {
-        return Math.tan(fov / 2.0);
+        return Math.round(Math.tan(Math.toRadians(fov / 2.0)));
     }
 
     /**
@@ -61,16 +63,18 @@ public class Camera {
      * checks for orientation format -> adjusts the size accordingly
      */
     public double pixelSize() {
+        var halfView = halfView();
+
         if (aspectRatio() < 1) {    //vertical format
-            halfHeight = halfView();
-            halfWidth = halfView() * aspectRatio();
+            halfHeight = halfView;
+            halfWidth = halfView * aspectRatio();
         } else {                    //horizontal format
-            halfWidth = halfView();
-            halfHeight = halfView() / aspectRatio();
+            halfWidth = halfView;
+            halfHeight = halfView / aspectRatio();
         }
 
         // pixels are assumed to be square -> single value
-        return (2 * halfWidth / width);
+        return (2 * halfWidth) / width;
     }
 
     /**

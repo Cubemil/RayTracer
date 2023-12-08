@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
+import static org.example.utils.intersections.IntersectionManager.combineIntersections;
+
 public class Scene {
 
     /*------------------------------------attributes------------------------------------*/
@@ -31,8 +33,10 @@ public class Scene {
      * -> contains every Intersection of the ray with every object in the scene
      */
     public IntersectionManager traceRay(Ray ray) {
+        assert objects != null : "Objects list not initialized";
+
         var intersectionList = objects.stream().map(o -> o.intersect(ray)).collect(Collectors.toCollection(ArrayList::new));
-        return new IntersectionManager().combineIntersections(intersectionList);
+        return combineIntersections(intersectionList);
     }
 
     /*---------------------------------structure methods--------------------------------*/
@@ -56,6 +60,7 @@ public class Scene {
      * @param newShape varargs to add any objects to the scene
      */
     public void addObject(Shape... newShape) {
+        if (newShape == null) throw new IllegalArgumentException("newShape cannot be null");
         this.objects.addAll(Arrays.asList(newShape));
     }
 

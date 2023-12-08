@@ -1,7 +1,9 @@
-package org.example.utils.image;
+package org.example.utils.application;
 
 import org.example.math.*;
 import org.example.objects.Sphere;
+import org.example.utils.image.Canvas;
+import org.example.utils.image.Color;
 import org.example.utils.intersections.*;
 
 public class TestImageCreator {
