@@ -50,6 +50,20 @@ public class Scene {
     }
 
     /**
+     * @return scene with three different spheres for testing
+     */
+    public static Scene threeSpheresScene() {
+        Scene scene = new Scene();
+
+        Sphere sphere1 = new Sphere(new Point(-0.5, 1, 0.5), 1);
+        Sphere sphere2 = new Sphere(new Point(1.5,0.5,-0.5), 0.5);
+        Sphere sphere3 = new Sphere(new Point(-1.5, 0.33, -0.75), 0.33);
+
+        scene.addObject(sphere1, sphere2, sphere3);
+        return scene;
+    }
+
+    /**
      * @param newShape varargs to add any objects to the scene
      */
     public void addObject(Shape... newShape) {

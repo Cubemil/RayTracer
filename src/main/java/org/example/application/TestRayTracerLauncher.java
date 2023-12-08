@@ -55,6 +55,8 @@ public class TestRayTracerLauncher {
         // Three spheres test image
         createThreeSpheresImage();
 
+        createSphereGridImage();
+
     }
 
 
@@ -67,12 +69,8 @@ public class TestRayTracerLauncher {
     }
 
     private static void createThreeSpheresImage() {
-        Sphere sphere1 = new Sphere(new Point(-0.5, 1, 0.5), 1);
-        Sphere sphere2 = new Sphere(new Point(1.5,0.5,-0.5), 0.5);
-        Sphere sphere3 = new Sphere(new Point(-1.5, 0.33, -0.75), 0.33);
-        Scene scene = new Scene();
+        Scene scene = Scene.threeSpheresScene();
 
-        scene.addObject(sphere1, sphere2, sphere3);
         Camera camera = new Camera(
                 800, 400, 60,
                 new Point(0.0, 1.5, -5.0),
@@ -80,6 +78,24 @@ public class TestRayTracerLauncher {
                 new Vector(0, 1, 0));
 
         createImage(scene, camera, "Images/TestRayTracer/threeSpheresImage");
+    }
+
+    private static void createSphereGridImage() {
+        Scene scene = new Scene();
+
+        for (int y = -3; y < 4; y++) {
+            for (int x = -3; x < 4; x++) {
+                scene.addObject(new Sphere(new Point(x, y, 0), 0.4));
+            }
+        }
+
+        Camera camera = new Camera(
+                400, 400, 90,
+                new Point(0, 0, -5),
+                new Point(0, 0, 0),
+                new Vector(0, 1, 0));
+
+        createImage(scene, camera, "Images/TestRayTracer/sphereGridImage");
     }
 
 }
