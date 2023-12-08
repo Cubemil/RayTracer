@@ -5,8 +5,21 @@ import org.example.math.*;
 
 public class Sphere extends Shape {
 
-    private final Point m = new Point(0,0,0);    // center Point
-    private final double r = 1.0;   // radius 1
+    private final Point m;
+    private final double r;
+
+    // default Sphere
+    public Sphere() {
+        this.m = new Point(0, 0, 0);   // center Point
+        this.r = 1.0;                           // radius 1
+    }
+
+    // custom Sphere
+    public Sphere(Point m, double r) {
+        this.m = m;
+        this.r = r;
+    }
+
     /**
      * @param localRay ray to check for intersections
      * -> later Transformed according to transformation Matrix of Sphere

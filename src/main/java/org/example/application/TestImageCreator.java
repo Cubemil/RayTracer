@@ -1,4 +1,4 @@
-package org.example.utils.application;
+package org.example.application;
 
 import org.example.math.*;
 import org.example.objects.Sphere;

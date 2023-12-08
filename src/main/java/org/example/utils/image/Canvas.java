@@ -42,7 +42,8 @@ public class Canvas {
     }
 
     public void writeFile(String newName) {
-        new Canvas(width, height, newName).writeFile();
+        this.setFileName(newName);
+        this.writeFile();
     }
 
     public int getWidth() {
@@ -57,4 +58,7 @@ public class Canvas {
         return fileName;
     }
 
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
 }

@@ -1,4 +1,4 @@
-package org.example.utils.application;
+package org.example.application;
 
 import org.example.math.*;
 import org.example.objects.*;
@@ -8,13 +8,12 @@ public class RayTracerLauncher {
     public static void main(String[] args) {
 
         // Sphere
-        Sphere sphere = new Sphere();
-        sphere.setTransformationMatrix(Matrix.scale(0.5, 0.5, 0.5));
+        Sphere sphere = new Sphere(new Point(0,0,0), 0.5);
         // Scene
         Scene scene = new Scene();
         scene.addObject(sphere);
 
-    /*----------------------------------Test 1----------------------------------*/
+/*----------------------------------Test 1----------------------------------*/
 
         // Camera
         Matrix viewTransform1 = Matrix.viewTransform(
@@ -26,7 +25,7 @@ public class RayTracerLauncher {
         // Ray Tracer
         createImage(scene, camera1, "Images/testImage1");
 
-    /*----------------------------------Test 2----------------------------------*/
+/*----------------------------------Test 2----------------------------------*/
 
         // View Transform
         Matrix viewTransform2 = Matrix.viewTransform(
@@ -39,7 +38,7 @@ public class RayTracerLauncher {
         // Ray Tracer
         createImage(scene, camera2, "Images/testImage2");
 
-    /*----------------------------------Test 3----------------------------------*/
+/*----------------------------------Test 3----------------------------------*/
 
         // View Transform
         Matrix viewTransform3 = Matrix.viewTransform(
@@ -52,14 +51,35 @@ public class RayTracerLauncher {
         // Ray Tracer
         createImage(scene, camera3, "Images/testImage3");
 
+/*-------------------------------Other Tests--------------------------------*/
+        // Three spheres test image
+        createThreeSpheresImage();
+
     }
+
 
     /*-------------------------------help functions-------------------------------*/
 
-    private static void createImage(Scene scene, Camera camera3, String newName) {
-        RayTracer rt = new RayTracer(scene, camera3);
+    private static void createImage(Scene scene, Camera camera, String newName) {
+        RayTracer rt = new RayTracer(scene, camera);
         rt.render();
         rt.getRenderTarget().writeFile(newName);
+    }
+
+    private static void createThreeSpheresImage() {
+        Sphere sphere1 = new Sphere(new Point(-0.5, 1, 0.5), 1);
+        Sphere sphere2 = new Sphere(new Point(1.5,0.5,-0.5), 0.5);
+        Sphere sphere3 = new Sphere(new Point(-1.5, 0.33, -0.75), 0.33);
+        Scene scene = new Scene();
+
+        scene.addObject(sphere1, sphere2, sphere3);
+        Camera camera = new Camera(
+                800, 400, 60,
+                new Point(0.0, 1.5, -5.0),
+                new Point(0.0, 1.0, 0.0),
+                new Vector(0, 1, 0));
+
+        createImage(scene, camera, "Images/threeSpheresImage");
     }
 
 }

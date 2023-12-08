@@ -2,7 +2,7 @@ package org.example.utils.image;
 
 public class Color {
 
-    public static final Color ORANGE = new Color(1, 1, 0);
+    public static final Color ORANGE = new Color(1, 0.5, 0);
     public static final Color BlUE = new Color(0, 0, 1);
     private final double r;
     private final double g;

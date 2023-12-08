@@ -55,7 +55,7 @@ public class Camera {
      * -> because Math.tan() expects it
      */
     private double halfView() {
-        return Math.round(Math.tan(Math.toRadians(fov / 2.0)));
+        return Math.tan(Math.toRadians(fov / 2.0));
     }
 
     /**
