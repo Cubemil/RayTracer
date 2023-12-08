@@ -1,4 +1,4 @@
-# org.example.utils.image.RayTracer
+# RayTracer
 by Emil Petersen
 
 ## Roadmap
@@ -10,7 +10,7 @@ by Emil Petersen
 - [x]  Chapter 4: Mathematical data structures - matrices
 - [x]  Chapter 5: Spheres and intersection with rays
 - [x]  Chapter 6: Mathematical data structures - transformationen
-- [x]  Chapter 7: org.example.utils.image.RayTracer basic structure, scenes and camera
+- [x]  Chapter 7: RayTracer basic structure, scenes and camera
 
 ## License
 This project is being made for Hochschule Anhalt - University of applied sciences, Germany
