@@ -14,16 +14,12 @@ public class Scene {
 
     /*------------------------------------attributes------------------------------------*/
 
-    private ArrayList<Shape> objects = new ArrayList<>();
+    private final ArrayList<Shape> objects = new ArrayList<>();
 
     /*TODO
     private ArrayList<LightSource> lightSources = new ArrayList<>();
     private ArrayList<Material> materials = new ArrayList<>();
     */
-
-    /*-----------------------------------constructors-----------------------------------*/
-
-
 
     /*--------------------------------calculation methods-------------------------------*/
 
@@ -33,10 +29,7 @@ public class Scene {
      * -> contains every Intersection of the ray with every object in the scene
      */
     public IntersectionManager traceRay(Ray ray) {
-        assert objects != null : "Objects list not initialized";
-
-        var intersectionList = objects.stream().map(o -> o.intersect(ray)).collect(Collectors.toCollection(ArrayList::new));
-        return combineIntersections(intersectionList);
+        return combineIntersections(objects.stream().map(o -> o.intersect(ray)).collect(Collectors.toCollection(ArrayList::new)));
     }
 
     /*---------------------------------structure methods--------------------------------*/
