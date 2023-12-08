@@ -34,5 +34,4 @@ public class RayTracer {
         return renderTarget;
     }
 
-
 }
