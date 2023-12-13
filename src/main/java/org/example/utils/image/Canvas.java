@@ -4,6 +4,7 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 
 public class Canvas {
 
@@ -29,12 +30,15 @@ public class Canvas {
     }
 
     public Color getPixelColor(int x, int y) {
-        return new Color(Math.round(outputImage.getRGB(x, y)));
+        return new Color(outputImage.getRGB(x, y));
     }
 
     public void writeFile() {
+        // adds current year, month, day, hour and minute to file name
+        String timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm").format(new java.util.Date());
+        // No need to check if fileName is an empty String
         try {
-            File outputFile = new File(fileName + ".png");
+            File outputFile = new File(fileName + timeStamp + ".png");
             ImageIO.write(outputImage, "png", outputFile);
         } catch (IOException e) {
             e.printStackTrace();
