@@ -271,13 +271,10 @@ public class TestCanvasCreator {
                 Ray ray = new Ray(new Point(0,0,-5), position);
                 IntersectionManager intersections = sphere.intersect(ray);
 
+                // at least one intersection: red
                 // no intersection: background blue
-                if (intersections.count() == 0) {
-                    image.setPixelColor(x, y, new Color(0, 0, 1));
-                } else {
-                    // at least one intersection: red
-                    image.setPixelColor(x, y, new Color(1, 0, 0));
-                }
+                image.setPixelColor(x, y, intersections.count() == 0 ? Color.BlUE : Color.ORANGE);
+
             }
         }
         image.writeFile();
