@@ -14,12 +14,6 @@ public class Sphere extends Shape {
         this.r = 1.0;                           // radius 1
     }
 
-    // custom Sphere
-    public Sphere(Point m, double r) {
-        this.m = m;
-        this.r = r;
-    }
-
     /**
      * @param localRay ray to check for intersections
      * -> later Transformed according to transformation Matrix of Sphere

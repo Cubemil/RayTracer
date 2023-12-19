@@ -8,7 +8,9 @@ public class TestRayTracerLauncher {
     public static void main(String[] args) {
 
         // Sphere
-        Sphere sphere = new Sphere(new Point(0,0,0), 0.5);
+        Sphere sphere = new Sphere();
+        sphere.setTransformationMatrix(Matrix.scale(0.5,0.5,0.5));
+
         // Scene
         Scene scene = new Scene();
         scene.addObject(sphere);
@@ -52,13 +54,13 @@ public class TestRayTracerLauncher {
         createImage(scene, camera3, "Images/TestRayTracer/testImage3");
 
 /*-------------------------------Other Tests--------------------------------*/
+
         // Three spheres test image
         createThreeSpheresImage();
 
         createSphereGridImage();
 
     }
-
 
     /*-------------------------------help functions-------------------------------*/
 
@@ -83,9 +85,11 @@ public class TestRayTracerLauncher {
     private static void createSphereGridImage() {
         Scene scene = new Scene();
 
-        for (int y = -3; y < 4; y++) {
-            for (int x = -3; x < 4; x++) {
-                scene.addObject(new Sphere(new Point(x, y, 0), 0.4));
+        for (int y = -3; y <= 3; y++) {
+            for (int x = -3; x <= 3; x++) {
+                Sphere sphere = new Sphere();
+                sphere.setTransformationMatrix(Matrix.translate(x, y, 0).mult(Matrix.scale(0.4,0.4,0.4)));
+                scene.addObject(sphere);
             }
         }
 

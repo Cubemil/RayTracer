@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
+import static org.example.math.Matrix.scale;
 import static org.example.utils.intersections.IntersectionManager.combineIntersections;
 
 public class Scene {
@@ -43,7 +44,7 @@ public class Scene {
         var defaultScene = new Scene();
         var normalSphere = new Sphere();
         var halfSizedSphere = new Sphere();
-        halfSizedSphere.setTransformationMatrix(Matrix.scale(0.5, 0.5, 0.5));
+        halfSizedSphere.setTransformationMatrix(scale(0.5, 0.5, 0.5));
 
         defaultScene.addObject(normalSphere, halfSizedSphere);
         return defaultScene;
@@ -54,12 +55,13 @@ public class Scene {
      */
     public static Scene threeSpheresScene() {
         Scene scene = new Scene();
+        Sphere[] spheres = new Sphere[]{new Sphere(), new Sphere(), new Sphere()};
 
-        Sphere sphere1 = new Sphere(new Point(-0.5, 1, 0.5), 1);
-        Sphere sphere2 = new Sphere(new Point(1.5,0.5,-0.5), 0.5);
-        Sphere sphere3 = new Sphere(new Point(-1.5, 0.33, -0.75), 0.33);
+        spheres[0].setTransformationMatrix(Matrix.translate(-0.5, 1, 0.5));
+        spheres[1].setTransformationMatrix(Matrix.translate(1.5, 0.5, -0.5).mult(scale(0.5, 0.5, 0.5)));
+        spheres[2].setTransformationMatrix(Matrix.translate(-1.5, 0.33, -0.75).mult(scale(0.33,0.33,0.33)));
 
-        scene.addObject(sphere1, sphere2, sphere3);
+        for (Sphere s : spheres) scene.addObject(s);
         return scene;
     }
 
