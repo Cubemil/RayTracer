@@ -85,8 +85,9 @@ public class Camera {
      */
     public Ray generateRay(int pixelX, int pixelY) {
         // determine offset from edge of Canvas to pixel center
-        var xOffset = (pixelX + 0.5) * pixelSize();
-        var yOffset = (pixelY + 0.5) * pixelSize();
+        var pixelSize = pixelSize();
+        var xOffset = (pixelX + 0.5) * pixelSize;
+        var yOffset = (pixelY + 0.5) * pixelSize;
 
         /* calculate pixel coordinate in world coords
         *  -> vpn goes through Canvas center

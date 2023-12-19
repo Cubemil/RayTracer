@@ -87,7 +87,9 @@ public class TestRayTracerLauncher {
 
         for (int y = -3; y < 4; y++) {
             for (int x = -3; x < 4; x++) {
-                scene.addObject(new Sphere(new Point(x, y, 0), 0.4));
+                Sphere sphere = new Sphere();
+                sphere.setTransformationMatrix(Matrix.scale(0.4, 0.4, 0.4).mult(Matrix.translate(-x, -y, 0)));
+                scene.addObject(sphere);
             }
         }
 
