@@ -85,10 +85,10 @@ public class TestRayTracerLauncher {
     private static void createSphereGridImage() {
         Scene scene = new Scene();
 
-        for (int y = -3; y < 4; y++) {
-            for (int x = -3; x < 4; x++) {
+        for (int y = -3; y <= 3; y++) {
+            for (int x = -3; x <= 3; x++) {
                 Sphere sphere = new Sphere();
-                sphere.setTransformationMatrix(Matrix.scale(0.4, 0.4, 0.4).mult(Matrix.translate(-x, -y, 0)));
+                sphere.setTransformationMatrix(Matrix.translate(x, y, 0).mult(Matrix.scale(0.4,0.4,0.4)));
                 scene.addObject(sphere);
             }
         }
