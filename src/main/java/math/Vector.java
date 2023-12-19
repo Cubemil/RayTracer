@@ -21,26 +21,33 @@ public final class Vector extends Tuple{
         this(values[0], values[1], values[2]);
     }
 
-    // Vektor + Vektor -> Vektor
-    // Komponentenweise Addition
+    /**
+     * @param vector to add
+     * @return vector + vector = vector
+     */
     public Vector add(Vector vector) {
         return new Vector(this.x + vector.x, this.y + vector.y, this.z + vector.z);
     }
 
-    // Vektor - Vektor -> Vektor
-    // Komponentenweise Subtraktion
+    /**
+     * @param vector to subtract
+     * @return vector - vector = vector
+     */
     public Vector sub(Vector vector) {
         return new Vector(this.x - vector.x, this.y - vector.y, this.z - vector.z);
     }
 
-    // -Vektor -> Vektor
-    // Komponentenweise Negation
+    /**
+     * @return vector with negative values
+     */
     public Vector neg() {
         return new Vector(-this.x, -this.y, -this.z);
     }
 
-    // Skalar * Vektor -> Vektor
-    // Komponentenweise Multiplikation mit dem Skalar
+    /**
+     * @param s scalar
+     * @return new vector scaled with s
+     */
     public Vector mult(double s) {
         return new Vector(
                 s * this.x,
@@ -48,6 +55,11 @@ public final class Vector extends Tuple{
                 s * this.z);
     }
 
+    /**
+     * @param s scalar
+     * @return new vector divided by s
+     * @throws IllegalArgumentException when s == 0
+     */
     // Skalar / Vektor -> Vektor
     // Komponentenweise Multiplikation mit dem Skalar
     public Vector div(double s) throws IllegalArgumentException {
@@ -58,32 +70,43 @@ public final class Vector extends Tuple{
                 this.z / s);
     }
 
-    // Länge eines Vektors → Double
-    // Wurzel aus dem Skalarprodukt des Vektors mit sich selbst
+    /**
+     * @return length of a vector, sqrt of dot with self
+     */
     public double magnitude() {
         return Math.sqrt(sqrMagnitude());
     }
 
-    // Länge eines Vektors quadriert → Double
+    /**
+     * @return mag of vector squared
+     */
     public double sqrMagnitude() {
-        return  this.x * this.x +
+        return this.x * this.x +
                 this.y * this.y +
                 this.z * this.z +
                 this.w * this.w;
     }
 
-    // Vektor normalisieren -> Vektor
+    /**
+     * @return normalised vector
+     */
     public Vector normalized() {
         double mag = magnitude();
         return mag != 0 ? new Vector(this.x / mag, this.y / mag, this.z / mag) : ZERO;
     }
 
-    // Skalarprodukt zweier Vektoren → Double
+    /**
+     * @param vector scalar-product of two vectors
+     * @return dot product
+     */
     public double dot(Vector vector) {
         return this.x * vector.x + this.y * vector.y + this.z * vector.z;
     }
 
-    // Kreuzprodukt zweier Vektoren → Vektor
+    /**
+     * @param vector other vector to be crossed with
+     * @return cross-product of two vectors
+     */
     public Vector cross(Vector vector) {
         return new Vector(
                 this.y * vector.z - this.z * vector.y,
@@ -91,7 +114,9 @@ public final class Vector extends Tuple{
                 this.x * vector.y - this.y * vector.x);
     }
 
-    // Check if the vector is normalized
+    /**
+     * @return true if vector is normalised
+     */
     public boolean isNormalized() {
         return Math.abs(this.magnitude() - 1.0) < 0.00001;
     }
