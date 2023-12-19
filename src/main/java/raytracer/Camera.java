@@ -1,6 +1,6 @@
-package org.example.utils.image;
+package raytracer;
 
-import org.example.math.*;
+import math.*;
 
 public class Camera {
 
