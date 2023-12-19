@@ -68,13 +68,11 @@ public class Sphere extends Shape {
     }
 
     /**
-     * @param point on the surface of the sphere
-     * @return the normal vector of the point
-     * -> here it is the same as the location vector of the point
+     * @param localPoint point in the local CS
+     * @return normal vector at given point
      */
-    @Override
-    public Vector normalAt(Point point) {
-        return new Vector(point.x(), point.y(), point.z());
+    private Vector localNormalAt(Point localPoint) {
+        return localPoint.sub(new Point(0, 0, 0));
     }
 
     public Point getM() {
