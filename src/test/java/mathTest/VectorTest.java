@@ -1,6 +1,6 @@
 package mathTest;
 
-import org.example.math.Vector;
+import math.Vector;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -108,7 +108,7 @@ class VectorTest {
     @Test
     void toStringTest() {
         Vector vector = new Vector(1, 2, 3);
-        assertEquals("Vector[x=1.0, y=2.0, z=3.0, w=0.0]", vector.toString());
+        assertEquals("(x: 1.0, y: 2.0, z: 3.0, w: 0.0)", vector.toString());
     }
 
 }

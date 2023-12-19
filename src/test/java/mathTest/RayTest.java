@@ -1,8 +1,8 @@
 package mathTest;
 
-import org.example.math.Point;
-import org.example.math.Ray;
-import org.example.math.Vector;
+import math.Point;
+import raytracer.Ray;
+import math.Vector;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

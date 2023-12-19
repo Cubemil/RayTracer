@@ -1,7 +1,7 @@
 package mathTest;
 
-import org.example.math.Point;
-import org.example.math.Vector;
+import math.Point;
+import math.Vector;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -95,6 +95,6 @@ class PointTest {
     @Test
     void toStringTest() {
         Point point = new Point(1, 2, 3);
-        assertEquals("Point[x=1.0, y=2.0, z=3.0, w=1.0]",point.toString());
+        assertEquals("(x: 1.0, y: 2.0, z: 3.0, w: 1.0)",point.toString());
     }
 }
