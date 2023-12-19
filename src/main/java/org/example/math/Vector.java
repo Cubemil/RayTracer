@@ -5,7 +5,7 @@ public final class Vector {
     private final double x;
     private final double y;
     private final double z;
-    private final double w;
+    private double w;
 
     public Vector(double x, double y, double z) {
         this.x = x;
@@ -134,4 +134,7 @@ public final class Vector {
         return Math.abs(this.magnitude() - 1.0) < 0.00001;
     }
 
+    public void setW(double w) {
+        this.w = w;
+    }
 }
