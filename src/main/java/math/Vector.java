@@ -2,12 +2,16 @@ package math;
 
 public final class Vector extends Tuple{
 
+    //- constants -------------------------------------------------------------
+
     public static Vector ONE = new Vector(1, 1, 1);
     public static Vector ZERO = new Vector(0, 0, 0);
     public static Vector UP = new Vector(0, 1, 0);
     public static Vector DOWN = new Vector(0, -1, 0);
     public static Vector RIGHT = new Vector(1, 0, 0);
     public static Vector FORWARD = new Vector(0, 0, 1);
+
+    //- constructors ----------------------------------------------------------
 
     public Vector(double x, double y, double z) {
         super(x, y, z, 0.0);
@@ -20,6 +24,8 @@ public final class Vector extends Tuple{
     public Vector(double[] values) {
         this(values[0], values[1], values[2]);
     }
+
+    //- calc functions --------------------------------------------------------
 
     /**
      * @param vector to add
@@ -53,6 +59,14 @@ public final class Vector extends Tuple{
                 s * this.x,
                 s * this.y,
                 s * this.z);
+    }
+
+    /**
+     * @param vector to multiply with
+     * @return vector * vector = vector
+     */
+    public Vector mult(Vector vector) {
+        return new Vector(this.x * vector.x, this.y * vector.y, this.z * vector.z);
     }
 
     /**
@@ -119,6 +133,18 @@ public final class Vector extends Tuple{
      */
     public boolean isNormalized() {
         return Math.abs(this.magnitude() - 1.0) < 0.00001;
+    }
+
+    /**
+     * @param other normal Vector n
+     * @return a reflected vector from e (this)
+     * r = e - 2(e * n) * n
+     * @throws IllegalArgumentException if the input vector is not normalized
+     */
+    public Vector reflect(Vector other) throws IllegalArgumentException {
+        if (!other.isNormalized()) throw new IllegalArgumentException("Input vector must be a normalized vector.");
+
+        return this.sub((this.mult(other).mult(other)).mult(2));
     }
 
 }
