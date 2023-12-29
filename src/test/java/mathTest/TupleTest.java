@@ -16,7 +16,6 @@ class TupleTest {
         assertEquals(new Vector(1, 1, 0), reflect);
     }
 
-    //TODO Test is not working
     /*
     @Test
     void reflectingVectorSlantedSurfaceTest() {
