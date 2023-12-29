@@ -25,16 +25,31 @@ public class Scene {
     /**
      * @return a default test scene with:
      * -> normal, non-transformed Sphere
+     *      -> has certain custom Material
      * -> Sphere scaled 1/2 in all directions
+     *      -> has default Material
      * -> PointLightSource at a default position with intensity of 1 and white
      */
     public static Scene defaultScene() {
-        var defaultScene = new Scene();
-        var normalSphere = new Sphere();
-        var halfSizedSphere = new Sphere();
+        // custom Material
+        Material material = new Material();
+            material.setColor(new Color(0.8, 1.0, 0.6));
+            material.setDiffuse(0.7);
+            material.setSpecular(0.2);
+
+        // s1 Sphere with custom Material / no transformation
+        Sphere normalSphere = new Sphere();
+        normalSphere.setMaterial(material);
+
+        // s2 Sphere with default Material / scaled 0.5 in every direction
+        Sphere halfSizedSphere = new Sphere();
         halfSizedSphere.setTransformationMatrix(scale(0.5, 0.5, 0.5));
 
+        // create Scene object and add s1, s2
+        Scene defaultScene = new Scene();
         defaultScene.addObject(normalSphere, halfSizedSphere);
+
+        // also add a custom Point Light Source
         defaultScene.addLightSource(new PointLightSource(new Point(-10, 10, -10), new Color(1, 1, 1)));
 
         return defaultScene;

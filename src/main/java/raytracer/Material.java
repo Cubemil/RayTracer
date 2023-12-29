@@ -7,13 +7,12 @@ public class Material {
 
     /*-------------------------------attributes-------------------------------*/
 
-    private final Color color;            // color of the surface
+    private Color color;            // color of the surface
 
-    private final double ambient;         // ambient reflection coefficient (0-1) -> share of basic brightness of the scene
-    private final double diffuse;         // diffuse reflection coefficient (0-1) -> share of matte or diffused reflections
-    private final double specular;        // specularity reflection coefficient (0-1) -> share of shining/specular reflections
-
-    private final int shininess;          // shininess of material
+    private double ambient;         // ambient reflection coefficient (0-1) -> share of basic brightness of the scene
+    private double diffuse;         // diffuse reflection coefficient (0-1) -> share of matte or diffused reflections
+    private double specular;        // specularity reflection coefficient (0-1) -> share of shining/specular reflection
+    private int shininess;          // shininess of material
 
     /*-------------------------------constructors-----------------------------*/
 
@@ -65,6 +64,26 @@ public class Material {
 
     public int getShininess() {
         return shininess;
+    }
+
+    public void setColor(Color color) {
+        this.color = color;
+    }
+
+    public void setAmbient(double ambient) {
+        this.ambient = ambient;
+    }
+
+    public void setDiffuse(double diffuse) {
+        this.diffuse = diffuse;
+    }
+
+    public void setSpecular(double specular) {
+        this.specular = specular;
+    }
+
+    public void setShininess(int shininess) {
+        this.shininess = shininess;
     }
 
     @Override

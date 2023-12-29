@@ -1,5 +1,6 @@
 package raytracer;
 
+import math.MUtils;
 import math.Point;
 import math.Color;
 
@@ -31,4 +32,15 @@ public class PointLightSource extends LightSource {
     public double getIntensity() {
         return intensity;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof PointLightSource other) {
+            return  this.color.equals(other.getColor()) &&
+                    this.position.equals(other.getPosition()) &&
+                    MUtils.approxEqual(this.intensity, other.intensity);
+        }
+        return false;
+    }
+
 }

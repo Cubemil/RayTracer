@@ -1,11 +1,8 @@
 package raytracerTest;
 
 import math.*;
-import raytracer.PointLightSource;
-import raytracer.Ray;
+import raytracer.*;
 import raytracer.geometry.Sphere;
-import raytracer.Scene;
-import raytracer.IntersectionManager;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -70,6 +67,28 @@ class SceneTest {
 
         scene.addLightSource(light);
         assertTrue(scene.getLightSources().contains(light));
+    }
+
+    @Test
+    void defaultWorldTest() {
+        PointLightSource light = new PointLightSource(new Point(-10, 10, -10), new Color(1, 1, 1));
+
+        Material material = new Material();
+            material.setColor(new Color(0.8, 1.0, 0.6));
+            material.setDiffuse(0.7);
+            material.setSpecular(0.2);
+
+        Sphere s1 = new Sphere();
+        s1.setMaterial(material);
+
+        Sphere s2 = new Sphere();
+        s2.setTransformationMatrix(Matrix.scale(0.5, 0.5, 0.5));
+
+        Scene scene = Scene.defaultScene();
+
+        assertEquals(light, scene.getLightSources().get(0));
+        assertTrue(scene.getObjects().contains(s1));
+        assertTrue(scene.getObjects().contains(s2));
     }
 
 }
