@@ -136,15 +136,17 @@ public final class Vector extends Tuple{
     }
 
     /**
-     * @param other normal Vector n
+     * @param normal normal Vector n
      * @return a reflected vector from e (this)
      * r = e - 2(e * n) * n
      * @throws IllegalArgumentException if the input vector is not normalized
      */
-    public Vector reflect(Vector other) throws IllegalArgumentException {
-        if (!other.isNormalized()) throw new IllegalArgumentException("Input vector must be a normalized vector.");
+    public Vector reflect(Vector normal) throws IllegalArgumentException {
+        if (!normal.isNormalized()) throw new IllegalArgumentException("Input vector is not normalized.");
 
-        return this.sub((this.mult(other).mult(other)).mult(2));
+        double s = this.dot(normal);
+        return this.sub(normal.mult(2 * s));
     }
+
 
 }
