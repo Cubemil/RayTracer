@@ -16,28 +16,17 @@ public class Scene {
 
     private final ArrayList<Shape> objects = new ArrayList<>();
 
-    /*TODO
-    private ArrayList<LightSource> lightSources = new ArrayList<>();
-    private ArrayList<Material> materials = new ArrayList<>();
-    */
+    private final ArrayList<LightSource> lightSources = new ArrayList<>();
 
-    /*--------------------------------calculation methods-------------------------------*/
+    private final ArrayList<Material> materials = new ArrayList<>();
 
-    /**
-     * @param ray current Ray to send through the scene
-     * @return a new IntersectionManager
-     * -> contains every Intersection of the ray with every object in the scene
-     */
-    public IntersectionManager traceRay(Ray ray) {
-        return IntersectionManager.combineIntersections(objects.stream().map(o -> o.intersect(ray)).collect(Collectors.toCollection(ArrayList::new)));
-    }
-
-    /*---------------------------------structure methods--------------------------------*/
+    /*-------------------------------predefined scenes-------------------------------*/
 
     /**
      * @return a default test scene with:
      * -> normal, non-transformed Sphere
      * -> Sphere scaled 1/2 in all directions
+     * -> PointLightSource at a default position with intensity of 1 and white
      */
     public static Scene defaultScene() {
         var defaultScene = new Scene();
@@ -46,6 +35,8 @@ public class Scene {
         halfSizedSphere.setTransformationMatrix(scale(0.5, 0.5, 0.5));
 
         defaultScene.addObject(normalSphere, halfSizedSphere);
+        defaultScene.addLightSource(new PointLightSource(new Point(-10, 10, -10), new Color(1, 1, 1)));
+
         return defaultScene;
     }
 
@@ -64,19 +55,49 @@ public class Scene {
         return scene;
     }
 
+    /*--------------------------------calculation methods-------------------------------*/
+
     /**
-     * @param newShape varargs to add any objects to the scene
+     * @param ray current Ray to send through the scene
+     * @return a new IntersectionManager
+     * -> contains every Intersection of the ray with every object in the scene
      */
-    public void addObject(Shape... newShape) {
-        if (newShape == null) throw new IllegalArgumentException("newShape cannot be null");
-        this.objects.addAll(Arrays.asList(newShape));
+    public IntersectionManager traceRay(Ray ray) {
+        return IntersectionManager.combineIntersections(objects.stream().map(o -> o.intersect(ray)).collect(Collectors.toCollection(ArrayList::new)));
+    }
+
+    /*---------------------------------structure methods--------------------------------*/
+
+    /**
+     * @param shape varargs to add any objects to the scene
+     */
+    public void addObject(Shape... shape) {
+        if (shape == null) throw new IllegalArgumentException("shape cannot be null");
+        this.objects.addAll(Arrays.asList(shape));
+    }
+
+    /**
+     * @param light varargs to add any light sources to the scene
+     */
+    public void addLightSource(LightSource... light) {
+        if (light == null) throw new IllegalArgumentException("light cannot be null");
+        this.lightSources.addAll(Arrays.asList(light));
     }
 
     /**
      * @return reference to object ArrayList
+     * access to objects in list by index -> 0 indexed
      */
     public ArrayList<Shape> getObjects() {
         return objects;
+    }
+
+    /**
+     * @return reference to light sources ArrayList
+     * access to lights in list by index -> 0 indexed
+     */
+    public ArrayList<LightSource> getLightSources() {
+        return lightSources;
     }
 
 }

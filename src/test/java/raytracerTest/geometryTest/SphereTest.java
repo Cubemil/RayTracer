@@ -2,6 +2,7 @@ package raytracerTest.geometryTest;
 
 import math.Matrix;
 import math.Point;
+import raytracer.Material;
 import raytracer.Ray;
 import math.Vector;
 import raytracer.geometry.Sphere;
@@ -122,5 +123,25 @@ class SphereTest {
 
         assertEquals(new Vector(0, 0.970142, -0.242536), n);
     }
+
+    /*---------------------------Testing Material---------------------------*/
+
+    @Test
+    void sphereDefaultMaterialTest() {
+        Sphere sphere = new Sphere();
+        Material material = sphere.getMaterial();
+
+        assertEquals(new Material(), material);
+    }
+
+    @Test
+    void sphereAssignedMaterialTest() {
+        Sphere sphere = new Sphere();
+        Material material = new Material();
+        sphere.setMaterial(material);
+
+        assertEquals(material, sphere.getMaterial());
+    }
+
 
 }

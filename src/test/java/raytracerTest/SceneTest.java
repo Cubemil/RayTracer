@@ -1,6 +1,7 @@
 package raytracerTest;
 
 import math.*;
+import raytracer.PointLightSource;
 import raytracer.Ray;
 import raytracer.geometry.Sphere;
 import raytracer.Scene;
@@ -50,6 +51,25 @@ class SceneTest {
         assertEquals(4.5, xs.get(1).t());
         assertEquals(5.5, xs.get(2).t());
         assertEquals(6, xs.get(3).t());
+    }
+
+    /*---------------------------Light sources testing---------------------------*/
+
+    @Test
+    void sceneWithLightsTest() {
+        Scene scene = new Scene();
+
+        assertTrue(scene.getObjects().isEmpty());
+        assertTrue(scene.getLightSources().isEmpty());
+    }
+
+    @Test
+    void addingLightsToSceneTest() {
+        Scene scene = new Scene();
+        PointLightSource light = new PointLightSource(new Point(-10, 10, -10), new Color(1, 1, 1));
+
+        scene.addLightSource(light);
+        assertTrue(scene.getLightSources().contains(light));
     }
 
 }

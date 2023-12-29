@@ -1,10 +1,14 @@
 package raytracer.geometry;
 
 import raytracer.IntersectionManager;
+import raytracer.Material;
 import raytracer.Ray;
 import math.*;
 
 public abstract class Shape {
+
+    protected Material material = new Material();
+    private Matrix transformationMatrix = Matrix.identityMatrix();
 
     public abstract IntersectionManager localIntersect(Ray localRay);
 
@@ -32,7 +36,13 @@ public abstract class Shape {
         return worldNormal.normalized();
     }
 
-    private Matrix transformationMatrix = Matrix.identityMatrix();
+    public Material getMaterial() {
+        return material;
+    }
+
+    public void setMaterial(Material material) {
+        this.material = material;
+    }
 
     public Matrix getTransformationMatrix() {
         return transformationMatrix;
@@ -41,4 +51,5 @@ public abstract class Shape {
     public void setTransformationMatrix(Matrix transformationMatrix) {
         this.transformationMatrix = transformationMatrix;
     }
+
 }
