@@ -101,7 +101,7 @@ public class Scene {
 
     /**
      * @return reference to object ArrayList
-     * access to objects in list by index -> 0 indexed
+     * access to objects in list by .get(index) -> 0 indexed
      */
     public ArrayList<Shape> getObjects() {
         return objects;
@@ -109,7 +109,7 @@ public class Scene {
 
     /**
      * @return reference to light sources ArrayList
-     * access to lights in list by index -> 0 indexed
+     * access to lights in list by .get(index) -> 0 indexed
      */
     public ArrayList<LightSource> getLightSources() {
         return lightSources;

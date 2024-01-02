@@ -4,15 +4,16 @@ public record Color(double red, double green, double blue) {
 
     //- example constants -----------------------------------------------------
 
-    public static Color PINK = new Color(1.0, 16 / 255.0, 240 / 255.0);
-    public static Color BLACK = new Color(0.0, 0.0, 0.0);
-    public static Color WHITE = new Color(1.0, 1.0, 1.0);
-    public static Color RED = new Color(1.0, 0.0, 0.0);
-    public static Color GREEN = new Color(0.0, 1.0, 0.0);
-    public static Color BLUE = new Color(0.0, 0.0, 1.0);
-    public static Color ORANGE = new Color(1.0, 0.4, 0.0);
-    public static Color CORNFLOWERBLUE = new Color(0.3922, 0.5843, 0.9294);
-    public static Color NEONGREEN = new Color(0.224, 1.00, 0.78);
+    public static final Color PINK = new Color(1.0, 16 / 255.0, 240 / 255.0);
+    public static final Color BLACK = new Color(0.0, 0.0, 0.0);
+    public static final Color WHITE = new Color(1.0, 1.0, 1.0);
+    public static final Color RED = new Color(1.0, 0.0, 0.0);
+    public static final Color GREEN = new Color(0.0, 1.0, 0.0);
+    public static final Color BLUE = new Color(0.0, 0.0, 1.0);
+    public static final Color YELLOW = new Color(1.0, 1.0, 0.0);
+    public static final Color ORANGE = new Color(1.0, 0.4, 0.0);
+    public static final Color CORNFLOWERBLUE = new Color(0.3922, 0.5843, 0.9294);
+    public static final Color NEONGREEN = new Color(0.224, 1.00, 0.78);
 
     //- constructors ----------------------------------------------------------
 

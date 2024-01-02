@@ -1,6 +1,7 @@
 package raytracer;
 
 import math.Color;
+import math.Point;
 
 public class RayTracer {
 
@@ -23,13 +24,30 @@ public class RayTracer {
         for (int y = 0; y < camera.getHeight(); y++) {
             for (int x = 0; x < camera.getWidth(); x++) {
                 Ray ray = camera.generateRay(x, y);
-                var intersectionManager = scene.traceRay(ray);
-                if (intersectionManager.hit() != null) renderTarget.setPixelColor(x, y, Color.ORANGE);
-                else renderTarget.setPixelColor(x, y, Color.CORNFLOWERBLUE);
+                var hit = scene.traceRay(ray).hit();
+
+                if (hit == null) renderTarget.setPixelColor(x, y, Color.CORNFLOWERBLUE);
+                else {
+                    // get Material from hit-shape
+                    Material mat = hit.shape().getMaterial();
+                    // get surface point at hit
+                    Point position = ray.pointAt(hit.t());
+                    // direction to observer is negative ray direction
+                    var observer = ray.getDirectionVector().neg();
+                    // normal at intersection
+                    var normal = hit.shape().normalAt(position);
+
+                    // execute Phong lighting
+                    var color = mat.phongLighting(scene.getLightSources().get(0), position, observer, normal);
+                    renderTarget.setPixelColor(x, y, color);
+                }
             }
         }
     }
 
+    /**
+     * @return reference to renderTarget Canvas object
+     */
     public Canvas getRenderTarget() {
         return renderTarget;
     }

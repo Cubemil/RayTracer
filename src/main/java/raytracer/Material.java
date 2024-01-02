@@ -74,9 +74,9 @@ public class Material {
         Color lightColor = lightSource.getColor();
         Vector l = lightSource.getPosition().sub(position).normalized();
 
-        return  color.mult(ambient)
+        return  (color.mult(ambient)
                 .add(lightColor.mult(color).mult(diffuse).mult(normal.dot(l)))
-                .add(lightColor.mult(specular).mult(Math.pow(observer.normalized().dot(l.reflect(normal)), shininess)));
+                .add(lightColor.mult(specular).mult(Math.pow(observer.normalized().dot(l.reflect(normal)), shininess)))).clamped();
     }
 
     /*----------------------------structure functions-------------------------*/
