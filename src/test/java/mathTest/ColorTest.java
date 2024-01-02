@@ -40,8 +40,8 @@ class ColorTest {
         Color color2 = new Color(0.8, 1.2, 1.6);
 
         Color result = new Color(0.4, 0.6, 0.8);
-        assertEquals(result, color1.scaled(2));
-        assertEquals(result, color2.scaled(0.5));
+        assertEquals(result, color1.mult(2));
+        assertEquals(result, color2.mult(0.5));
     }
 
     // multiplying colors using the Hadamard product

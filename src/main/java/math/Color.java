@@ -58,7 +58,7 @@ public record Color(double red, double green, double blue) {
         return new Color(red * other.red(), green * other.green(), blue * other.blue());
     }
 
-    public Color scaled(double value) {
+    public Color mult(double value) {
         return new Color(red * value, green * value, blue * value);
     }
 
