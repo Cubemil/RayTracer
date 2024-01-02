@@ -7,7 +7,7 @@ import raytracer.PointLightSource;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class PointLightSourceTest {
+class LightSourceTest {
 
     @Test
     void pointLightPositionAndIntensityTest() {
