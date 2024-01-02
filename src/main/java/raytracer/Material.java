@@ -2,6 +2,8 @@ package raytracer;
 
 import math.Color;
 import math.MUtils;
+import math.Point;
+import math.Vector;
 
 public class Material {
 
@@ -43,6 +45,39 @@ public class Material {
 
     // pink testing material with diffused reflection only
     public static Material TESTING_MATERIAL = new Material(new Color(1, 0, 1), 0, 1, 0, 0);
+
+    /*---------------------------calculation functions------------------------*/
+
+    /**
+     * @param lightSource   light source
+     * @param position      the object's surface point at which the calculation happens
+     *                          -> intersection of ray
+     *                          -> gives us the corresponding material
+     * @param observer      Vector from intersection point to observer
+     * @param normal        normal Vector at the intersection point
+     * @return              Color containing the correct lighting conditions given the parameters
+     * -------------------------------------------------------------------------
+     * > calculates the color after the lighting model Phong
+     * > r = reflected observer Vector
+     * > l = Vector from position to light source
+     * > kA = ambient  part
+     * > kD = diffuse  part
+     * > kS = specular part
+     * > I  = resulting Color
+     *      IL = light source color and intensity
+     *      O  = material color
+     * > I = kA * O + IL * O * kD * (normal * l) + IL * kS * (observer * r) ^ normal
+     *
+     * -------------------------------------------------------------------------
+     */
+    public Color phongLighting(LightSource lightSource, Point position, Vector observer, Vector normal) {
+        Color lightColor = lightSource.getColor();
+        Vector l = lightSource.getPosition().sub(position).normalized();
+
+        return  color.mult(ambient)
+                .add(lightColor.mult(color).mult(diffuse).mult(normal.dot(l)))
+                .add(lightColor.mult(specular).mult(Math.pow(observer.normalized().dot(l.reflect(normal)), shininess)));
+    }
 
     /*----------------------------structure functions-------------------------*/
 
