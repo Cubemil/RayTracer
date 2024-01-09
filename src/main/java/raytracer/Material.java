@@ -66,7 +66,7 @@ public class Material {
      * > I  = resulting Color
      *      IL = light source color and intensity
      *      O  = material color
-     * > I = kA * O + IL * O * kD * (normal * l) + IL * kS * (observer * r) ^ normal
+     * > I = kA * O + IL * O * kD * (normal * l) + IL * kS * (observer * r) ^ shininess
      *
      * -------------------------------------------------------------------------
      */
@@ -74,9 +74,22 @@ public class Material {
         Color lightColor = lightSource.getColor();
         Vector l = lightSource.getPosition().sub(position).normalized();
 
-        return  (color.mult(ambient)
-                .add(lightColor.mult(color).mult(diffuse).mult(normal.dot(l)))
-                .add(lightColor.mult(specular).mult(Math.pow(observer.normalized().dot(l.reflect(normal)), shininess)))).clamped();
+        // O * kA
+        var ambientPart = color.mult(ambient);
+
+        // (normal * l) -> dot product
+        // only have an influence when dot product is positive
+        var diffuseDotProduct = Math.max(normal.dot(l), 0.00001);
+        // IL * O * kD * diffuseDotProduct
+        var diffusePart = lightColor.mult(color).mult(diffuse).mult(diffuseDotProduct);
+
+        // (observer * r) -> dot product
+        var specularDotProduct = Math.max(observer.normalized().dot(l.reflect(normal)), 0.00001);
+        // IL * kS * specularDotProduct TIMES shininess
+        var specularPart = lightColor.mult(specular).mult(Math.pow(specularDotProduct, shininess));
+
+        // return Color from the sum of all three parts
+        return ambientPart.add(diffusePart.add(specularPart));
     }
 
     /*----------------------------structure functions-------------------------*/

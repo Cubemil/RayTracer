@@ -39,7 +39,7 @@ public class RayTracer {
 
                     // execute Phong lighting
                     var color = mat.phongLighting(scene.getLightSources().get(0), position, observer, normal);
-                    renderTarget.setPixelColor(x, y, color);
+                    renderTarget.setPixelColor(x, y, color.clamped());
                 }
             }
         }
