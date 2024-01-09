@@ -42,12 +42,10 @@ public class TestPhongModel {
         Material green = new Material();
             green.setColor(Color.GREEN);
         Material lime = new Material();
-            lime.setColor(Color.NEONGREEN);
+            lime.setColor(Color.NEON_GREEN);
         threeSpherePhongScene("threeSpheresYellowGreenLime", green, lime, yellow);
 
-
     }
-
 
     /*----------------------------help functions--------------------------*/
 

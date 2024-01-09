@@ -2,9 +2,9 @@ package math;
 
 public class Tuple {
 
-    protected double x;
-    protected double y;
-    protected double z;
+    protected final double x;
+    protected final double y;
+    protected final double z;
     protected double w;
 
     //- constructors ----------------------------------------------------------

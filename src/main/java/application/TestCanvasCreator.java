@@ -4,7 +4,6 @@ import math.*;
 import raytracer.Ray;
 import raytracer.geometry.Sphere;
 import raytracer.Canvas;
-import math.Color;
 import raytracer.IntersectionManager;
 
 public class TestCanvasCreator {

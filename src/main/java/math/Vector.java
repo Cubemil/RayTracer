@@ -4,12 +4,12 @@ public final class Vector extends Tuple{
 
     //- constants -------------------------------------------------------------
 
-    public static Vector ONE = new Vector(1, 1, 1);
-    public static Vector ZERO = new Vector(0, 0, 0);
-    public static Vector UP = new Vector(0, 1, 0);
-    public static Vector DOWN = new Vector(0, -1, 0);
-    public static Vector RIGHT = new Vector(1, 0, 0);
-    public static Vector FORWARD = new Vector(0, 0, 1);
+    public final static Vector ONE = new Vector(1, 1, 1);
+    public final static Vector ZERO = new Vector(0, 0, 0);
+    public final static Vector UP = new Vector(0, 1, 0);
+    public final static Vector DOWN = new Vector(0, -1, 0);
+    public final static Vector RIGHT = new Vector(1, 0, 0);
+    public final static Vector FORWARD = new Vector(0, 0, 1);
 
     //- constructors ----------------------------------------------------------
 
@@ -77,7 +77,7 @@ public final class Vector extends Tuple{
     // Skalar / Vektor -> Vektor
     // Komponentenweise Multiplikation mit dem Skalar
     public Vector div(double s) throws IllegalArgumentException {
-        if (s == 0) throw new IllegalArgumentException();
+        if (s == 0) throw new IllegalArgumentException("Vector division by zero");
         return new Vector(
                 this.x / s,
                 this.y / s,

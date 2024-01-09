@@ -13,7 +13,7 @@ public record Color(double red, double green, double blue) {
     public static final Color YELLOW = new Color(1.0, 1.0, 0.0);
     public static final Color ORANGE = new Color(1.0, 0.4, 0.0);
     public static final Color CORNFLOWERBLUE = new Color(0.3922, 0.5843, 0.9294);
-    public static final Color NEONGREEN = new Color(0.224, 1.00, 0.78);
+    public static final Color NEON_GREEN = new Color(0.224, 1.00, 0.78);
 
     //- constructors ----------------------------------------------------------
 
