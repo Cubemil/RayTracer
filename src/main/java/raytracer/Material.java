@@ -79,14 +79,22 @@ public class Material {
 
         // (normal * l) -> dot product
         // only have an influence when dot product is positive
-        var diffuseDotProduct = Math.max(normal.dot(l), 0.00001);
+        var diffuseDotProduct = l.dot(normal);
         // IL * O * kD * diffuseDotProduct
-        var diffusePart = lightColor.mult(color).mult(diffuse).mult(diffuseDotProduct);
+        Color diffusePart = lightColor.mult(diffuse).mult(Math.max(diffuseDotProduct, 0));
 
         // (observer * r) -> dot product
-        var specularDotProduct = Math.max(observer.normalized().dot(l.reflect(normal)), 0.00001);
-        // IL * kS * specularDotProduct TIMES shininess
-        var specularPart = lightColor.mult(specular).mult(Math.pow(specularDotProduct, shininess));
+        var specularDotProduct = l.neg().reflect(normal).dot(observer);
+
+        // default color if dot product is negative
+        var specularPart = new Color(0, 0, 0);
+
+        if (specularDotProduct > 0) {
+            // specularDot ^ shininess
+            var reflectExponent = Math.pow(specularDotProduct, shininess);
+            // IL * kS * reflectExponent
+            specularPart = lightColor.mult(specular).mult(reflectExponent);
+        }
 
         // return Color from the sum of all three parts
         return ambientPart.add(diffusePart.add(specularPart));
