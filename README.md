@@ -11,7 +11,8 @@ by Emil Petersen
 - [x]  Chapter 5: Spheres and intersection with rays
 - [x]  Chapter 6: Mathematical data structures - transformationen
 - [x]  Chapter 7: RayTracer basic structure, scenes and camera
-- [x]  Chapter 8: Lighting Model Implementation
+- [x]  Chapter 8: Lighting model implementation
+- [ ]  Chapter 9: Shadows and light sources - recursive
 
 ## License
 This project is being made for Hochschule Anhalt - University of applied sciences, Germany
