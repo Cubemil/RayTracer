@@ -81,7 +81,7 @@ public class Material {
         // only have an influence when dot product is positive
         var diffuseDotProduct = l.dot(normal);
         // IL * O * kD * diffuseDotProduct
-        Color diffusePart = lightColor.mult(diffuse).mult(Math.max(diffuseDotProduct, 0));
+        Color diffusePart = lightColor.mult(color).mult(diffuse).mult(Math.max(diffuseDotProduct, 0));
 
         // (viewDirection * r) -> dot product
         var specularDotProduct = l.neg().reflect(normal).dot(observer);
