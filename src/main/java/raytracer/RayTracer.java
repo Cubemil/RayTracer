@@ -1,7 +1,6 @@
 package raytracer;
 
 import math.Color;
-import math.Point;
 
 public class RayTracer {
 
@@ -21,27 +20,30 @@ public class RayTracer {
      * and sets the colors according to the first Intersection hit
      */
     public void render() {
-        for (int y = 0; y < camera.getHeight(); y++) {
-            for (int x = 0; x < camera.getWidth(); x++) {
-                Ray ray = camera.generateRay(x, y);
-                var hit = scene.traceRay(ray).hit();
+        for (int y = 0; y < camera.getHeight(); y++)
+            for (int x = 0; x < camera.getWidth(); x++)
+                setPixelColor(x, y);
+    }
 
-                if (hit == null) renderTarget.setPixelColor(x, y, Color.CORNFLOWERBLUE);
-                else {
-                    // get Material from hit-shape
-                    Material mat = hit.shape().getMaterial();
-                    // get surface point at hit
-                    Point position = ray.pointAt(hit.t());
-                    // direction to observer is negative ray direction
-                    var observer = ray.getDirectionVector().neg();
-                    // normal at intersection
-                    var normal = hit.shape().normalAt(position);
+    /**
+     * @param x - Coordinate of the image
+     * @param y - Coordinate of the image
+     * sets Color using HitInfo -> using phongLighting
+     */
+    private void setPixelColor(int x, int y) {
+        Ray ray = camera.generateRay(x, y);
+        var hit = scene.traceRay(ray).hit();
 
-                    // execute Phong lighting
-                    var color = mat.phongLighting(scene.getLightSources().get(0), position, observer, normal);
-                    renderTarget.setPixelColor(x, y, color.clamped());
-                }
-            }
+        // background color
+        if (hit == null) {
+            renderTarget.setPixelColor(x, y, Color.CORNFLOWERBLUE);
+        } else {
+            // get Color from phong lighting called by HitInfo (includes shadow)
+            HitInfo hitInfo = hit.prepareHitInfo(ray);
+            Color color = scene.shadeHit(hitInfo);
+
+            // set pixel to Color
+            renderTarget.setPixelColor(x, y, color.clamped());
         }
     }
 

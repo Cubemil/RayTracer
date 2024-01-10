@@ -136,7 +136,7 @@ public final class Vector extends Tuple{
     }
 
     /**
-     * @param normal normal Vector n
+     * @param normal hitNormal Vector n
      * @return a reflected vector from e (this)
      * r = e - 2(e * n) * n
      * @throws IllegalArgumentException if the input vector is not normalized

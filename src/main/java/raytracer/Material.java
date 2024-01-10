@@ -53,12 +53,12 @@ public class Material {
      * @param position      the object's surface point at which the calculation happens
      *                          -> intersection of ray
      *                          -> gives us the corresponding material
-     * @param observer      Vector from intersection point to observer
-     * @param normal        normal Vector at the intersection point
+     * @param observer      Vector from intersection point to viewDirection
+     * @param normal        hitNormal Vector at the intersection point
      * @return              Color containing the correct lighting conditions given the parameters
      * -------------------------------------------------------------------------
      * > calculates the color after the lighting model Phong
-     * > r = reflected observer Vector
+     * > r = reflected viewDirection Vector
      * > l = Vector from position to light source
      * > kA = ambient  part
      * > kD = diffuse  part
@@ -66,7 +66,7 @@ public class Material {
      * > I  = resulting Color
      *      IL = light source color and intensity
      *      O  = material color
-     * > I = kA * O + IL * O * kD * (normal * l) + IL * kS * (observer * r) ^ shininess
+     * > I = kA * O + IL * O * kD * (hitNormal * l) + IL * kS * (viewDirection * r) ^ shininess
      *
      * -------------------------------------------------------------------------
      */
@@ -77,13 +77,13 @@ public class Material {
         // O * kA
         var ambientPart = color.mult(ambient);
 
-        // (normal * l) -> dot product
+        // (hitNormal * l) -> dot product
         // only have an influence when dot product is positive
         var diffuseDotProduct = l.dot(normal);
         // IL * O * kD * diffuseDotProduct
         Color diffusePart = lightColor.mult(diffuse).mult(Math.max(diffuseDotProduct, 0));
 
-        // (observer * r) -> dot product
+        // (viewDirection * r) -> dot product
         var specularDotProduct = l.neg().reflect(normal).dot(observer);
 
         // default color if dot product is negative

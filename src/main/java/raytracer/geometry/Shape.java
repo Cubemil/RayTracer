@@ -16,16 +16,16 @@ public abstract class Shape {
 
     /**
      * @param worldPoint on the surface of the shape
-     * @return the normal vector of the surface point
+     * @return the hitNormal vector of the surface point
      * -> here it is the same as the location vector of the worldPoint
      * -> before, worldPoint used to be hit
-     *      ->changed due to not being able to display normal vectors when multiplying with inverse
+     *      ->changed due to not being able to display hitNormal vectors when multiplying with inverse
      */
     public Vector normalAt(Point worldPoint) {
         // transformation of worldPoint in local CS
         Point localPoint = getTransformationMatrix().inv().mult(worldPoint);
 
-        // local normal
+        // local hitNormal
         Vector localNormal = localPoint.sub(new Point(0, 0, 0));
 
         // transformation of localNormal in world CS

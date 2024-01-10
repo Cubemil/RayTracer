@@ -2,6 +2,8 @@ package raytracer;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
+import java.util.stream.IntStream;
 
 public class IntersectionManager {
 
@@ -42,9 +44,8 @@ public class IntersectionManager {
 
         // adds new item always at the end
         int index = this.intersections.length;
-        for (Intersection newIntersect : newIntersections) {
+        for (Intersection newIntersect : newIntersections)
             temp[index++] = newIntersect;
-        }
 
         // assign new array to the old object
         this.intersections = sort(temp);
@@ -53,23 +54,11 @@ public class IntersectionManager {
     /**
      * @param intersections array to sort after the t-value
      * @return the sorted array
-     * using bubble sort
+     * using Arrays.sort() method and comparing with java.util.Comparator
      * private method since it should always be called when changing the intersections field
      */
     private Intersection[] sort(Intersection[] intersections) {
-        boolean swapped;
-        do {
-            swapped = false;
-            for (int index = 1; index < intersections.length; index++) {
-                if (intersections[index - 1].t() > intersections[index].t()) {
-                    // swap intersections[index - 1] and intersections[index]
-                    Intersection temp = intersections[index - 1];
-                    intersections[index - 1] = intersections[index];
-                    intersections[index] = temp;
-                    swapped = true;
-                }
-            }
-        } while (swapped);
+        Arrays.sort(intersections, Comparator.comparingDouble(Intersection::t));
         return intersections;
     }
 
@@ -79,9 +68,11 @@ public class IntersectionManager {
      */
     public static IntersectionManager combineIntersections(ArrayList<IntersectionManager> intersectionList) {
         IntersectionManager resultIntersectionMng = new IntersectionManager();
-        for (IntersectionManager manager : intersectionList)
-            for (int i = 0; i < manager.count(); i++)
-                resultIntersectionMng.add(manager.get(i));
+        intersectionList
+            .forEach(manager -> IntStream
+            .range(0, manager.count())
+            .mapToObj(manager::get)
+            .forEach(resultIntersectionMng::add));
         return resultIntersectionMng;
     }
 
@@ -89,7 +80,10 @@ public class IntersectionManager {
      * @return the smallest t-value above 0
      */
     public Intersection hit() {
-        return Arrays.stream(intersections).filter(x -> x.t() > 0).findFirst().orElse(null);
+        return Arrays.stream(intersections)
+            .filter(x -> x.t() > 0)
+            .findFirst()
+            .orElse(null);
     }
 
     /*------------------------------------structure-methods------------------------------------*/

@@ -1,14 +1,13 @@
 package raytracer;
 
-import math.*;
-import raytracer.geometry.Sphere;
-import raytracer.geometry.Shape;
+import math.Color;
+import math.Point;
+import math.Matrix;
+import raytracer.geometry.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.stream.Collectors;
-
-import static math.Matrix.scale;
 
 public class Scene {
 
@@ -24,7 +23,7 @@ public class Scene {
 
     /**
      * @return a default test scene with:
-     * -> normal, non-transformed Sphere
+     * -> hitNormal, non-transformed Sphere
      *      -> has certain custom Material
      * -> Sphere scaled 1/2 in all directions
      *      -> has default Material
@@ -43,7 +42,7 @@ public class Scene {
 
         // s2 Sphere with default Material / scaled 0.5 in every direction
         Sphere halfSizedSphere = new Sphere();
-        halfSizedSphere.setTransformationMatrix(scale(0.5, 0.5, 0.5));
+        halfSizedSphere.setTransformationMatrix(Matrix.scale(0.5, 0.5, 0.5));
 
         // create Scene object and add s1, s2
         Scene defaultScene = new Scene();
@@ -63,8 +62,8 @@ public class Scene {
         Sphere[] spheres = new Sphere[]{new Sphere(), new Sphere(), new Sphere()};
 
         spheres[0].setTransformationMatrix(Matrix.translate(-0.5, 1, 0.5));
-        spheres[1].setTransformationMatrix(Matrix.translate(1.5, 0.5, -0.5).mult(scale(0.5, 0.5, 0.5)));
-        spheres[2].setTransformationMatrix(Matrix.translate(-1.5, 0.33, -0.75).mult(scale(0.33,0.33,0.33)));
+        spheres[1].setTransformationMatrix(Matrix.translate(1.5, 0.5, -0.5).mult(Matrix.scale(0.5, 0.5, 0.5)));
+        spheres[2].setTransformationMatrix(Matrix.translate(-1.5, 0.33, -0.75).mult(Matrix.scale(0.33,0.33,0.33)));
 
         for (Sphere s : spheres) scene.addObject(s);
         return scene;
@@ -78,7 +77,23 @@ public class Scene {
      * -> contains every Intersection of the ray with every object in the scene
      */
     public IntersectionManager traceRay(Ray ray) {
-        return IntersectionManager.combineIntersections(objects.stream().map(o -> o.intersect(ray)).collect(Collectors.toCollection(ArrayList::new)));
+        return IntersectionManager
+            .combineIntersections(objects.stream()
+            .map(o -> o.intersect(ray))
+            .collect(Collectors
+            .toCollection(ArrayList::new)));
+    }
+
+    /**
+     * @param info HitInfo from an Intersection
+     * @return Color from calling Material.phongLighting, but with shadows
+     */
+    public Color shadeHit(HitInfo info) {
+        return info.object().getMaterial().phongLighting(
+            lightSources.get(0),
+            info.hit(),
+            info.viewDirection(),
+            info.hitNormal());
     }
 
     /*---------------------------------structure methods--------------------------------*/
