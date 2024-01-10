@@ -97,6 +97,13 @@ public class IntersectionManager {
     }
 
     /**
+     * @return reference to Intersection-array
+     */
+    public Intersection[] getIntersections() {
+        return intersections;
+    }
+
+    /**
      * @return length of intersections-array
      */
     public int count() {

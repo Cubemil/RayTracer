@@ -91,4 +91,35 @@ class SceneTest {
         assertTrue(scene.getObjects().contains(s2));
     }
 
+    /*---------------------------shadow testing---------------------------*/
+
+    @Test
+    void noShadow_NothingBetweenPointAndLightTest() {
+        Scene scene = Scene.defaultScene();
+        Point point = new Point(0, 10, 0);
+        assertFalse(scene.isShadowed(point));
+    }
+
+    @Test
+    void shadow_ObjectBetweenPointAndLightTest() {
+        Scene scene = Scene.defaultScene();
+        Point point = new Point(10, -10, 10);
+        assertTrue(scene.isShadowed(point));
+    }
+
+    @Test
+    void noShadow_ObjectBehindLightTest() {
+        Scene scene = Scene.defaultScene();
+        Point point = new Point(-20, 20, -20);
+        assertFalse(scene.isShadowed(point));
+    }
+
+    @Test
+    void noShadow_ObjectBehindPointTest() {
+        Scene scene = Scene.defaultScene();
+        Point point = new Point(-2, 2, -2);
+        assertFalse(scene.isShadowed(point));
+    }
+
+
 }

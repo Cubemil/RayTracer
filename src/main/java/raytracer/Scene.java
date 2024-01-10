@@ -1,8 +1,6 @@
 package raytracer;
 
-import math.Color;
-import math.Point;
-import math.Matrix;
+import math.*;
 import raytracer.geometry.*;
 
 import java.util.ArrayList;
@@ -94,6 +92,33 @@ public class Scene {
             info.hit(),
             info.viewDirection(),
             info.hitNormal());
+    }
+
+    /**
+     * @param point to check
+     * @return whether the point should have a shadow or not
+     * 1. create ray from point to light source
+     * 2. calculate intersection points of the ray in this scene
+     * if there is an intersection, and it's closer to the point that the light
+     * (t < distance point->light), then this point has a shadow
+     */
+    public boolean isShadowed(Point point) {
+
+        // ray from point to light
+        Vector direction = lightSources.get(0).getPosition().sub(point);
+        Ray ray = new Ray(point, direction.normalized());
+        // distance point to light
+        var distance = direction.magnitude();
+
+        // get all Intersections
+        IntersectionManager xs = traceRay(ray);
+        // no Intersections
+        if (xs.count() == 0) return false;
+        // check if any Intersection's t-value < distance
+        for (Intersection x : xs.getIntersections())
+            if (x.t() < distance) return true;
+
+        return false;
     }
 
     /*---------------------------------structure methods--------------------------------*/
