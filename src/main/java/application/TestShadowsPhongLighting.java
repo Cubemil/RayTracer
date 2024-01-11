@@ -10,7 +10,7 @@ import raytracer.Scene;
 public class TestShadowsPhongLighting {
 
     public static void main(String[] args) {
-        threeSpherePhongSceneWithShadows("threeSphereShadowedScene");
+        threeSpherePhongSceneWithShadows("correctedThreeSphereShadowedScene");
     }
 
     private static void threeSpherePhongSceneWithShadows(String fileName) {

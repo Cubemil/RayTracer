@@ -89,15 +89,19 @@ public class Scene {
     /**
      * @param info HitInfo from an Intersection
      * @return Color from calling Material.phongLighting,
-     * but with checking if the intersection hit is shadowed
+     * but with checking if 'point' is shadowed
+     * -> point > hit + normalVector * epsilon
      */
     public Color shadeHit(HitInfo info) {
+        double EPSILON = 0.0001;
+        Point point = info.hit().add(info.hitNormal().mult(EPSILON));
+
         return info.object().getMaterial().phongLighting(
-            lightSources.get(0),
-            info.hit(),
-            info.viewDirection(),
-            info.hitNormal(),
-            isShadowed(info.hit()));
+                lightSources.get(0),
+                info.hit(),
+                info.viewDirection(),
+                info.hitNormal(),
+                isShadowed(point));
     }
 
     /**
