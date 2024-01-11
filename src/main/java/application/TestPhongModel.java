@@ -3,6 +3,7 @@ package application;
 import math.*;
 import raytracer.*;
 import raytracer.geometry.Sphere;
+import raytracer.light.PointLightSource;
 
 public class TestPhongModel {
 

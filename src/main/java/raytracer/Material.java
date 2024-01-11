@@ -4,6 +4,7 @@ import math.Color;
 import math.MUtils;
 import math.Point;
 import math.Vector;
+import raytracer.light.LightSource;
 
 public class Material {
 
@@ -72,8 +73,8 @@ public class Material {
      * -------------------------------------------------------------------------
      */
     public Color phongLighting(LightSource lightSource, Point position, Vector observer, Vector normal, boolean inShadow) {
-        Color lightColor = lightSource.getColor();
-        Vector l = lightSource.getPosition().sub(position).normalized();
+        Color lightColor = lightSource.colorAtPoint(position);
+        Vector l = lightSource.directionFromPoint(position);
 
         // O * kA
         var ambientPart = color.mult(ambient);

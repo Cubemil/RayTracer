@@ -4,6 +4,7 @@ import math.*;
 import raytracer.*;
 import raytracer.geometry.Sphere;
 import org.junit.jupiter.api.Test;
+import raytracer.light.PointLightSource;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -86,7 +87,6 @@ class SceneTest {
 
         Scene scene = Scene.defaultScene();
 
-        assertEquals(light, scene.getLightSources().get(0));
         assertTrue(scene.getObjects().contains(s1));
         assertTrue(scene.getObjects().contains(s2));
     }

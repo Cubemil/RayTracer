@@ -5,7 +5,7 @@ import math.Point;
 import math.Vector;
 import org.junit.jupiter.api.Test;
 import raytracer.Material;
-import raytracer.PointLightSource;
+import raytracer.light.PointLightSource;
 
 import static org.junit.jupiter.api.Assertions.*;
 

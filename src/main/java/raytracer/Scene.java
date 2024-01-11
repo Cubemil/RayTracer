@@ -2,6 +2,8 @@ package raytracer;
 
 import math.*;
 import raytracer.geometry.*;
+import raytracer.light.LightSource;
+import raytracer.light.PointLightSource;
 
 import java.util.ArrayList;
 import java.util.Arrays;
