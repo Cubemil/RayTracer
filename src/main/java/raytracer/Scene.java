@@ -57,11 +57,15 @@ public class Scene {
      */
     public static Scene threeSpheresScene() {
         Scene scene = new Scene();
-        Sphere[] spheres = new Sphere[]{new Sphere(), new Sphere(), new Sphere()};
+        Sphere[] spheres = new Sphere[]{new Sphere(), new Sphere(), new Sphere(), new Sphere()};
 
         spheres[0].setTransformationMatrix(Matrix.translate(-0.5, 1, 0.5));
         spheres[1].setTransformationMatrix(Matrix.translate(1.5, 0.5, -0.5).mult(Matrix.scale(0.5, 0.5, 0.5)));
         spheres[2].setTransformationMatrix(Matrix.translate(-1.5, 0.33, -0.75).mult(Matrix.scale(0.33,0.33,0.33)));
+        spheres[3].setTransformationMatrix(Matrix.scale(10, 0.01, 10));
+
+        // also add a custom Point Light Source
+        scene.addLightSource(new PointLightSource(new Point(-10, 10, -10), new Color(1, 1, 1)));
 
         for (Sphere s : spheres) scene.addObject(s);
         return scene;
@@ -84,14 +88,16 @@ public class Scene {
 
     /**
      * @param info HitInfo from an Intersection
-     * @return Color from calling Material.phongLighting, but with shadows
+     * @return Color from calling Material.phongLighting,
+     * but with checking if the intersection hit is shadowed
      */
     public Color shadeHit(HitInfo info) {
         return info.object().getMaterial().phongLighting(
             lightSources.get(0),
             info.hit(),
             info.viewDirection(),
-            info.hitNormal());
+            info.hitNormal(),
+            isShadowed(info.hit()));
     }
 
     /**
@@ -116,7 +122,8 @@ public class Scene {
         if (xs.count() == 0) return false;
         // check if any Intersection's t-value < distance
         for (Intersection x : xs.getIntersections())
-            if (x.t() < distance) return true;
+            //TODO t > 0 check
+            if (x.t() < distance && x.t() > 0) return true;
 
         return false;
     }

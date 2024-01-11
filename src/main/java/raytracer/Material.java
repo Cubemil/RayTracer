@@ -55,6 +55,7 @@ public class Material {
      *                          -> gives us the corresponding material
      * @param observer      Vector from intersection point to viewDirection
      * @param normal        hitNormal Vector at the intersection point
+     * @param inShadow      boolean, checks if position contains shadow
      * @return              Color containing the correct lighting conditions given the parameters
      * -------------------------------------------------------------------------
      * > calculates the color after the lighting model Phong
@@ -70,18 +71,21 @@ public class Material {
      *
      * -------------------------------------------------------------------------
      */
-    public Color phongLighting(LightSource lightSource, Point position, Vector observer, Vector normal) {
+    public Color phongLighting(LightSource lightSource, Point position, Vector observer, Vector normal, boolean inShadow) {
         Color lightColor = lightSource.getColor();
         Vector l = lightSource.getPosition().sub(position).normalized();
 
         // O * kA
         var ambientPart = color.mult(ambient);
 
+        if (inShadow) return ambientPart;
+
         // (hitNormal * l) -> dot product
         // only have an influence when dot product is positive
         var diffuseDotProduct = l.dot(normal);
         // IL * O * kD * diffuseDotProduct
         Color diffusePart = lightColor.mult(color).mult(diffuse).mult(Math.max(diffuseDotProduct, 0));
+
 
         // (viewDirection * r) -> dot product
         var specularDotProduct = l.neg().reflect(normal).dot(observer);
