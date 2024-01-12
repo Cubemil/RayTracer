@@ -5,9 +5,12 @@ import raytracer.Camera;
 import raytracer.RayTracer;
 import raytracer.Scene;
 import raytracer.geometry.Sphere;
+import raytracer.light.PointLightSource;
 
 public class TestRayTracerLauncher {
+
     public static void main(String[] args) {
+
 
         // Sphere
         Sphere sphere = new Sphere();
@@ -73,7 +76,7 @@ public class TestRayTracerLauncher {
     }
 
     private static void createThreeSpheresImage() {
-        Scene scene = Scene.threeSpheresScene();
+        Scene scene = Scene.threeSpheresScene(new PointLightSource(new Point(-10, 10, -10), new Color(1, 1, 1)));
 
         Camera camera = new Camera(
                 800, 400, 60,

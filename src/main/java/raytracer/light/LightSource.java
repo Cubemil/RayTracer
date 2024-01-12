@@ -37,30 +37,16 @@ public abstract class LightSource {
         return intensity;
     }
 
-    public boolean isDirectional() {
-        return !(this instanceof PointLightSource);
-    }
+    public abstract boolean isDirectional();
 
-    public Vector directionFromPoint(Point point) {
-        if (this instanceof DirectionalLightSource) throw new IllegalCallerException("Only PointLightSources and SpotLightSources can have a position");
-        return getPosition().sub(point).normalized();
-    }
+    public abstract Vector directionFromPoint(Point point);
 
-    public double distanceFromPoint(Point point) {
-        return directionFromPoint(point).magnitude();
-    }
+    public abstract double distanceFromPoint(Point point);
 
-    public Vector directionToPoint(Point point) {
-        if (this instanceof DirectionalLightSource) throw new IllegalCallerException("Only PointLightSources and SpotLightSources can have a position");
-        return point.sub(getPosition()).normalized();
-    }
+    public abstract Vector directionToPoint(Point point);
 
-    public Color colorAtPoint(Point point) {
-        return color.mult(intensity);
-    }
+    public abstract Color colorAtPoint(Point point);
 
-    public Point getPosition() {
-        throw new IllegalCallerException("Only PointLightSources and SpotLightSources can have a position");
-    }
+    public abstract Point getPosition();
 
 }

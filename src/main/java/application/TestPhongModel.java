@@ -11,6 +11,9 @@ public class TestPhongModel {
 
         /*----------------------------phong parts images--------------------------*/
 
+        var light = new PointLightSource(new Point(-10, 10, -10), new Color(1, 1, 1));
+
+
         Material mat = new Material();
         mat.setColor(new Color(1, 0.2, 1));
 
@@ -65,7 +68,7 @@ public class TestPhongModel {
     }
 
     private static void threeSpherePhongScene(String imgName, Material... materials) {
-        Scene scene = Scene.threeSpheresScene();
+        Scene scene = Scene.threeSpheresScene(new PointLightSource(new Point(-10, 10, -10), new Color(1, 1, 1)));
         scene.addLightSource(new PointLightSource(new Point(-10, 10, -10), Color.WHITE, 1));
 
         if (materials.length != 0) {

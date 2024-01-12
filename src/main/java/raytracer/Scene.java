@@ -57,7 +57,7 @@ public class Scene {
     /**
      * @return scene with three different spheres for testing
      */
-    public static Scene threeSpheresScene() {
+    public static Scene threeSpheresScene(LightSource light) {
         Scene scene = new Scene();
         Sphere[] spheres = new Sphere[]{new Sphere(), new Sphere(), new Sphere(), new Sphere()};
 
@@ -67,7 +67,7 @@ public class Scene {
         spheres[3].setTransformationMatrix(Matrix.scale(10, 0.01, 10));
 
         // also add a custom Point Light Source
-        scene.addLightSource(new PointLightSource(new Point(-10, 10, -10), new Color(1, 1, 1)));
+        scene.addLightSource(light);
 
         for (Sphere s : spheres) scene.addObject(s);
         return scene;
@@ -117,7 +117,7 @@ public class Scene {
     public boolean isShadowed(Point point) {
 
         // ray from point to light
-        Vector direction = lightSources.get(0).getPosition().sub(point);
+        Vector direction = lightSources.get(0).directionFromPoint(point);
         Ray ray = new Ray(point, direction.normalized());
         // distance point to light
         var distance = direction.magnitude();

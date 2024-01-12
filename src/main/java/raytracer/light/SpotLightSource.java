@@ -33,8 +33,33 @@ public class SpotLightSource extends LightSource{
         this.direction = direction;
     }
 
+    @Override
+    public Vector directionFromPoint(Point point) {
+        return null;
+    }
+
+    @Override
+    public double distanceFromPoint(Point point) {
+        return directionFromPoint(point).magnitude();
+    }
+
+    @Override
+    public Vector directionToPoint(Point point) {
+        return point.sub(position).normalized();
+    }
+
+    @Override
+    public Color colorAtPoint(Point point) {
+        return null;
+    }
+
     public Point getPosition() {
         return position;
+    }
+
+    @Override
+    public boolean isDirectional() {
+        return true;
     }
 
     public Vector getDirection() {
