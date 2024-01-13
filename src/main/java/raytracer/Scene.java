@@ -57,7 +57,7 @@ public class Scene {
     /**
      * @return scene with three different spheres for testing
      */
-    public static Scene threeSpheresScene(LightSource light) {
+    public static Scene threeSpheresScene() {
         Scene scene = new Scene();
         Sphere[] spheres = new Sphere[]{new Sphere(), new Sphere(), new Sphere(), new Sphere()};
 
@@ -65,9 +65,6 @@ public class Scene {
         spheres[1].setTransformationMatrix(Matrix.translate(1.5, 0.5, -0.5).mult(Matrix.scale(0.5, 0.5, 0.5)));
         spheres[2].setTransformationMatrix(Matrix.translate(-1.5, 0.33, -0.75).mult(Matrix.scale(0.33,0.33,0.33)));
         spheres[3].setTransformationMatrix(Matrix.scale(10, 0.01, 10));
-
-        // also add a custom Point Light Source
-        scene.addLightSource(light);
 
         for (Sphere s : spheres) scene.addObject(s);
         return scene;

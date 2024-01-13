@@ -68,7 +68,7 @@ public class TestPhongModel {
     }
 
     private static void threeSpherePhongScene(String imgName, Material... materials) {
-        Scene scene = Scene.threeSpheresScene(new PointLightSource(new Point(-10, 10, -10), new Color(1, 1, 1)));
+        Scene scene = Scene.threeSpheresScene();
         scene.addLightSource(new PointLightSource(new Point(-10, 10, -10), Color.WHITE, 1));
 
         if (materials.length != 0) {

@@ -13,13 +13,7 @@ public class PointLightSource extends LightSource {
         this.position = position;
     }
 
-    public PointLightSource(Point position, double intensity) {
-        super(intensity);
-        this.position = position;
-    }
-
     public PointLightSource(Point position) {
-        super();
         this.position = position;
     }
 

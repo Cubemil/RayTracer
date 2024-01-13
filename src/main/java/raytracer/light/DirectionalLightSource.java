@@ -14,7 +14,6 @@ public class DirectionalLightSource extends LightSource {
     }
 
     public DirectionalLightSource(Vector direction) {
-        super();
         this.direction = direction;
     }
 

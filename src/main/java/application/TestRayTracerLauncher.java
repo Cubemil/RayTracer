@@ -76,7 +76,8 @@ public class TestRayTracerLauncher {
     }
 
     private static void createThreeSpheresImage() {
-        Scene scene = Scene.threeSpheresScene(new PointLightSource(new Point(-10, 10, -10), new Color(1, 1, 1)));
+        Scene scene = Scene.threeSpheresScene();
+        scene.addLightSource(new PointLightSource(new Point(-10, 10, -10)));
 
         Camera camera = new Camera(
                 800, 400, 60,
