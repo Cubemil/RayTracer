@@ -14,5 +14,8 @@ public class MUtils
         return Math.abs(a-b) < EPSILON;
     }
 
+    public static double getEPSILON() {
+        return EPSILON;
+    }
 }
 

@@ -7,13 +7,17 @@ import raytracer.light.*;
 public class TestShadowsPhongLighting {
 
     public static void main(String[] args) {
+//        // test values vary - do not run all at once //
 //        threeSpherePhongSceneWithShadows();
+//
+//        double[] intensities = {0.5, 1, 10};
+//        for (double i : intensities) {
+////            directionalLightSourceThreeSpheres(i);
+//            spotLightThreeSpheres(i);
+////            attenuatedPointLightThreeSpheres(i);
+//        }
 
-        double[] intensities = {0.5, 1, 10};
-        for (double i : intensities) {
-//            directionalLightSourceThreeSpheres(i);
-            spotLightSourceThreeSpheres(i);
-        }
+        multipleLightsThreeSpheres();
 
     }
 
@@ -40,15 +44,42 @@ public class TestShadowsPhongLighting {
         createImage("directionalLightSourceThreeSpheres" + intensity + "_", scene, camera);
     }
 
-    private static void spotLightSourceThreeSpheres(double intensity) {
-       var scene = Scene.threeSpheresScene();
+    private static void spotLightThreeSpheres(double intensity) {
+        Point position = new Point(-10.0, 10.0, -10.0);
+        var scene = Scene.threeSpheresScene();
+
         scene.addLightSource(new SpotLightSource(
-            new Point(-10.0, 10.0, -10.0),
-            new Vector(10, -10.0, 10),
+            position,
+            Point.ZERO.sub(position),
             Color.WHITE, intensity,
             30,
             10));
+
         createImage("spotLightSourceThreeSpheres" + intensity + "_", scene, camera);
+    }
+
+    private static void attenuatedPointLightThreeSpheres(double intensity) {
+        var scene = Scene.threeSpheresScene();
+        scene.addLightSource(new PointLightSource(new Point(-10, 10, -10), intensity));
+
+        createImage("attenuatedPointLightThreeSpheres" + intensity + "-", scene, camera);
+    }
+
+    private static void multipleLightsThreeSpheres() {
+        var scene = Scene.threeSpheresScene();
+        scene.addLightSource(
+            new DirectionalLightSource(
+                new Vector(0, -10, 10), Color.WHITE, 0.3),
+            new SpotLightSource(
+                new Point(-2, 1, -1),
+                new Point(-1.5, 0.33, -0.75).sub(new Point(-2, 1, -1)),
+                new Color(Color.BLUE), 1, 1, 0.5),
+            new SpotLightSource(
+                new Point(2.5, 2, 1.5),
+                new Point(1.5, 0.5, -0.5).sub(new Point(2.5, 2, 1.5)),
+                new Color(Color.ORANGE), 1, 1, 0.5));
+
+        createImage("multipleLightsThreeSpheres", scene, camera);
     }
 
     private static void createImage(String fileName, Scene scene, Camera camera) {

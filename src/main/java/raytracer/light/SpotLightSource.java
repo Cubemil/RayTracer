@@ -19,13 +19,6 @@ public class SpotLightSource extends LightSource{
         this.fallOffStartDegrees = fallOffStartDegrees;
     }
 
-    public SpotLightSource(Point position, Vector direction, double totalAngleDegrees, double fallOffStartDegrees) {
-        this.position = position;
-        this.direction = direction;
-        this.totalAngleDegrees = totalAngleDegrees;
-        this.fallOffStartDegrees = fallOffStartDegrees;
-    }
-
     @Override
     public boolean isDirectional() {
         return false;
@@ -48,35 +41,35 @@ public class SpotLightSource extends LightSource{
 
     @Override
     public Color colorAtPoint(Point point) {
-        // angle between direction of light and direction to surface point
-        double directionAndPointAngle = direction.normalized().dot(directionToPoint(point));
+        // Color of surface point scaled with light intensity
         Color baseColor = color.mult(intensity);
 
+        // direction of light -> normalised
+        Vector lightDirection = direction.normalized();
+        // direction to surface point -> normalised
+        Vector pointDirection = directionToPoint(point);
+        double centerToPoint = Math.acos(lightDirection.dot(pointDirection));
+
         // point outside light cone
-        if (directionAndPointAngle > totalAngleDegrees / 2) return Color.BLACK;
+        if (centerToPoint > totalAngleDegrees / 2) return Color.BLACK;
         // point in illuminated center
-        if (directionAndPointAngle < fallOffStartDegrees / 2) return baseColor;
+        if (centerToPoint < fallOffStartDegrees / 2) return baseColor;
+
+        // light direction scaled with radians of cone edge -> normalised
+        Vector outerEdgeDirection = lightDirection.mult(Math.toRadians(totalAngleDegrees)).normalized();
+        // direction of start of fall-off region -> normalised
+        Vector fallOffDirection = lightDirection.mult(Math.toRadians(fallOffStartDegrees)).normalized();
+
+        double pointToEdge = Math.acos(pointDirection.dot(outerEdgeDirection));
+        double fallOffToEdge = Math.acos(fallOffDirection.dot(outerEdgeDirection));
+        double attenuationPortion = pointToEdge / fallOffToEdge;
 
         // Point is in the fall-off region, apply attenuation
-        double falloffFactor = Math.cos(directionAndPointAngle - fallOffStartDegrees);
-        // base color * part of inside angle to outside ^2
-        return baseColor.mult(falloffFactor);
-
+        return baseColor.mult(Math.pow(attenuationPortion, 2));
     }
 
     public Point getPosition() {
         return position;
     }
 
-    public Vector getDirection() {
-        return direction;
-    }
-
-    private double getTotalAngleDegrees() {
-        return totalAngleDegrees;
-    }
-
-    private double getFallOffStartDegrees() {
-        return fallOffStartDegrees;
-    }
 }

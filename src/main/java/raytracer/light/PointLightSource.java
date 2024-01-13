@@ -13,6 +13,11 @@ public class PointLightSource extends LightSource {
         this.position = position;
     }
 
+    public PointLightSource(Point position, double intensity) {
+        super(intensity);
+        this.position = position;
+    }
+
     public PointLightSource(Point position) {
         this.position = position;
     }
@@ -39,7 +44,8 @@ public class PointLightSource extends LightSource {
 
     @Override
     public Color colorAtPoint(Point point) {
-        return color.mult(intensity);
+        var attenuation = 1 / Math.pow(distanceFromPoint(point), 2) * intensity;
+        return color.mult(attenuation);
     }
 
     @Override

@@ -49,7 +49,10 @@ public class Scene {
         defaultScene.addObject(normalSphere, halfSizedSphere);
 
         // also add a custom Point Light Source
-        defaultScene.addLightSource(new PointLightSource(new Point(-10, 10, -10), new Color(1, 1, 1)));
+        defaultScene.addLightSource(
+                new PointLightSource(
+                        new Point(-10, 10, -10),
+                        new Color(1, 1, 1)));
 
         return defaultScene;
     }
@@ -90,31 +93,39 @@ public class Scene {
      * @return Color from calling Material.phongLighting,
      * but with checking if 'point' is shadowed
      * -> point > hit + normalVector * epsilon
+     * returns sum of ALL light sources in scene
      */
     public Color shadeHit(HitInfo info) {
-        double EPSILON = 0.0001;
-        Point point = info.hit().add(info.hitNormal().mult(EPSILON));
+        Point adjusted = info.hit().add(info.hitNormal().mult(MUtils.getEPSILON()));
+        Color finalColor = Color.BLACK;
 
-        return info.object().getMaterial().phongLighting(
-                lightSources.get(0),
-                info.hit(),
-                info.viewDirection(),
-                info.hitNormal(),
-                isShadowed(point));
+        for (var light : lightSources) {
+            boolean isShadowed = isShadowed(adjusted, light);
+            finalColor = finalColor.add(
+                info.object().getMaterial().phongLighting(
+                    light,
+                    info.hit(),
+                    info.viewDirection(),
+                    info.hitNormal(),
+                    isShadowed));
+        }
+
+        return finalColor;
     }
 
     /**
      * @param point to check
+     * @param light light source, later added up to all lights in the scene
      * @return whether the point should have a shadow or not
      * 1. create ray from point to light source
      * 2. calculate intersection points of the ray in this scene
      * if there is an intersection, and it's closer to the point that the light
      * (t < distance point->light), then this point has a shadow
      */
-    public boolean isShadowed(Point point) {
+    public boolean isShadowed(Point point, LightSource light) {
 
         // ray from point to light
-        Vector direction = lightSources.get(0).directionFromPoint(point);
+        Vector direction = light.directionFromPoint(point);
         Ray ray = new Ray(point, direction.normalized());
         // distance point to light
         var distance = direction.magnitude();
@@ -125,7 +136,6 @@ public class Scene {
         if (xs.count() == 0) return false;
         // check if any Intersection's t-value < distance
         for (Intersection x : xs.getIntersections())
-            //TODO t > 0 check
             if (x.t() < distance && x.t() > 0) return true;
 
         return false;
@@ -136,7 +146,7 @@ public class Scene {
     /**
      * @param shape varargs to add any objects to the scene
      */
-    public void addObject(Shape... shape) {
+    public void addObject(Shape... shape) throws IllegalArgumentException {
         if (shape == null) throw new IllegalArgumentException("shape cannot be null");
         this.objects.addAll(Arrays.asList(shape));
     }
