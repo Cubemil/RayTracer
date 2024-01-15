@@ -10,14 +10,14 @@ public class TestShadowsPhongLighting {
 //        // test values vary - do not run all at once //
 //        threeSpherePhongSceneWithShadows();
 //
-        double[] intensities = {0.5, 1, 10};
+     /*   double[] intensities = {0.5, 1, 10};
         for (double i : intensities) {
 ////            directionalLightSourceThreeSpheres(i);
             spotLightThreeSpheres(i);
 ////            attenuatedPointLightThreeSpheres(i);
-        }
+        }*/
 
-        //multipleLightsThreeSpheres();
+        multipleLightsThreeSpheres();
 
     }
 
@@ -69,15 +69,15 @@ public class TestShadowsPhongLighting {
         var scene = Scene.threeSpheresScene();
         scene.addLightSource(
             new DirectionalLightSource(
-                new Vector(0, -10, 10), Color.WHITE, 0.3),
+                new Vector(0, -10, 10), Color.WHITE, 0.6),
             new SpotLightSource(
-                new Point(-2, 1, -1),
-                new Point(-1.5, 0.33, -0.75).sub(new Point(-2, 1, -1)),
-                new Color(Color.BLUE), 1, 1, 0.5),
+                new Point(-10, 10, -2),
+                new Point(-1.5, 0.33, -0.75).sub(new Point(-10, 10, -2)),
+                new Color(Color.BLUE), 1, 10, 7),
             new SpotLightSource(
-                new Point(2.5, 2, 1.5),
-                new Point(1.5, 0.5, -0.5).sub(new Point(2.5, 2, 1.5)),
-                new Color(Color.ORANGE), 1, 1, 0.5));
+                new Point(10, 10, 5),
+                new Point(1.5, 0.5, -0.5).sub(new Point(10, 10, 5)),
+                new Color(Color.ORANGE), 1, 10, 7));
 
         createImage("multipleLightsThreeSpheres", scene, camera);
     }
