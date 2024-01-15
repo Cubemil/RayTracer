@@ -48,7 +48,7 @@ public class SpotLightSource extends LightSource{
         Vector lightDirection = direction.normalized();
         // direction to surface point -> normalised
         Vector pointDirection = directionToPoint(point);
-        double centerToPoint = Math.acos(lightDirection.dot(pointDirection));
+        double centerToPoint = Math.toDegrees(Math.acos(lightDirection.dot(pointDirection)));
 
         // point outside light cone
         if (centerToPoint > totalAngleDegrees / 2) return Color.BLACK;
@@ -60,12 +60,29 @@ public class SpotLightSource extends LightSource{
         // direction of start of fall-off region -> normalised
         Vector fallOffDirection = lightDirection.mult(Math.toRadians(fallOffStartDegrees)).normalized();
 
-        double pointToEdge = Math.acos(pointDirection.dot(outerEdgeDirection));
-        double fallOffToEdge = Math.acos(fallOffDirection.dot(outerEdgeDirection));
-        double attenuationPortion = pointToEdge / fallOffToEdge;
-
         // Point is in the fall-off region, apply attenuation
+        double attenuationPortion = getAttenuationPortion(pointDirection, outerEdgeDirection, fallOffDirection);
         return baseColor.mult(Math.pow(attenuationPortion, 2));
+    }
+
+    private double getAttenuationPortion(Vector pointDirection, Vector outerEdgeDirection, Vector fallOffDirection) {
+        double attenuationPortion;
+
+        double pointToEdge = Math.toDegrees(Math.acos(pointDirection.dot(outerEdgeDirection)));
+        double fallOffToEdge = Math.toDegrees(Math.acos(fallOffDirection.dot(outerEdgeDirection)));
+
+        // Adjust the calculation of attenuationPortion
+        if (pointToEdge < fallOffStartDegrees / 2) {
+            // Inside the illuminated center, no attenuation
+            attenuationPortion = 1.0;
+        } else if (pointToEdge <= totalAngleDegrees / 2) {
+            // Inside the fall-off region
+            attenuationPortion = 1.0 - ((pointToEdge - fallOffStartDegrees / 2) / (totalAngleDegrees / 2 - fallOffStartDegrees / 2));
+        } else {
+            // Outside the total angle, completely attenuated
+            attenuationPortion = 0.0;
+        }
+        return attenuationPortion;
     }
 
     public Point getPosition() {

@@ -10,14 +10,14 @@ public class TestShadowsPhongLighting {
 //        // test values vary - do not run all at once //
 //        threeSpherePhongSceneWithShadows();
 //
-//        double[] intensities = {0.5, 1, 10};
-//        for (double i : intensities) {
+        double[] intensities = {0.5, 1, 10};
+        for (double i : intensities) {
 ////            directionalLightSourceThreeSpheres(i);
-//            spotLightThreeSpheres(i);
+            spotLightThreeSpheres(i);
 ////            attenuatedPointLightThreeSpheres(i);
-//        }
+        }
 
-        multipleLightsThreeSpheres();
+        //multipleLightsThreeSpheres();
 
     }
 
