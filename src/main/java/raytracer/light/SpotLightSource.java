@@ -44,20 +44,14 @@ public class SpotLightSource extends LightSource{
         // Color of surface point scaled with light intensity
         Color baseColor = color.mult(intensity);
 
-        // direction of light -> normalised
+        // direction of light -> normalized
         Vector lightDirection = direction.normalized();
-        // direction to surface point -> normalised
+        // direction to surface point -> normalized
         Vector pointDirection = directionToPoint(point);
-        double centerToPoint = Math.toDegrees(Math.acos(lightDirection.dot(pointDirection)));
 
-        // point outside light cone
-        if (centerToPoint > totalAngleDegrees / 2) return Color.BLACK;
-        // point in illuminated center
-        if (centerToPoint < fallOffStartDegrees / 2) return baseColor;
-
-        // light direction scaled with radians of cone edge -> normalised
+        // light direction scaled with radians of cone edge -> normalized
         Vector outerEdgeDirection = lightDirection.mult(Math.toRadians(totalAngleDegrees)).normalized();
-        // direction of start of fall-off region -> normalised
+        // direction of start of fall-off region -> normalized
         Vector fallOffDirection = lightDirection.mult(Math.toRadians(fallOffStartDegrees)).normalized();
 
         // Point is in the fall-off region, apply attenuation
@@ -65,6 +59,14 @@ public class SpotLightSource extends LightSource{
         return baseColor.mult(Math.pow(attenuationPortion, 2));
     }
 
+
+    /**
+     * @param pointDirection direction to the surface point
+     * @param outerEdgeDirection direction to the outer edge of the spotlight
+     * @param fallOffDirection direction to the start of the falloff region
+     * @return the amount of attenuation given the three directions,
+     * saying how much the base color needs to be altered
+     */
     private double getAttenuationPortion(Vector pointDirection, Vector outerEdgeDirection, Vector fallOffDirection) {
         double attenuationPortion;
 
