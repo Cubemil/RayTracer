@@ -21,16 +21,18 @@ public record Intersection(double t, Shape shape) {
      * --------- includes: ---------
      * - intersected object/shape
      * - t-value from this
-     * - Point intersectionPoint by using ray.pointAt(t)
-     * - viewDirection direction = negative ray direction
-     * - hitNormal Vector by using normalAt(ray.pointAt(t))
-     */
+     * - Point: intersectionPoint by using ray.pointAt(t)
+     * - viewDirection: direction = negative ray direction
+     * - hitNormal: Vector by using normalAt(ray.pointAt(t))
+     * - reflect: Vector of the incoming ray reflected at the intersection-normal
+     * */
     public HitInfo prepareHitInfo(Ray ray) {
         Point intersectionPoint = ray.pointAt(t);
         Vector observer = ray.getDirectionVector().neg();
         Vector normal = shape.normalAt(intersectionPoint);
+        Vector reflect = ray.getDirectionVector().reflect(normal);
 
-        return new HitInfo(shape, t, intersectionPoint, observer, normal);
+        return new HitInfo(shape, t, intersectionPoint, observer, normal, reflect);
     }
 
 }

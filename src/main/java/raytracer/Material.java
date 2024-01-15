@@ -17,6 +17,9 @@ public class Material {
     private double specular;        // specularity reflection coefficient (0-1) -> share of shining/specular reflection
     private int shininess;          // shininess of material
 
+    // new: reflection
+    private double reflectance;
+
     /*-------------------------------constructors-----------------------------*/
 
     /**
@@ -33,19 +36,21 @@ public class Material {
         this.diffuse = 0.9;
         this.specular = 0.9;
         this.shininess = 200;
+        this.reflectance = 0.0;
     }
 
     // custom values Constructor
-    public Material(Color color, double ambient, double diffuse, double specular, int shininess) {
+    public Material(Color color, double ambient, double diffuse, double specular, int shininess, int reflection) {
         this.color = color;
         this.ambient = ambient;
         this.diffuse = diffuse;
         this.specular = specular;
         this.shininess = shininess;
+        this.reflectance = reflection;
     }
 
     // pink testing material with diffused reflection only
-    public static Material TESTING_MATERIAL = new Material(new Color(1, 0, 1), 0, 1, 0, 0);
+    public static Material TESTING_MATERIAL = new Material(new Color(1, 0, 1), 0, 1, 0, 0, 0);
 
     /*---------------------------calculation functions------------------------*/
 
@@ -127,6 +132,10 @@ public class Material {
         return shininess;
     }
 
+    public double getReflectance() {
+        return reflectance;
+    }
+
     public void setColor(Color color) {
         this.color = color;
     }
@@ -145,6 +154,10 @@ public class Material {
 
     public void setShininess(int shininess) {
         this.shininess = shininess;
+    }
+
+    public void setReflectance(double reflectance) {
+        this.reflectance = reflectance;
     }
 
     @Override

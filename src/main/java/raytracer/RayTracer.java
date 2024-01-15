@@ -36,11 +36,9 @@ public class RayTracer {
 
         // background color
         if (hit == null) {
-            renderTarget.setPixelColor(x, y, Color.CORNFLOWERBLUE);
+            renderTarget.setPixelColor(x, y, Color.BLACK);
         } else {
-            // get Color from phong lighting called by HitInfo (includes shadow)
-            HitInfo hitInfo = hit.prepareHitInfo(ray);
-            Color color = scene.shadeHit(hitInfo);
+            Color color = scene.colorAt(ray, 5);
 
             // set pixel to Color
             renderTarget.setPixelColor(x, y, color.clamped());
