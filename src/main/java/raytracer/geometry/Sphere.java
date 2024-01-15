@@ -71,7 +71,7 @@ public class Sphere extends Shape {
 
     /**
      * @param localPoint point in the local CS
-     * @return normal vector at given point
+     * @return hitNormal vector at given point
      */
     private Vector localNormalAt(Point localPoint) {
         return localPoint.sub(new Point(0, 0, 0));

@@ -88,7 +88,7 @@ public class TestCanvasCreator {
      * @param width width of the output image
      * @param height height of the output image
      * creates a Canvas object that uses the vector length from
-     * an observer point, showing a color in grayscale
+     * an viewDirection point, showing a color in grayscale
      */
     private static void generateVectorLengthImage(int width, int height) {
         Canvas image = new Canvas(width, height, "Images/TestCanvasImages/vector_length");
@@ -213,7 +213,7 @@ public class TestCanvasCreator {
      * @param width width of the output image
      * @param height height of the output image
      * creates a Canvas object that shows an rgb color according to
-     * the values of a normal vector of a surface point on
+     * the values of a hitNormal vector of a surface point on
      * the sphere that the current ray intercepts
      */
     private static void generateNormalVectorSphereImage(int width, int height) {
@@ -235,7 +235,7 @@ public class TestCanvasCreator {
                 } else {
                     // Intercepting point at the sphere from the ray (t value)
                     Point interceptPoint = ray.pointAt(intersections.get(0).t());
-                    // use t value as parameter for getting the normal vector from the sphere surface point
+                    // use t value as parameter for getting the hitNormal vector from the sphere surface point
                     Vector normalVec = sphere.normalAt(interceptPoint);
                     // using the absolute components from the vector we can create a new Color in rgb, not grayscale
                     Color newColor = new Color(Math.abs(normalVec.x()), Math.abs(normalVec.y()), Math.abs(normalVec.z()));

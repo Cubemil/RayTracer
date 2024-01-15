@@ -3,12 +3,16 @@ package application;
 import math.*;
 import raytracer.*;
 import raytracer.geometry.Sphere;
+import raytracer.light.PointLightSource;
 
 public class TestPhongModel {
 
     public static void main(String[] args) {
 
         /*----------------------------phong parts images--------------------------*/
+
+        var light = new PointLightSource(new Point(-10, 10, -10), new Color(1, 1, 1));
+
 
         Material mat = new Material();
         mat.setColor(new Color(1, 0.2, 1));
@@ -38,11 +42,11 @@ public class TestPhongModel {
         threeSpherePhongScene("threeSpheresNoMaterial");
 
         Material yellow = new Material();
-            yellow.setColor(Color.YELLOW);
+        yellow.setColor(Color.YELLOW);
         Material green = new Material();
-            green.setColor(Color.GREEN);
+        green.setColor(Color.GREEN);
         Material lime = new Material();
-            lime.setColor(Color.NEON_GREEN);
+        lime.setColor(Color.NEON_GREEN);
         threeSpherePhongScene("threeSpheresYellowGreenLime", green, lime, yellow);
 
     }

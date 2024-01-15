@@ -288,7 +288,7 @@ public class Matrix {
      * @param up        Vector which shows which direction is "up" -> typically the world's y-axis
      * @return          the view Matrix V -> CS of the camera
      * ----------------------------------------------------------------------------------------
-     * -> vpn    :  perpendicular to the scene -> also called view plane normal  (n-axis)
+     * -> vpn    :  perpendicular to the scene -> also called view plane hitNormal  (n-axis)
      * -> right  :  horizontal u-axis of the camera cs                           (u-axis)
      * -> trueUp :  upwards direction of the camera (perp. to the other axes)    (v-axis)
      * ----------------------------------------------------------------------------------------
@@ -335,16 +335,11 @@ public class Matrix {
         if (!(obj instanceof Matrix other) ||
                 this.dimension != other.dimension ||
                 this.data.length != other.data.length ||
-                this.data[0].length != other.data[0].length) {
-            return false;
-        }
-        for (int row = 0; row < ((Matrix) obj).dimension; row++) {
-            for (int col = 0; col < ((Matrix) obj).dimension; col++) {
-                if (Math.abs(((Matrix) obj).get(row, col) - get(row, col)) > 1.0E-5)
-                    return false;
-            }
-        }
-        return true;
+                this.data[0].length != other.data[0].length) return false;
+
+        return IntStream.range(0, ((Matrix) obj).dimension).noneMatch(
+                row -> IntStream.range(0, ((Matrix) obj).dimension).anyMatch(
+                col -> Math.abs(((Matrix) obj).get(row, col) - get(row, col)) > 1.0E-5));
     }
 
     @Override
