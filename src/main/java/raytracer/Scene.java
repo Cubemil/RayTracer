@@ -112,11 +112,10 @@ public class Scene {
                     info.hit(),
                     info.viewDirection(),
                     info.hitNormal(),
-                    isShadowed))
-                .add(reflectedColor(info, depth));
+                    isShadowed));
         }
 
-        return finalColor;
+        return finalColor.add(reflectedColor(info, depth));
     }
 
     /**

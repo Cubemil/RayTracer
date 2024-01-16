@@ -26,10 +26,8 @@ public class TestReflectionAndAntiAliasing {
 
     private static void reflectiveSpheres() {
         var scene = Scene.threeSpheresScene();
-        Material mat = new Material();
-        mat.setReflectance(1);
 
-        for (Shape s : scene.getObjects()) s.setMaterial(mat);
+        for (Shape s : scene.getObjects()) s.getMaterial().setReflectance(1);
 
         scene.addLightSource(new PointLightSource(new Point(-10, 10, -10)));
         createImage("reflectiveSpheres", scene, camera);
