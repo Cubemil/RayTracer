@@ -172,12 +172,16 @@ public class Scene {
      * 3. return reflectedColor scaled by the reflectivity-value
      */
     public Color reflectedColor(HitInfo hitInfo, int depth) {
-        if (depth <= 0 || hitInfo.object().getMaterial().getReflectance() == 0) return Color.BLACK;
+        var material = hitInfo.object().getMaterial();
 
-        var ray = new Ray(hitInfo.hit().add(hitInfo.hitNormal().mult(MUtils.getEPSILON())), hitInfo.reflected());
-        var reflectedColor = colorAt(ray, depth - 1);
+        if (material.getReflectance() == 0) return Color.BLACK;
 
-        return reflectedColor.mult(hitInfo.object().getMaterial().getReflectance());
+        Vector reflectDir = hitInfo.reflected();
+        Point reflectOrigin = hitInfo.hit().add(hitInfo.hitNormal().mult(MUtils.getEPSILON())); // Kleiner Offset
+        Ray reflectRay = new Ray(reflectOrigin, reflectDir);
+
+        Color reflectedColor = colorAt(reflectRay, depth);
+        return reflectedColor.mult(material.getReflectance());
     }
 
     /*---------------------------------structure methods--------------------------------*/

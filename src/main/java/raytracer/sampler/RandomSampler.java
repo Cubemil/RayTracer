@@ -5,7 +5,7 @@ import math.Point;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RandomSampler implements Sampler{
+public class RandomSampler implements Sampler {
 
     @Override
     public List<Point> generateSamplePoint(int count) {
