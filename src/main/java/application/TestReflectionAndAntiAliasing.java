@@ -4,7 +4,6 @@ import math.Matrix;
 import math.Point;
 import math.Vector;
 import raytracer.Camera;
-import raytracer.Material;
 import raytracer.RayTracer;
 import raytracer.Scene;
 import raytracer.geometry.Shape;
