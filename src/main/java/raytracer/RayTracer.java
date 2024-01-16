@@ -7,12 +7,22 @@ public class RayTracer {
     private final Scene scene;
     private final Camera camera;
     private final Canvas renderTarget;
+    private int maxDepth;
 
     public RayTracer(Scene scene, Camera camera) {
         this.scene = scene;
         this.camera = camera;
         // Canvas gets size from Camera
         this.renderTarget = new Canvas(camera.getWidth(), camera.getHeight());
+        this.maxDepth = 5;
+    }
+
+    public RayTracer(Scene scene, Camera camera, int maxDepth) {
+        this.scene = scene;
+        this.camera = camera;
+        // Canvas gets size from Camera
+        this.renderTarget = new Canvas(camera.getWidth(), camera.getHeight());
+        this.maxDepth = maxDepth;
     }
 
     /**
@@ -38,7 +48,7 @@ public class RayTracer {
         if (hit == null) {
             renderTarget.setPixelColor(x, y, Color.BLACK);
         } else {
-            Color color = scene.colorAt(ray, 5);
+            Color color = scene.colorAt(ray, maxDepth);
 
             // set pixel to Color
             renderTarget.setPixelColor(x, y, color.clamped());
