@@ -7,7 +7,7 @@ public class RayTracer {
     private final Scene scene;
     private final Camera camera;
     private final Canvas renderTarget;
-    private int maxDepth;
+    private final int maxDepth;
 
     public RayTracer(Scene scene, Camera camera) {
         this.scene = scene;
@@ -32,27 +32,36 @@ public class RayTracer {
     public void render() {
         for (int y = 0; y < camera.getHeight(); y++)
             for (int x = 0; x < camera.getWidth(); x++)
-                setPixelColor(x, y);
+                //TODO un-hardcode 5-.
+                setPixelColor(x, y, 5);
     }
 
     /**
-     * @param x - Coordinate of the image
-     * @param y - Coordinate of the image
-     * sets Color using HitInfo -> using phongLighting
+     * @param x             - Coordinate of the image
+     * @param y             - Coordinate of the image
+     * @param sampleCount   - number of n-rays sent through the area of one pixel
+     * - sends multiple rays per pixel using offsets
+     * - return Color using sum of different return values
+     * - adds (clamped) color to pixel
      */
-    private void setPixelColor(int x, int y) {
-        Ray ray = camera.generateRay(x, y);
-        var hit = scene.traceRay(ray).hit();
+    private void setPixelColor(int x, int y, int sampleCount) {
+        Color superSamplingColor = Color.BLACK;
+        for (int sample = 0; sample < sampleCount; sample++) {
+            // create offset TODO
+            double offsetX = 0;
+            double offsetY = 0;
 
-        // background color
-        if (hit == null) {
-            renderTarget.setPixelColor(x, y, Color.BLACK);
-        } else {
-            Color color = scene.colorAt(ray, maxDepth);
+            // create ray
+            Ray ray = camera.generateRay(x + offsetX, y + offsetY);
+            var hit = scene.traceRay(ray).hit();
 
-            // set pixel to Color
-            renderTarget.setPixelColor(x, y, color.clamped());
+            superSamplingColor = superSamplingColor.add(scene.colorAt(ray, maxDepth));
         }
+        // divide color by sampleCount
+        Color color = superSamplingColor.mult(1.0 / sampleCount);
+
+        // set pixel to Color
+        renderTarget.setPixelColor(x, y, superSamplingColor.clamped());
     }
 
     /**
