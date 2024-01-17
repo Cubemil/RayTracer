@@ -61,19 +61,11 @@ public class Sphere extends Shape {
     }
 
     /**
-     * @param worldRay gets a transformed Ray in world coords
-     * @return localIntersect() with a local ray transformed to the local coords of this object
-     */
-    public IntersectionManager intersect(Ray worldRay) {
-        var ray = worldRay.transform(this.getTransformationMatrix().inv());
-        return localIntersect(ray);
-    }
-
-    /**
      * @param localPoint point in the local CS
      * @return hitNormal vector at given point
      */
-    private Vector localNormalAt(Point localPoint) {
+    @Override
+    public Vector localNormalAt(Point localPoint) {
         return localPoint.sub(new Point(0, 0, 0));
     }
 

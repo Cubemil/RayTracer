@@ -12,7 +12,14 @@ public abstract class Shape {
 
     public abstract IntersectionManager localIntersect(Ray localRay);
 
-    public abstract IntersectionManager intersect(Ray worldRay);
+    /**
+     * @param worldRay gets a transformed Ray in world coords
+     * @return localIntersect() with a local ray transformed to the local coords of this object
+     */
+    public IntersectionManager intersect(Ray worldRay){
+        var ray = worldRay.transform(this.getTransformationMatrix().inv());
+        return localIntersect(ray);
+    }
 
     /**
      * @param worldPoint on the surface of the shape
@@ -35,6 +42,8 @@ public abstract class Shape {
         worldNormal.setW(0);
         return worldNormal.normalized();
     }
+
+    public abstract Vector localNormalAt(Point localPoint);
 
     public Material getMaterial() {
         return material;

@@ -13,7 +13,8 @@ by Emil Petersen
 - [x]  Chapter  7: RayTracer basic structure, scenes and camera
 - [x]  Chapter  8: Lighting model implementation
 - [x]  Chapter  9: Shadows and light sources - recursive
-- [ ]  Chapter 10: Reflection and Anti-Aliasing - recursive
+- [x]  Chapter 10: Reflection and Anti-Aliasing - recursive
+- [x]  Chapter 11: Further geometric primitives
 
 ## License
 This project is being made for Hochschule Anhalt - University of applied sciences, Germany
