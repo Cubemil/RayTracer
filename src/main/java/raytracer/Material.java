@@ -82,7 +82,7 @@ public class Material {
         Vector l = lightSource.directionFromPoint(position);
 
         // O * kA
-        var ambientPart = color.mult(ambient);
+        var ambientPart = color.scaled(ambient);
 
         if (inShadow) return ambientPart;
 
@@ -90,7 +90,7 @@ public class Material {
         // only have an influence when dot product is positive
         var diffuseDotProduct = l.dot(normal);
         // IL * O * kD * diffuseDotProduct
-        Color diffusePart = lightColor.mult(color).mult(diffuse).mult(Math.max(diffuseDotProduct, 0));
+        Color diffusePart = lightColor.scaled(color).scaled(diffuse).scaled(Math.max(diffuseDotProduct, 0));
 
 
         // (viewDirection * r) -> dot product
@@ -103,7 +103,7 @@ public class Material {
             // specularDot ^ shininess
             var reflectExponent = Math.pow(specularDotProduct, shininess);
             // IL * kS * reflectExponent
-            specularPart = lightColor.mult(specular).mult(reflectExponent);
+            specularPart = lightColor.scaled(specular).scaled(reflectExponent);
         }
 
         // return Color from the sum of all three parts

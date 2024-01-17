@@ -49,7 +49,7 @@ public class DirectionalLightSource extends LightSource {
 
     @Override
     public Color colorAtPoint(Point point) {
-        return color.mult(intensity);
+        return color.scaled(intensity);
     }
 
     @Override

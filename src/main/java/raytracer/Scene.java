@@ -4,6 +4,8 @@ import math.*;
 import raytracer.geometry.*;
 import raytracer.light.LightSource;
 import raytracer.light.PointLightSource;
+import raytracer.sampler.NoSampler;
+import raytracer.sampler.Sampler;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -18,6 +20,8 @@ public class Scene {
     private final ArrayList<LightSource> lightSources = new ArrayList<>();
 
     private final ArrayList<Material> materials = new ArrayList<>();
+
+    private Sampler sampler = new NoSampler();
 
     /*-------------------------------predefined scenes-------------------------------*/
 
@@ -173,15 +177,14 @@ public class Scene {
      */
     public Color reflectedColor(HitInfo hitInfo, int depth) {
         var material = hitInfo.object().getMaterial();
-
-        if (material.getReflectance() == 0) return Color.BLACK;
+        if (depth <= 0 || material.getReflectance() == 0) return Color.BLACK;
 
         Vector reflectDir = hitInfo.reflected();
-        Point reflectOrigin = hitInfo.hit().add(hitInfo.hitNormal().mult(MUtils.getEPSILON())); // Kleiner Offset
+        Point reflectOrigin = hitInfo.hit().add(hitInfo.hitNormal().mult(MUtils.getEPSILON()));
         Ray reflectRay = new Ray(reflectOrigin, reflectDir);
 
-        Color reflectedColor = colorAt(reflectRay, depth);
-        return reflectedColor.mult(material.getReflectance());
+        Color reflectedColor = colorAt(reflectRay, depth - 1);
+        return reflectedColor.scaled(material.getReflectance());
     }
 
     /*---------------------------------structure methods--------------------------------*/
@@ -216,6 +219,14 @@ public class Scene {
      */
     public ArrayList<LightSource> getLightSources() {
         return lightSources;
+    }
+
+    public Sampler getSampler() {
+        return sampler;
+    }
+
+    public void setSampler(Sampler sampler) {
+        this.sampler = sampler;
     }
 
 }

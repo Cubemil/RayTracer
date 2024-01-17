@@ -55,11 +55,11 @@ public record Color(double red, double green, double blue) {
         return new Color(red - other.red(), green - other.green(), blue - other.blue());
     }
 
-    public Color mult(Color other) {
+    public Color scaled(Color other) {
         return new Color(red * other.red(), green * other.green(), blue * other.blue());
     }
 
-    public Color mult(double value) {
+    public Color scaled(double value) {
         return new Color(red * value, green * value, blue * value);
     }
 
