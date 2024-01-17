@@ -4,6 +4,8 @@ import math.*;
 import raytracer.geometry.*;
 import raytracer.light.LightSource;
 import raytracer.light.PointLightSource;
+import raytracer.sampler.NoSampler;
+import raytracer.sampler.Sampler;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -18,6 +20,8 @@ public class Scene {
     private final ArrayList<LightSource> lightSources = new ArrayList<>();
 
     private final ArrayList<Material> materials = new ArrayList<>();
+
+    private Sampler sampler = new NoSampler();
 
     /*-------------------------------predefined scenes-------------------------------*/
 
@@ -69,6 +73,10 @@ public class Scene {
         spheres[2].setTransformationMatrix(Matrix.translate(-1.5, 0.33, -0.75).mult(Matrix.scale(0.33,0.33,0.33)));
         spheres[3].setTransformationMatrix(Matrix.scale(10, 0.01, 10));
 
+        spheres[0].getMaterial().setColor(Color.GREEN);
+        spheres[1].getMaterial().setColor(Color.BLUE);
+        spheres[2].getMaterial().setColor(Color.YELLOW);
+
         for (Sphere s : spheres) scene.addObject(s);
         return scene;
     }
@@ -90,12 +98,13 @@ public class Scene {
 
     /**
      * @param info HitInfo from an Intersection
+     * @param depth max recursion depth
      * @return Color from calling Material.phongLighting,
      * but with checking if 'point' is shadowed
      * -> point > hit + normalVector * epsilon
      * returns sum of ALL light sources in scene
      */
-    public Color shadeHit(HitInfo info) {
+    public Color shadeHit(HitInfo info, int depth) {
         Point adjusted = info.hit().add(info.hitNormal().mult(MUtils.getEPSILON()));
         Color finalColor = Color.BLACK;
 
@@ -110,7 +119,7 @@ public class Scene {
                     isShadowed));
         }
 
-        return finalColor;
+        return finalColor.add(reflectedColor(info, depth));
     }
 
     /**
@@ -139,6 +148,43 @@ public class Scene {
             if (x.t() < distance && x.t() > 0) return true;
 
         return false;
+    }
+
+    /**
+     * ----- Main execution method for the final Color -----
+     * @param ray that is sent through the scene
+     * @param depth max recursion depth
+     * @return the final Color after calling multiple existing methods:
+     * traceRay, prepareHitInfo and shadeHit
+     */
+    public Color colorAt(Ray ray, int depth) {
+        var intersections = traceRay(ray);
+        var hit = intersections.hit();
+        if (hit == null) return Color.BLACK;
+
+        var hitInfo = hit.prepareHitInfo(ray);
+        return shadeHit(hitInfo, depth);
+    }
+
+    /**
+     * @param hitInfo about the current Intersection hit
+     * @param depth max recursion depth
+     * @return reflected Color:
+     * - if material reflectivity is 0, return BLACK
+     * 1. Create the ray needed for the calculation ((adjusted)intersection -> reflection direction)
+     * 2. execute a normal RayTracing using colorAt() -> returns reflectedColor
+     * 3. return reflectedColor scaled by the reflectivity-value
+     */
+    public Color reflectedColor(HitInfo hitInfo, int depth) {
+        var material = hitInfo.object().getMaterial();
+        if (depth <= 0 || material.getReflectance() == 0) return Color.BLACK;
+
+        Vector reflectDir = hitInfo.reflected();
+        Point reflectOrigin = hitInfo.hit().add(hitInfo.hitNormal().mult(MUtils.getEPSILON()));
+        Ray reflectRay = new Ray(reflectOrigin, reflectDir);
+
+        Color reflectedColor = colorAt(reflectRay, depth - 1);
+        return reflectedColor.scaled(material.getReflectance());
     }
 
     /*---------------------------------structure methods--------------------------------*/
@@ -173,6 +219,14 @@ public class Scene {
      */
     public ArrayList<LightSource> getLightSources() {
         return lightSources;
+    }
+
+    public Sampler getSampler() {
+        return sampler;
+    }
+
+    public void setSampler(Sampler sampler) {
+        this.sampler = sampler;
     }
 
 }

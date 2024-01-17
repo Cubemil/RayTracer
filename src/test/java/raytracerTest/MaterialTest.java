@@ -18,8 +18,9 @@ class MaterialTest {
         double diffuse = 0.1;
         double specular = 0.1;
         int shininess = 100;
+        int reflection = 0;
 
-        Material material = new Material(color, ambient, diffuse, specular, shininess);
+        Material material = new Material(color, ambient, diffuse, specular, shininess, reflection);
 
         assertEquals(0.1, material.getAmbient());
         assertEquals(0.1, material.getDiffuse());
@@ -37,6 +38,12 @@ class MaterialTest {
         assertEquals(0.9, material.getSpecular());
         assertEquals(new Color(1, 1, 1), material.getColor());
         assertEquals(200, material.getShininess());
+    }
+
+    @Test
+    void reflectivityTest() {
+        Material material = new Material();
+        assertEquals(0.0, material.getReflectance());
     }
 
     /*-------------------shadow on intersection tests----------------------*/

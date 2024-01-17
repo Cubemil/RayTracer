@@ -1,50 +1,57 @@
 package raytracer;
 
 import math.Color;
+import math.Point;
 
 public class RayTracer {
 
     private final Scene scene;
     private final Camera camera;
     private final Canvas renderTarget;
+    private final int sampleCount;
 
     public RayTracer(Scene scene, Camera camera) {
         this.scene = scene;
         this.camera = camera;
         // Canvas gets size from Camera
         this.renderTarget = new Canvas(camera.getWidth(), camera.getHeight());
+        this.sampleCount = 1;
     }
 
-    /**
-     * sends a ray from every pixel of the camera on the scene
-     * and sets the colors according to the first Intersection hit
-     */
+    public RayTracer(Scene scene, Camera camera, int sampleCount) {
+        this.scene = scene;
+        this.camera = camera;
+        // Canvas gets size from Camera
+        this.renderTarget = new Canvas(camera.getWidth(), camera.getHeight());
+        this.sampleCount = sampleCount;
+    }
+
     public void render() {
         for (int y = 0; y < camera.getHeight(); y++)
             for (int x = 0; x < camera.getWidth(); x++)
-                setPixelColor(x, y);
+                findPixelColor(x, y);
     }
 
     /**
-     * @param x - Coordinate of the image
-     * @param y - Coordinate of the image
-     * sets Color using HitInfo -> using phongLighting
+     * @param x             - Coordinate of the image
+     * @param y             - Coordinate of the image
+     * - sends multiple rays per pixel using offsets
+     * - return Color using sum of different return values
+     * - adds (clamped) color to pixel
      */
-    private void setPixelColor(int x, int y) {
-        Ray ray = camera.generateRay(x, y);
-        var hit = scene.traceRay(ray).hit();
+    private void findPixelColor(int x, int y) {
+        int MAX_DEPTH = 5;
+        Color superSamplingColor = Color.BLACK;
 
-        // background color
-        if (hit == null) {
-            renderTarget.setPixelColor(x, y, Color.CORNFLOWERBLUE);
-        } else {
-            // get Color from phong lighting called by HitInfo (includes shadow)
-            HitInfo hitInfo = hit.prepareHitInfo(ray);
-            Color color = scene.shadeHit(hitInfo);
-
-            // set pixel to Color
-            renderTarget.setPixelColor(x, y, color.clamped());
+        for (Point offset : scene.getSampler().generateSamplePoint(sampleCount)) {
+            Ray ray = camera.generateRay(x + offset.x(), y + offset.y());
+            var color = scene.colorAt(ray, MAX_DEPTH);
+            superSamplingColor = superSamplingColor.add(color);
         }
+        // divide color by sampleCount
+        var color = superSamplingColor.scaled(1.0 / sampleCount);
+        // set pixel to Color
+        renderTarget.setPixelColor(x, y, color.clamped());
     }
 
     /**

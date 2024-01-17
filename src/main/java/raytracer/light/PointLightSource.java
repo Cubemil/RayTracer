@@ -45,7 +45,7 @@ public class PointLightSource extends LightSource {
     @Override
     public Color colorAtPoint(Point point) {
         var attenuation = 1 / Math.pow(distanceFromPoint(point), 2) * intensity;
-        return color.mult(attenuation);
+        return color.scaled(attenuation);
     }
 
     @Override

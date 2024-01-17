@@ -42,7 +42,7 @@ public class SpotLightSource extends LightSource{
     @Override
     public Color colorAtPoint(Point point) {
         // Color of surface point scaled with light intensity
-        Color baseColor = color.mult(intensity);
+        Color baseColor = color.scaled(intensity);
 
         // direction of light -> normalized
         Vector lightDirection = direction.normalized();
@@ -56,7 +56,7 @@ public class SpotLightSource extends LightSource{
 
         // Point is in the fall-off region, apply attenuation
         double attenuationPortion = getAttenuationPortion(pointDirection, outerEdgeDirection, fallOffDirection);
-        return baseColor.mult(Math.pow(attenuationPortion, 2));
+        return baseColor.scaled(Math.pow(attenuationPortion, 2));
     }
 
 

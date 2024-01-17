@@ -83,7 +83,7 @@ public class Camera {
      * @return a ray that goes from the camera to the given pixel
      * --> the returning pixel from the Canvas is the same as in the result Image
      */
-    public Ray generateRay(int pixelX, int pixelY) {
+    public Ray generateRay(double pixelX, double pixelY) {
         // determine offset from edge of Canvas to pixel center
         var pixelSize = pixelSize();
         var xOffset = (pixelX + 0.5) * pixelSize;

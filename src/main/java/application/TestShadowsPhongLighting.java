@@ -7,18 +7,7 @@ import raytracer.light.*;
 public class TestShadowsPhongLighting {
 
     public static void main(String[] args) {
-//        // test values vary - do not run all at once //
-//        threeSpherePhongSceneWithShadows();
-//
-     /*   double[] intensities = {0.5, 1, 10};
-        for (double i : intensities) {
-////            directionalLightSourceThreeSpheres(i);
-            spotLightThreeSpheres(i);
-////            attenuatedPointLightThreeSpheres(i);
-        }*/
-
         multipleLightsThreeSpheres();
-
     }
 
     static Matrix viewTransform = Matrix.viewTransform(

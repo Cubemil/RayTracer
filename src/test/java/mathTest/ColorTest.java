@@ -40,8 +40,8 @@ class ColorTest {
         Color color2 = new Color(0.8, 1.2, 1.6);
 
         Color result = new Color(0.4, 0.6, 0.8);
-        assertEquals(result, color1.mult(2));
-        assertEquals(result, color2.mult(0.5));
+        assertEquals(result, color1.scaled(2));
+        assertEquals(result, color2.scaled(0.5));
     }
 
     // multiplying colors using the Hadamard product
@@ -50,7 +50,7 @@ class ColorTest {
         Color color1 = new Color(1, 0.2, 0.4);
         Color color2 = new Color(0.9, 1, 0.1);
 
-        assertEquals(new Color(0.9, 0.2, 0.04), color1.mult(color2));
+        assertEquals(new Color(0.9, 0.2, 0.04), color1.scaled(color2));
     }
 
     // tests the clamping method for Color objects
