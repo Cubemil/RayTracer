@@ -66,12 +66,11 @@ public class Scene {
      */
     public static Scene threeSpheresScene() {
         Scene scene = new Scene();
-        Sphere[] spheres = new Sphere[]{new Sphere(), new Sphere(), new Sphere(), new Sphere()};
+        Sphere[] spheres = new Sphere[]{new Sphere(), new Sphere(), new Sphere()};
 
         spheres[0].setTransformationMatrix(Matrix.translate(-0.5, 1, 0.5));
         spheres[1].setTransformationMatrix(Matrix.translate(1.5, 0.5, -0.5).mult(Matrix.scale(0.5, 0.5, 0.5)));
         spheres[2].setTransformationMatrix(Matrix.translate(-1.5, 0.33, -0.75).mult(Matrix.scale(0.33,0.33,0.33)));
-        spheres[3].setTransformationMatrix(Matrix.scale(10, 0.01, 10));
 
         spheres[0].getMaterial().setColor(Color.GREEN);
         spheres[1].getMaterial().setColor(Color.BLUE);

@@ -57,7 +57,7 @@ public class TestReflectionAndAntiAliasing {
         scene.getObjects().get(0).getMaterial().setReflectance(0);
         scene.getObjects().get(1).getMaterial().setReflectance(0);
         scene.getObjects().get(2).getMaterial().setReflectance(0.7);
-        scene.getObjects().get(3).getMaterial().setReflectance(0.7);
+//        scene.getObjects().get(3).getMaterial().setReflectance(0.7);
 
         return scene;
     }
