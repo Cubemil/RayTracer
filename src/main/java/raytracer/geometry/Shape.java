@@ -12,6 +12,8 @@ public abstract class Shape {
 
     public abstract IntersectionManager localIntersect(Ray localRay);
 
+    public abstract Vector localNormalAt(Point localPoint);
+
     /**
      * @param worldRay gets a transformed Ray in world coords
      * @return localIntersect() with a local ray transformed to the local coords of this object
@@ -26,7 +28,7 @@ public abstract class Shape {
      * @return the hitNormal vector of the surface point
      * -> here it is the same as the location vector of the worldPoint
      * -> before, worldPoint used to be hit
-     *      ->changed due to not being able to display hitNormal vectors when multiplying with inverse
+     *      -> changed due to not being able to display hitNormal vectors when multiplying with inverse
      */
     public Vector normalAt(Point worldPoint) {
         // transformation of worldPoint in local CS
@@ -42,8 +44,6 @@ public abstract class Shape {
         worldNormal.setW(0);
         return worldNormal.normalized();
     }
-
-    public abstract Vector localNormalAt(Point localPoint);
 
     public Material getMaterial() {
         return material;
