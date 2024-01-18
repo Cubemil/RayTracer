@@ -16,15 +16,4 @@ class TupleTest {
         assertEquals(new Vector(1, 1, 0), reflect);
     }
 
-    /*
-    @Test
-    void reflectingVectorSlantedSurfaceTest() {
-        Vector vector1 = new Vector(0, -1, 0);
-        Vector vector2 = new Vector(0.707011, 0.707011, 0);
-        Vector reflect = vector1.reflect(vector2);
-
-        assertEquals(new Vector(1, 0, 0), reflect);
-    }
-    */
-
 }

@@ -22,30 +22,30 @@ public class TestReflectionAndAntiAliasing {
 
     }
 
-    static Matrix viewTransform = Matrix.viewTransform(
+    final static Matrix viewTransform = Matrix.viewTransform(
             new Point(0, 1.5, -5),
             new Point(0, 1, 0),
             new Vector(0, 1, 0));
-    static Camera camera = new Camera(800, 500, 60, viewTransform);
+    final static Camera camera = new Camera(800, 500, 60, viewTransform);
 
     public static void noSamplerThreeSpheres() {
         var scene = threeSphereScene();
-        createImage("noSampler", scene, camera, new NoSampler(), 1);
+        createImage("noSampler", scene, new NoSampler(), 1);
     }
 
     public static void offsetSamplerScene() {
         var scene = threeSphereScene();
-        createImage("offsetSampler", scene, camera, new OffsetSampler(), 9);
+        createImage("offsetSampler", scene, new OffsetSampler(), 9);
     }
 
     private static void randomSamplerScene() {
         var scene = threeSphereScene();
-        createImage("randomSampler", scene, camera, new RandomSampler(), 9);
+        createImage("randomSampler", scene, new RandomSampler(), 9);
     }
 
-    private static void createImage(String fileName, Scene scene, Camera camera, Sampler sampler, int sampleCount) {
+    private static void createImage(String fileName, Scene scene, Sampler sampler, int sampleCount) {
         scene.setSampler(sampler);
-        RayTracer rt = new RayTracer(scene, camera, sampleCount);
+        RayTracer rt = new RayTracer(scene, TestReflectionAndAntiAliasing.camera, sampleCount);
         rt.render();
         rt.getRenderTarget().writeFile("Images/ReflectionsTest/" + fileName);
     }

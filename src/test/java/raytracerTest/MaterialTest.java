@@ -48,8 +48,8 @@ class MaterialTest {
 
     /*-------------------shadow on intersection tests----------------------*/
 
-    Material material = new Material();
-    Point position = new Point(0, 0, 0);
+    final Material material = new Material();
+    final Point position = new Point(0, 0, 0);
 
     @Test
     void lightingWithSurfaceInShadowTest() {

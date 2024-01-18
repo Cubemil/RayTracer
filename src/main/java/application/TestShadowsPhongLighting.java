@@ -10,11 +10,11 @@ public class TestShadowsPhongLighting {
         multipleLightsThreeSpheres();
     }
 
-    static Matrix viewTransform = Matrix.viewTransform(
+    final static Matrix viewTransform = Matrix.viewTransform(
         new Point(0, 1.5, -5),
         new Point(0, 1, 0),
         new Vector(0, 1, 0));
-    static Camera camera = new Camera(800, 800, 60, viewTransform);
+    final static Camera camera = new Camera(800, 800, 60, viewTransform);
 
     private static void threeSpherePhongSceneWithShadows() {
         var scene = Scene.threeSpheresScene();
@@ -22,7 +22,7 @@ public class TestShadowsPhongLighting {
                 new Point(-10, 10, -10),
                 new Color(1, 1, 1)));
 
-        createImage("correctedThreeSphereShadowedScene", scene, camera);
+        createImage("correctedThreeSphereShadowedScene", scene);
     }
 
     private static void directionalLightSourceThreeSpheres(double intensity) {
@@ -30,7 +30,7 @@ public class TestShadowsPhongLighting {
         scene.addLightSource(new DirectionalLightSource(
                 new Vector(10.0, -10.0, 10.0),
                 intensity));
-        createImage("directionalLightSourceThreeSpheres" + intensity + "_", scene, camera);
+        createImage("directionalLightSourceThreeSpheres" + intensity + "_", scene);
     }
 
     private static void spotLightThreeSpheres(double intensity) {
@@ -44,14 +44,14 @@ public class TestShadowsPhongLighting {
             30,
             10));
 
-        createImage("spotLightSourceThreeSpheres" + intensity + "_", scene, camera);
+        createImage("spotLightSourceThreeSpheres" + intensity + "_", scene);
     }
 
     private static void attenuatedPointLightThreeSpheres(double intensity) {
         var scene = Scene.threeSpheresScene();
         scene.addLightSource(new PointLightSource(new Point(-10, 10, -10), intensity));
 
-        createImage("attenuatedPointLightThreeSpheres" + intensity + "-", scene, camera);
+        createImage("attenuatedPointLightThreeSpheres" + intensity + "-", scene);
     }
 
     private static void multipleLightsThreeSpheres() {
@@ -68,11 +68,11 @@ public class TestShadowsPhongLighting {
                 new Point(1.5, 0.5, -0.5).sub(new Point(10, 10, 5)),
                 new Color(Color.ORANGE), 1, 10, 7));
 
-        createImage("multipleLightsThreeSpheres", scene, camera);
+        createImage("multipleLightsThreeSpheres", scene);
     }
 
-    private static void createImage(String fileName, Scene scene, Camera camera) {
-        RayTracer rt = new RayTracer(scene, camera);
+    private static void createImage(String fileName, Scene scene) {
+        RayTracer rt = new RayTracer(scene, TestShadowsPhongLighting.camera);
         rt.render();
         rt.getRenderTarget().writeFile("Images/ShadowsTest/" + fileName);
     }
