@@ -49,23 +49,23 @@ class TestShapeTest {
     @Test
     void intersectingScaledShapeWithRayTest() {
         Ray ray = new Ray(new Point(0, 0, -5), new Vector(0, 0, 1));
-        Shape shape = new TestShape();
+        TestShape shape = new TestShape();
         shape.setTransformationMatrix(Matrix.scale(2, 2, 2));
         var xs = shape.intersect(ray);
 
-        assertEquals(new Point(0, 0, -2.5), ((TestShape) shape).getSavedRay().getOriginPoint());
-        assertEquals(new Vector(0, 0, 0.5), ((TestShape) shape).getSavedRay().getDirectionVector());
+        assertEquals(new Point(0, 0, -2.5), shape.getSavedRay().getOriginPoint());
+        assertEquals(new Vector(0, 0, 0.5), shape.getSavedRay().getDirectionVector());
     }
 
     @Test
     void intersectingTranslatedShapeWithRayTest() {
         Ray ray = new Ray(new Point(0, 0, -5), new Vector(0, 0, 1));
-        Shape shape = new TestShape();
+        TestShape shape = new TestShape();
         shape.setTransformationMatrix(Matrix.translate(5, 0, 0));
         var xs = shape.intersect(ray);
 
-        assertEquals(new Point(-5, 0, -5), ((TestShape) shape).getSavedRay().getOriginPoint());
-        assertEquals(new Vector(0, 0, 1), ((TestShape) shape).getSavedRay().getDirectionVector());
+        assertEquals(new Point(-5, 0, -5), shape.getSavedRay().getOriginPoint());
+        assertEquals(new Vector(0, 0, 1), shape.getSavedRay().getDirectionVector());
     }
 
     @Test
