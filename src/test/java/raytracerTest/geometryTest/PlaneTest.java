@@ -1,3 +1,5 @@
+package raytracerTest.geometryTest;
+
 import math.Point;
 import math.Vector;
 import org.junit.jupiter.api.Test;

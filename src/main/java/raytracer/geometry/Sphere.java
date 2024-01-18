@@ -45,7 +45,7 @@ public class Sphere extends Shape {
         double discriminant = b * b - 4 * a * c;
 
         // return empty array
-        if (discriminant < 0) return new IntersectionManager(new Intersection[]{});
+        if (discriminant < 0) return new IntersectionManager();
         else {
             // first intersection point
             double t1 = (-b + Math.sqrt(discriminant)) / (2 * a);

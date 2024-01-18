@@ -20,9 +20,9 @@ public class TestNewPrimitives {
 
     private static void simplePlaneTest() {
         var scene = threeSphereScene();
-        scene.addObject(new Plane());
 
         // plane
+        scene.addObject(new Plane());
         scene.getObjects().get(3).getMaterial().setReflectance(0.7);
         scene.getObjects().get(3).getMaterial().setSpecular(0);
         scene.getObjects().get(3).getMaterial().setColor(new Color(1, 0.9, 0.9));

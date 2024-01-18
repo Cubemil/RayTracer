@@ -9,14 +9,15 @@ import raytracer.Ray;
 
 public class Plane extends Shape {
 
-//    private Point origin;
-//    private Vector xDirection;
-//    private Vector yDirection;
-//    private Vector zDirection;
-//
-//    public Plane(Point origin) {
-//        this.origin = origin;
-//    }
+    private final Point origin;
+
+    public Plane(Point origin) {
+        this.origin = origin;
+    }
+
+    public Plane() {
+        this.origin = new Point(0, 0, 0);
+    }
 
     @Override
     public IntersectionManager localIntersect(Ray localRay) {
@@ -27,6 +28,7 @@ public class Plane extends Shape {
 
         var t = - localRay.getOriginPoint().y() / localRay.getDirectionVector().y();
         xs.add(new Intersection(t, this));
+
         return xs;
     }
 
