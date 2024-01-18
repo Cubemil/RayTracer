@@ -7,8 +7,13 @@ import math.*;
 
 public abstract class Shape {
 
-    protected Material material = new Material();
-    private Matrix transformationMatrix = Matrix.identityMatrix();
+    protected Material material;
+    protected Matrix transformationMatrix;
+
+    public Shape() {
+        this.transformationMatrix = Matrix.identityMatrix();
+        this.material = new Material();
+    }
 
     public abstract IntersectionManager localIntersect(Ray localRay);
 
@@ -19,8 +24,8 @@ public abstract class Shape {
      * @return localIntersect() with a local ray transformed to the local coords of this object
      */
     public IntersectionManager intersect(Ray worldRay){
-        var ray = worldRay.transform(this.getTransformationMatrix().inv());
-        return localIntersect(ray);
+        var transformedRay = worldRay.transform(this.transformationMatrix.inv());
+        return localIntersect(transformedRay);
     }
 
     /**
@@ -35,7 +40,7 @@ public abstract class Shape {
         Point localPoint = getTransformationMatrix().inv().mult(worldPoint);
 
         // local hitNormal
-        Vector localNormal = localPoint.sub(new Point(0, 0, 0));
+        Vector localNormal = localNormalAt(localPoint);
 
         // transformation of localNormal in world CS
         Vector worldNormal = getTransformationMatrix().inv().transposed().mult(localNormal);
@@ -59,6 +64,15 @@ public abstract class Shape {
 
     public void setTransformationMatrix(Matrix transformationMatrix) {
         this.transformationMatrix = transformationMatrix;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+
+        Shape other = (Shape) obj;
+        return transformationMatrix.equals(other.transformationMatrix) && material.equals(other.material);
     }
 
 }

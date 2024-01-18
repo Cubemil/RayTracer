@@ -9,6 +9,10 @@ public class TestShape extends Shape{
 
     private Ray savedRay;
 
+    public TestShape() {
+        super();
+    }
+
     public Ray getSavedRay() {
         return savedRay;
     }

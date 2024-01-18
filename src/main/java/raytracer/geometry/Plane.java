@@ -1,45 +1,53 @@
 package raytracer.geometry;
 
 import math.MUtils;
-import math.Point;
-import math.Vector;
 import raytracer.Intersection;
 import raytracer.IntersectionManager;
 import raytracer.Ray;
+import math.Point;
+import math.Vector;
 
 public class Plane extends Shape {
 
-    private final Point origin;
-
-    public Plane(Point origin) {
-        this.origin = origin;
-    }
-
     public Plane() {
-        this.origin = new Point(0, 0, 0);
+        super();
     }
 
     @Override
     public IntersectionManager localIntersect(Ray localRay) {
-        var xs = new IntersectionManager();
+        IntersectionManager xs = new IntersectionManager();
 
-        // ray is perpendicular or equal to plane -> no intersections
-        if (MUtils.approxEqual(localRay.getDirectionVector().y(), 0)) return xs;
+        // Check if the ray is parallel or nearly parallel to the plane.
+        if (Math.abs(localRay.getDirectionVector().y()) < MUtils.getEPSILON()) {
+            return xs; // No intersection.
+        }
 
-        var t = - localRay.getOriginPoint().y() / localRay.getDirectionVector().y();
+        // Calculate the intersection point with the plane.
+        double t = -localRay.getOriginPoint().y() / localRay.getDirectionVector().y();
         xs.add(new Intersection(t, this));
 
         return xs;
     }
 
-    /**
-     * @param localPoint point in local CS
-     * @return always the normal (0, 1, 0)^T,
-     * since all points are on the same plane
-     */
     @Override
     public Vector localNormalAt(Point localPoint) {
+        // The normal vector for the plane is always (0, 1, 0) in local coordinates.
         return new Vector(0, 1, 0);
+    }
+
+    @Override
+    public Vector normalAt(Point worldPoint) {
+        // Transformiere den Punkt in das lokale Koordinatensystem der Ebene
+        Point localPoint = getTransformationMatrix().inv().mult(worldPoint);
+
+        // Berechne die lokale Normale (ist bei einer Ebene immer (0, 1, 0))
+        Vector localNormal = localNormalAt(localPoint);
+
+        // Transformiere die lokale Normale zurück in das Weltkoordinatensystem
+        Vector worldNormal = getTransformationMatrix().inv().transposed().mult(localNormal);
+
+        // Normalisiere die Welt-Normale
+        return worldNormal.normalized();
     }
 
 }

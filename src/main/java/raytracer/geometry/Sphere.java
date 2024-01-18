@@ -7,13 +7,13 @@ import raytracer.Ray;
 
 public class Sphere extends Shape {
 
-    private final Point m;
-    private final double r;
+    private final Point origin;
+    private final double radius;
 
     // default Sphere
     public Sphere() {
-        this.m = new Point(0, 0, 0);   // center Point
-        this.r = 1.0;                           // radius 1
+        this.origin = new Point(0, 0, 0);   // center Point
+        this.radius = 1.0;                          // radius 1
     }
 
     /**
@@ -37,10 +37,10 @@ public class Sphere extends Shape {
     public IntersectionManager localIntersect(Ray localRay) {
         IntersectionManager resultIntersections = new IntersectionManager();
 
-        Vector oc = localRay.getOriginPoint().sub(getM());
+        Vector oc = localRay.getOriginPoint().sub(getOrigin());
         double a = localRay.getDirectionVector().dot(localRay.getDirectionVector());
         double b = 2 * oc.dot(localRay.getDirectionVector());
-        double c = oc.dot(oc) - r * r;
+        double c = oc.dot(oc) - radius * radius;
 
         double discriminant = b * b - 4 * a * c;
 
@@ -66,15 +66,15 @@ public class Sphere extends Shape {
      */
     @Override
     public Vector localNormalAt(Point localPoint) {
-        return localPoint.sub(new Point(0, 0, 0));
+        return localPoint.sub(origin);
     }
 
-    public Point getM() {
-        return m;
+    public Point getOrigin() {
+        return origin;
     }
 
-    public double getR() {
-        return this.r;
+    public double getRadius() {
+        return this.radius;
     }
 
     /**
@@ -84,8 +84,8 @@ public class Sphere extends Shape {
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof Sphere other) {
-            return  this.getM().equals(other.getM()) &&
-                    this.r == other.getR() &&
+            return  this.getOrigin().equals(other.getOrigin()) &&
+                    this.radius == other.getRadius() &&
                     this.getTransformationMatrix().equals(other.getTransformationMatrix());
         }
         return false;
