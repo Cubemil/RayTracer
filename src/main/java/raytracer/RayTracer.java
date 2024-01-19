@@ -27,9 +27,14 @@ public class RayTracer {
     }
 
     public void render() {
+        var start = System.nanoTime();
+
         for (int y = 0; y < camera.getHeight(); y++)
             for (int x = 0; x < camera.getWidth(); x++)
                 findPixelColor(x, y);
+
+        var timeElapsed = (System.nanoTime() - start) /  1e-9;
+        System.out.printf("Render time: " + timeElapsed + " seconds");
     }
 
     /**

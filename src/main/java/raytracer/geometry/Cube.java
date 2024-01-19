@@ -9,16 +9,20 @@ import raytracer.Ray;
 
 public class Cube extends Shape {
 
+    private static final double EPSILON = MUtils.getEPSILON();
+    private static final double MIN_BOUND = -1.0;
+    private static final double MAX_BOUND = 1.0;
+
     public Cube() {
         super();
     }
 
     private double[] getMinMax(double origin, double direction) {
-        double tMinNumerator = -1 - origin;
-        double tMaxNumerator = 1 - origin;
+        double tMinNumerator = MIN_BOUND - origin;
+        double tMaxNumerator = MAX_BOUND - origin;
 
         double tMin, tMax;
-        if (Math.abs(direction) >= MUtils.getEPSILON()) {
+        if (Math.abs(direction) >= EPSILON) {
             tMin = tMinNumerator / direction;
             tMax = tMaxNumerator / direction;
         } else {
@@ -36,33 +40,25 @@ public class Cube extends Shape {
 
     @Override
     public IntersectionManager localIntersect(Ray localRay) {
-        var xs = new IntersectionManager();
+        var intersectionManager = new IntersectionManager();
 
-        // check all three planes with corresponding rays
-        double[] tMinX = getMinMax(localRay.getOriginPoint().x(), localRay.getDirectionVector().x());
-        double[] tMinY = getMinMax(localRay.getOriginPoint().y(), localRay.getDirectionVector().y());
-        double[] tMinZ = getMinMax(localRay.getOriginPoint().z(), localRay.getDirectionVector().z());
+        double[] tMinMaxX = getMinMax(localRay.getOriginPoint().x(), localRay.getDirectionVector().x());
+        double[] tMinMaxY = getMinMax(localRay.getOriginPoint().y(), localRay.getDirectionVector().y());
+        double[] tMinMaxZ = getMinMax(localRay.getOriginPoint().z(), localRay.getDirectionVector().z());
 
-        // get the max of tMinX, tMinY, tMinZ
-        double minT = Math.max(tMinX[0], Math.max(tMinY[0], tMinZ[0]));
-        double maxT = Math.min(tMinX[1], Math.min(tMinY[1], tMinZ[1]));
+        double minT = Math.max(tMinMaxX[0], Math.max(tMinMaxY[0], tMinMaxZ[0]));
+        double maxT = Math.min(tMinMaxX[1], Math.min(tMinMaxY[1], tMinMaxZ[1]));
 
-        // no intersection
-        if (minT > maxT) return xs;
+        if (minT > maxT) return intersectionManager;
 
-        // return both parameter values of both intersections with cube
-        xs.add(new Intersection(minT, this));
-        xs.add(new Intersection(maxT, this));
-        return xs;
+        intersectionManager.add(new Intersection(minT, this));
+        intersectionManager.add(new Intersection(maxT, this));
+        return intersectionManager;
     }
 
     @Override
     public Vector localNormalAt(Point localPoint) {
-        double max =    Math.max(
-                            Math.abs(localPoint.x()),
-                        Math.max(
-                            Math.abs(localPoint.y()),
-                            Math.abs(localPoint.z())));
+        double max = Math.max(Math.abs(localPoint.x()), Math.max(Math.abs(localPoint.y()), Math.abs(localPoint.z())));
 
         if (max == Math.abs(localPoint.x())) {
             return new Vector(localPoint.x(), 0, 0);
@@ -75,13 +71,9 @@ public class Cube extends Shape {
 
     @Override
     public Vector normalAt(Point worldPoint) {
-        // transform point in local CS
         Point localPoint = getTransformationMatrix().inv().mult(worldPoint);
-        // get the local normal
         Vector localNormal = localNormalAt(localPoint);
-        // transform local normal back into world CS
         Vector worldNormal = getTransformationMatrix().inv().transposed().mult(localNormal);
-        // normalised world normal
         return worldNormal.normalized();
     }
 
