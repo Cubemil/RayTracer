@@ -7,6 +7,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 
 public class Canvas {
 
@@ -43,7 +44,7 @@ public class Canvas {
             File outputFile = new File(fileName + timeStamp + ".png");
             ImageIO.write(outputImage, "png", outputFile);
         } catch (IOException e) {
-            e.printStackTrace();
+            System.err.println(Arrays.toString(e.getStackTrace()));
         }
     }
 
@@ -67,4 +68,5 @@ public class Canvas {
     public void setFileName(String fileName) {
         this.fileName = fileName;
     }
+
 }

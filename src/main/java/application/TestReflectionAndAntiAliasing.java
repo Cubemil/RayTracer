@@ -16,8 +16,6 @@ public class TestReflectionAndAntiAliasing {
 
     public static void main(String[] args) {
 
-//        noSamplerThreeSpheres();
-//        offsetSamplerScene();
         randomSamplerScene();
 
     }
