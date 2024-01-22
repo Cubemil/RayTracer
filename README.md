@@ -20,4 +20,4 @@ by Emil Petersen
 This project is being made for Hochschule Anhalt - University of applied sciences, Germany
 
 ## Project status
-*in progress*
+*finished (for now)*

@@ -34,7 +34,7 @@ public class TestNewPrimitives {
 
     private static void cubePlaneAndSpheresSceneTest() {
         var scene = cubePlaneAndSpheresScene();
-        createImage("cubePlaneAndSpheresSceneTest", scene, new NoSampler(), 1);
+        createImage("cubePlaneAndSpheresSceneTest", scene, new RandomSampler(), 9);
     }
 
     private static Scene threeSphereScene() {
